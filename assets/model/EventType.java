@@ -1,10 +1,10 @@
 package assets.model;
 
-import assets.framework.ITapahtumanTyyppi;
+import assets.framework.IEventType;
 
 // TODO:
 // Tapahtumien tyypit määritellään simulointimallin vaatimusten perusteella
-public enum TapahtumanTyyppi implements ITapahtumanTyyppi{
+public enum EventType implements IEventType {
 	ARR1, DEP1, DEP2, DEP3;
 
 }

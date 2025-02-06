@@ -1,16 +1,16 @@
 package run;
 
-import assets.framework.Moottori;
+import assets.framework.Engine;
 import assets.framework.Trace;
 import assets.framework.Trace.Level;
-import assets.model.OmaMoottori;
+import assets.model.OwnEngine;
 
 public class Simulaattori { //Tekstipohjainen
 
 	public static void main(String[] args) {
 		
 		Trace.setTraceLevel(Level.INFO);
-		Moottori m = new OmaMoottori();
+		Engine m = new OwnEngine();
 		m.setSimulointiaika(1000);
 		m.aja();
 		///

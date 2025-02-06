@@ -1,18 +1,18 @@
 package assets.framework;
 
-public abstract class Moottori {
+public abstract class Engine {
 	
 	private double simulointiaika = 0;
 	
-	private Kello kello;
+	private Clock kello;
 	
-	protected Tapahtumalista tapahtumalista;
+	protected EventList tapahtumalista;
 
-	public Moottori(){
+	public Engine(){
 
-		kello = Kello.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
+		kello = Clock.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 		
-		tapahtumalista = new Tapahtumalista();
+		tapahtumalista = new EventList();
 		
 		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa 
 		
@@ -56,7 +56,7 @@ public abstract class Moottori {
 		return kello.getAika() < simulointiaika;
 	}
 
-	protected abstract void suoritaTapahtuma(Tapahtuma t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void suoritaTapahtuma(Event t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 	protected abstract void yritaCTapahtumat();	// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa

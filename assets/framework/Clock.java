@@ -1,17 +1,17 @@
 package assets.framework;
 
-public class Kello {
+public class Clock {
 
 	private double aika;
-	private static Kello instanssi;
+	private static Clock instanssi;
 	
-	private Kello(){
+	private Clock(){
 		aika = 0;
 	}
 	
-	public static Kello getInstance(){
+	public static Clock getInstance(){
 		if (instanssi == null){
-			instanssi = new Kello();	
+			instanssi = new Clock();
 		}
 		return instanssi;
 	}

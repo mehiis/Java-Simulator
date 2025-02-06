@@ -4,17 +4,17 @@ import assets.framework.*;
 
 // TODO:
 // Asiakas koodataan simulointimallin edellyttämällä tavalla (data!)
-public class Asiakas {
+public class Customer {
 	private double saapumisaika;
 	private double poistumisaika;
 	private int id;
 	private static int i = 1;
 	private static long sum = 0;
 	
-	public Asiakas(){
+	public Customer(){
 	    id = i++;
 	    
-		saapumisaika = Kello.getInstance().getAika();
+		saapumisaika = Clock.getInstance().getAika();
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo "+saapumisaika);
 	}
 

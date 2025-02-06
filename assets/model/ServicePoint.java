@@ -6,19 +6,19 @@ import eduni.distributions.ContinuousGenerator;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
-public class Palvelupiste {
+public class ServicePoint {
 
-	private final LinkedList<Asiakas> jono = new LinkedList<>(); // Tietorakennetoteutus
+	private final LinkedList<Customer> jono = new LinkedList<>(); // Tietorakennetoteutus
 	private final ContinuousGenerator generator;
-	private final Tapahtumalista tapahtumalista;
-	private final TapahtumanTyyppi skeduloitavanTapahtumanTyyppi;
+	private final EventList tapahtumalista;
+	private final EventType skeduloitavanTapahtumanTyyppi;
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
 	
 	private boolean varattu = false;
 
 
-	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi){
+	public ServicePoint(ContinuousGenerator generator, EventList tapahtumalista, EventType tyyppi){
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
 		this.skeduloitavanTapahtumanTyyppi = tyyppi;
@@ -26,13 +26,13 @@ public class Palvelupiste {
 	}
 
 
-	public void lisaaJonoon(Asiakas a){   // Jonon 1. asiakas aina palvelussa
+	public void lisaaJonoon(Customer a){   // Jonon 1. asiakas aina palvelussa
 		jono.add(a);
 		
 	}
 
 
-	public Asiakas otaJonosta(){  // Poistetaan palvelussa ollut
+	public Customer otaJonosta(){  // Poistetaan palvelussa ollut
 		varattu = false;
 		return jono.poll();
 	}
@@ -44,7 +44,7 @@ public class Palvelupiste {
 		
 		varattu = true;
 		double palveluaika = generator.sample();
-		tapahtumalista.lisaa(new Tapahtuma(skeduloitavanTapahtumanTyyppi,Kello.getInstance().getAika()+palveluaika));
+		tapahtumalista.lisaa(new Event(skeduloitavanTapahtumanTyyppi, Clock.getInstance().getAika()+palveluaika));
 	}
 
 

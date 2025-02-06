@@ -1,19 +1,19 @@
 package assets.framework;
 
-public class Tapahtuma implements Comparable<Tapahtuma> {
+public class Event implements Comparable<Event> {
 
-	private ITapahtumanTyyppi tyyppi;
+	private IEventType tyyppi;
 	private double aika;
 	
-	public Tapahtuma(ITapahtumanTyyppi tyyppi, double aika){
+	public Event(IEventType tyyppi, double aika){
 		this.tyyppi = tyyppi;
 		this.aika = aika;
 	}
 	
-	public void setTyyppi(ITapahtumanTyyppi tyyppi) {
+	public void setTyyppi(IEventType tyyppi) {
 		this.tyyppi = tyyppi;
 	}
-	public ITapahtumanTyyppi getTyyppi() {
+	public IEventType getTyyppi() {
 		return tyyppi;
 	}
 	public void setAika(double aika) {
@@ -24,7 +24,7 @@ public class Tapahtuma implements Comparable<Tapahtuma> {
 	}
 
 	@Override
-	public int compareTo(Tapahtuma arg) {
+	public int compareTo(Event arg) {
 		if (this.aika < arg.aika) return -1;
 		else if (this.aika > arg.aika) return 1;
 		return 0;
