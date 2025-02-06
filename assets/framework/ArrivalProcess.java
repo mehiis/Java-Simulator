@@ -13,7 +13,7 @@ public class ArrivalProcess {
 		this.tyyppi = tyyppi;
 	}
 
-	public void generoiSeuraava(){
+	public void generateNext(){
 		Event t = new Event(tyyppi, Clock.getInstance().getTime()+generaattori.sample());
 		tapahtumalista.add(t);
 	}

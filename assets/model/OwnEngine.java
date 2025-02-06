@@ -6,26 +6,26 @@ import eduni.distributions.Normal;
 
 public class OwnEngine extends Engine {
 	
-	private ArrivalProcess saapumisprosessi;
+	private ArrivalProcess arrivalProcess;
 
-	private ServicePoint[] palvelupisteet;
+	private ServicePoint[] servicePoints;
 
 	public OwnEngine(){
 
-		palvelupisteet = new ServicePoint[3];
+		servicePoints = new ServicePoint[3];
 
-		palvelupisteet[0]=new ServicePoint(new Normal(10,6), eventList, EventType.DEP1);
-		palvelupisteet[1]=new ServicePoint(new Normal(10,10), eventList, EventType.DEP2);
-		palvelupisteet[2]=new ServicePoint(new Normal(5,3), eventList, EventType.DEP3);
+		servicePoints[0]=new ServicePoint(new Normal(10,6), eventList, EventType.DEP1);
+		servicePoints[1]=new ServicePoint(new Normal(10,10), eventList, EventType.DEP2);
+		servicePoints[2]=new ServicePoint(new Normal(5,3), eventList, EventType.DEP3);
 
-		saapumisprosessi = new ArrivalProcess(new Negexp(15,5), eventList, EventType.ARR1);
+		arrivalProcess = new ArrivalProcess(new Negexp(15,5), eventList, EventType.ARR1);
 
 	}
 
 
 	@Override
 	protected void init() {
-		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
+		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
 	}
 
 	@Override
@@ -34,17 +34,17 @@ public class OwnEngine extends Engine {
 		Customer a;
 		switch ((EventType)t.getType()){
 
-			case ARR1: palvelupisteet[0].addToQue(new Customer());
-				       saapumisprosessi.generoiSeuraava();
+			case ARR1: servicePoints[0].addToQueue(new Customer());
+				       arrivalProcess.generateNext();
 				break;
-			case DEP1: a = (Customer)palvelupisteet[0].getFromQue();
-				   	   palvelupisteet[1].addToQue(a);
+			case DEP1: a = (Customer) servicePoints[0].getFromQueue();
+				   	   servicePoints[1].addToQueue(a);
 				break;
-			case DEP2: a = (Customer)palvelupisteet[1].getFromQue();
-				   	   palvelupisteet[2].addToQue(a);
+			case DEP2: a = (Customer) servicePoints[1].getFromQueue();
+				   	   servicePoints[2].addToQueue(a);
 				break;
 			case DEP3:
-				       a = (Customer)palvelupisteet[2].getFromQue();
+				       a = (Customer) servicePoints[2].getFromQueue();
 					   a.setExitTime(Clock.getInstance().getTime());
 			           a.report();
 		}
@@ -52,7 +52,7 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void tryCtypeEvents(){
-		for (ServicePoint p: palvelupisteet){
+		for (ServicePoint p: servicePoints){
 			if (!p.isReserved() && p.isQueued()){
 				p.startService();
 			}

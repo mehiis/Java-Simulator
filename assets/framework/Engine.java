@@ -19,8 +19,8 @@ public abstract class Engine {
 		
 	}
 
-	public void setSimulationTime(double aika) {
-		simulationTime = aika;
+	public void setSimulationTime(double time) {
+		simulationTime = time;
 	}
 	
 	

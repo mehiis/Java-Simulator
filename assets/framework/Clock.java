@@ -2,25 +2,25 @@ package assets.framework;
 
 public class Clock {
 
-	private double aika;
-	private static Clock instanssi;
+	private double time;
+	private static Clock instance;
 	
 	private Clock(){
-		aika = 0;
+		time = 0;
 	}
 	
 	public static Clock getInstance(){
-		if (instanssi == null){
-			instanssi = new Clock();
+		if (instance == null){
+			instance = new Clock();
 		}
-		return instanssi;
+		return instance;
 	}
 	
-	public void setTime(double aika){
-		this.aika = aika;
+	public void setTime(double time){
+		this.time = time;
 	}
 
 	public double getTime(){
-		return aika;
+		return time;
 	}
 }
