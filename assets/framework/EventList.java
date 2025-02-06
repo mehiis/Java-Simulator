@@ -3,24 +3,24 @@ package assets.framework;
 import java.util.PriorityQueue;
 
 public class EventList {
-	private PriorityQueue<Event> lista = new PriorityQueue<Event>();
+	private PriorityQueue<Event> list = new PriorityQueue<Event>();
 	
 	public EventList(){
 	 
 	}
 	
-	public Event poista(){
-		Trace.out(Trace.Level.INFO,"Tapahtumalistasta poisto " + lista.peek().getTyyppi() + " " + lista.peek().getAika() );
-		return lista.remove();
+	public Event delete(){
+		Trace.out(Trace.Level.INFO,"Tapahtumalistasta poisto " + list.peek().getType() + " " + list.peek().getTime() );
+		return list.remove();
 	}
 	
-	public void lisaa(Event t){
-		Trace.out(Trace.Level.INFO,"Tapahtumalistaan lisätään uusi " + t.getTyyppi() + " " + t.getAika());
-		lista.add(t);
+	public void add(Event t){
+		Trace.out(Trace.Level.INFO,"Tapahtumalistaan lisätään uusi " + t.getType() + " " + t.getTime());
+		list.add(t);
 	}
 	
-	public double getSeuraavanAika(){
-		return lista.peek().getAika();
+	public double getNextTime(){
+		return list.peek().getTime();
 	}
 	
 	

@@ -14,8 +14,8 @@ public class ArrivalProcess {
 	}
 
 	public void generoiSeuraava(){
-		Event t = new Event(tyyppi, Clock.getInstance().getAika()+generaattori.sample());
-		tapahtumalista.lisaa(t);
+		Event t = new Event(tyyppi, Clock.getInstance().getTime()+generaattori.sample());
+		tapahtumalista.add(t);
 	}
 
 }

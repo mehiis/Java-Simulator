@@ -8,55 +8,55 @@ import eduni.distributions.ContinuousGenerator;
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class ServicePoint {
 
-	private final LinkedList<Customer> jono = new LinkedList<>(); // Tietorakennetoteutus
+	private final LinkedList<Customer> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private final ContinuousGenerator generator;
-	private final EventList tapahtumalista;
-	private final EventType skeduloitavanTapahtumanTyyppi;
+	private final EventList eventList;
+	private final EventType scheduledEventType;
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
 	
-	private boolean varattu = false;
+	private boolean reserved = false;
 
 
 	public ServicePoint(ContinuousGenerator generator, EventList tapahtumalista, EventType tyyppi){
-		this.tapahtumalista = tapahtumalista;
+		this.eventList = tapahtumalista;
 		this.generator = generator;
-		this.skeduloitavanTapahtumanTyyppi = tyyppi;
+		this.scheduledEventType = tyyppi;
 				
 	}
 
 
-	public void lisaaJonoon(Customer a){   // Jonon 1. asiakas aina palvelussa
-		jono.add(a);
+	public void addToQue(Customer a){   // Jonon 1. asiakas aina palvelussa
+		queue.add(a);
 		
 	}
 
 
-	public Customer otaJonosta(){  // Poistetaan palvelussa ollut
-		varattu = false;
-		return jono.poll();
+	public Customer getFromQue(){  // Poistetaan palvelussa ollut
+		reserved = false;
+		return queue.poll();
 	}
 
 
-	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
+	public void startService(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		
-		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
+		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + queue.peek().getId());
 		
-		varattu = true;
+		reserved = true;
 		double palveluaika = generator.sample();
-		tapahtumalista.lisaa(new Event(skeduloitavanTapahtumanTyyppi, Clock.getInstance().getAika()+palveluaika));
+		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()+palveluaika));
 	}
 
 
 
-	public boolean onVarattu(){
-		return varattu;
+	public boolean isReserved(){
+		return reserved;
 	}
 
 
 
-	public boolean onJonossa(){
-		return jono.size() != 0;
+	public boolean isQueued(){
+		return queue.size() != 0;
 	}
 
 }

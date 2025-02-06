@@ -14,54 +14,54 @@ public class OwnEngine extends Engine {
 
 		palvelupisteet = new ServicePoint[3];
 
-		palvelupisteet[0]=new ServicePoint(new Normal(10,6), tapahtumalista, EventType.DEP1);
-		palvelupisteet[1]=new ServicePoint(new Normal(10,10), tapahtumalista, EventType.DEP2);
-		palvelupisteet[2]=new ServicePoint(new Normal(5,3), tapahtumalista, EventType.DEP3);
+		palvelupisteet[0]=new ServicePoint(new Normal(10,6), eventList, EventType.DEP1);
+		palvelupisteet[1]=new ServicePoint(new Normal(10,10), eventList, EventType.DEP2);
+		palvelupisteet[2]=new ServicePoint(new Normal(5,3), eventList, EventType.DEP3);
 
-		saapumisprosessi = new ArrivalProcess(new Negexp(15,5), tapahtumalista, EventType.ARR1);
+		saapumisprosessi = new ArrivalProcess(new Negexp(15,5), eventList, EventType.ARR1);
 
 	}
 
 
 	@Override
-	protected void alustukset() {
+	protected void init() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
 	}
 
 	@Override
-	protected void suoritaTapahtuma(Event t){  // B-vaiheen tapahtumat
+	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
 
 		Customer a;
-		switch ((EventType)t.getTyyppi()){
+		switch ((EventType)t.getType()){
 
-			case ARR1: palvelupisteet[0].lisaaJonoon(new Customer());
+			case ARR1: palvelupisteet[0].addToQue(new Customer());
 				       saapumisprosessi.generoiSeuraava();
 				break;
-			case DEP1: a = (Customer)palvelupisteet[0].otaJonosta();
-				   	   palvelupisteet[1].lisaaJonoon(a);
+			case DEP1: a = (Customer)palvelupisteet[0].getFromQue();
+				   	   palvelupisteet[1].addToQue(a);
 				break;
-			case DEP2: a = (Customer)palvelupisteet[1].otaJonosta();
-				   	   palvelupisteet[2].lisaaJonoon(a);
+			case DEP2: a = (Customer)palvelupisteet[1].getFromQue();
+				   	   palvelupisteet[2].addToQue(a);
 				break;
 			case DEP3:
-				       a = (Customer)palvelupisteet[2].otaJonosta();
-					   a.setPoistumisaika(Clock.getInstance().getAika());
-			           a.raportti();
+				       a = (Customer)palvelupisteet[2].getFromQue();
+					   a.setExitTime(Clock.getInstance().getTime());
+			           a.report();
 		}
 	}
 
 	@Override
-	protected void yritaCTapahtumat(){
+	protected void tryCtypeEvents(){
 		for (ServicePoint p: palvelupisteet){
-			if (!p.onVarattu() && p.onJonossa()){
-				p.aloitaPalvelu();
+			if (!p.isReserved() && p.isQueued()){
+				p.startService();
 			}
 		}
 	}
 
 	@Override
-	protected void tulokset() {
-		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getAika());
+	protected void results() {
+		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getTime());
 		System.out.println("Tulokset ... puuttuvat vielä");
 	}
 

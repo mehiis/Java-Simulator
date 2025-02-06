@@ -14,23 +14,23 @@ public class Customer {
 	public Customer(){
 	    id = i++;
 	    
-		saapumisaika = Clock.getInstance().getAika();
+		saapumisaika = Clock.getInstance().getTime();
 		Trace.out(Trace.Level.INFO, "Uusi asiakas nro " + id + " saapui klo "+saapumisaika);
 	}
 
-	public double getPoistumisaika() {
+	public double getExitTime() {
 		return poistumisaika;
 	}
 
-	public void setPoistumisaika(double poistumisaika) {
+	public void setExitTime(double poistumisaika) {
 		this.poistumisaika = poistumisaika;
 	}
 
-	public double getSaapumisaika() {
+	public double getArrivalTime() {
 		return saapumisaika;
 	}
 
-	public void setSaapumisaika(double saapumisaika) {
+	public void setArrivalTime(double saapumisaika) {
 		this.saapumisaika = saapumisaika;
 	}
 	
@@ -40,7 +40,7 @@ public class Customer {
 		return id;
 	}
 	
-	public void raportti(){
+	public void report(){
 		Trace.out(Trace.Level.INFO, "\nAsiakas "+id+ " valmis! ");
 		Trace.out(Trace.Level.INFO, "Asiakas "+id+ " saapui: " +saapumisaika);
 		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " poistui: " +poistumisaika);

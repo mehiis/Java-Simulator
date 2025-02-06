@@ -16,11 +16,11 @@ public class Clock {
 		return instanssi;
 	}
 	
-	public void setAika(double aika){
+	public void setTime(double aika){
 		this.aika = aika;
 	}
 
-	public double getAika(){
+	public double getTime(){
 		return aika;
 	}
 }

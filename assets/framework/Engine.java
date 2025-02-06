@@ -2,65 +2,65 @@ package assets.framework;
 
 public abstract class Engine {
 	
-	private double simulointiaika = 0;
+	private double simulationTime = 0;
 	
-	private Clock kello;
+	private Clock clock;
 	
-	protected EventList tapahtumalista;
+	protected EventList eventList;
 
 	public Engine(){
 
-		kello = Clock.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
+		clock = Clock.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 		
-		tapahtumalista = new EventList();
+		eventList = new EventList();
 		
 		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa 
 		
 		
 	}
 
-	public void setSimulointiaika(double aika) {
-		simulointiaika = aika;
+	public void setSimulationTime(double aika) {
+		simulationTime = aika;
 	}
 	
 	
-	public void aja(){
-		alustukset(); // luodaan mm. ensimmäinen tapahtuma
-		while (simuloidaan()){
+	public void execute(){
+		init(); // luodaan mm. ensimmäinen tapahtuma
+		while (simulation()){
 			
-			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + nykyaika());
-			kello.setAika(nykyaika());
+			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + currentTime());
+			clock.setTime(currentTime());
 			
 			Trace.out(Trace.Level.INFO, "\nB-vaihe:" );
-			suoritaBTapahtumat();
+			executeBtypeEvents();
 			
 			Trace.out(Trace.Level.INFO, "\nC-vaihe:" );
-			yritaCTapahtumat();
+			tryCtypeEvents();
 
 		}
-		tulokset();
+		results();
 		
 	}
 	
-	private void suoritaBTapahtumat(){
-		while (tapahtumalista.getSeuraavanAika() == kello.getAika()){
-			suoritaTapahtuma(tapahtumalista.poista());
+	private void executeBtypeEvents(){
+		while (eventList.getNextTime() == clock.getTime()){
+			executeEvent(eventList.delete());
 		}
 	}
 
-	private double nykyaika(){
-		return tapahtumalista.getSeuraavanAika();
+	private double currentTime(){
+		return eventList.getNextTime();
 	}
 	
-	private boolean simuloidaan(){
-		return kello.getAika() < simulointiaika;
+	private boolean simulation(){
+		return clock.getTime() < simulationTime;
 	}
 
-	protected abstract void suoritaTapahtuma(Event t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-	protected abstract void yritaCTapahtumat();	// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void executeEvent(Event t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void tryCtypeEvents();	// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
-	protected abstract void alustukset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void init(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
-	protected abstract void tulokset(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void results(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 	
 }
