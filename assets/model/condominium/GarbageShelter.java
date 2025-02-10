@@ -5,17 +5,19 @@ import assets.framework.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import assets.model.Customer;
+//import assets.model.Customer;
 import assets.model.EventType;
 import eduni.distributions.ContinuousGenerator;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class GarbageShelter {
+	public int howManyTimesThrashThrown = 0;
+
 	private static int id = 0;
 	private int thisId;
 
-	private final LinkedList<Customer> queue = new LinkedList<>(); // Tietorakennetoteutus
+	private final LinkedList<Integer> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private final ArrayList<GarbageCan> garbageCans = new ArrayList<>();
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
@@ -37,12 +39,12 @@ public class GarbageShelter {
 		this.scheduledEventType 	= type;
 	}
 
-	public void addToQueue(Customer a){   // Jonon 1. asiakas aina palvelussa
+	public void addToQueue(Integer a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
 	}
 
 
-	public Customer getFromQueue(){  // Poistetaan palvelussa ollut
+	public Integer getFromQueue(){  // Poistetaan palvelussa ollut
 		reserved = false;
 		return queue.poll(); //delete the first element
 	}
@@ -51,7 +53,7 @@ public class GarbageShelter {
 	public void throwTrash(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		thrashAmount += 0.5;
 
-		Trace.out(Trace.Level.INFO, "[Condominium "  + thisId +"]: Resident throws thrash 0.5 kg, " + thrashAmount + " kg thrash in the shelter. by:" + queue.peek().getId());
+		Trace.out(Trace.Level.INFO, "[Condominium "  + thisId +"]: Resident throws thrash 0.5 kg, " + thrashAmount + " kg thrash in the shelter. ");// + queue.peek().getId());
 		
 		reserved = true;
 		//double serviceTime = generator.sample();

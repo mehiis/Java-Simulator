@@ -14,9 +14,7 @@ public abstract class Engine {
 		
 		eventList = new EventList();
 		
-		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa 
-		
-		
+		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
 	}
 
 	public void setSimulationTime(double time) {

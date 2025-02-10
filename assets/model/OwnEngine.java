@@ -6,7 +6,6 @@ import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 
 public class OwnEngine extends Engine {
-	
 	private ArrivalProcess 		arrivalProcess;
 	private GarbageShelter[] 	garbageShelters;
 
@@ -17,7 +16,6 @@ public class OwnEngine extends Engine {
 		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
 	}
 
-
 	@Override
 	protected void init() {
 		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
@@ -25,29 +23,24 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
-		Customer a;
+		int a;
 
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-					garbageShelters[0].addToQueue(new Customer());
+					garbageShelters[0].addToQueue(0);
 					arrivalProcess.generateNext();
 				break;
 			case THROW_TRASH:
 						garbageShelters[0].getFromQueue();
-				   	   //servicePoints[1].addToQueue(a);
 				break;
-			/*case DEP3:
-				       a = (Customer) servicePoints[2].getFromQueue();
-					   a.setExitTime(Clock.getInstance().getTime());
-			           a.report();*/
 		}
 	}
 
 	@Override
 	protected void tryCtypeEvents(){
-		for (GarbageShelter p: garbageShelters){
-			if (!p.isReserved() && p.isQueued()){
-				p.throwTrash();
+		for (GarbageShelter shelter: garbageShelters){
+			if (!shelter.isReserved() && shelter.isQueued()){
+				shelter.throwTrash();
 			}
 		}
 	}
@@ -57,6 +50,4 @@ public class OwnEngine extends Engine {
 		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getTime());
 		System.out.println("Tulokset ... puuttuvat vielä");
 	}
-
-	
 }
