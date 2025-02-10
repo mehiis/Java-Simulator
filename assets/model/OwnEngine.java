@@ -24,7 +24,7 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void init() {
-		for (int i = 0; i < garbageShelters.length -1; i++) {
+		for (int i = 0; i < garbageShelters.length; i++) {
 			garbageShelters[i].arrivalProcess.generateNext();
 		}
 	}
@@ -33,13 +33,13 @@ public class OwnEngine extends Engine {
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-					for (int i = 0; i < garbageShelters.length -1; i++) {
+					for (int i = 0; i < garbageShelters.length; i++) {
 						garbageShelters[i].addToQueue(0);
 						garbageShelters[i].arrivalProcess.generateNext();
 					}
 				break;
 			case THROW_TRASH:
-				for (int i = 0; i < garbageShelters.length -1; i++) {
+				for (int i = 0; i < garbageShelters.length; i++) {
 					garbageShelters[0].getFromQueue();
 				}
 				break;
