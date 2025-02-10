@@ -11,7 +11,7 @@ public class Simulaattori { //Tekstipohjainen
 		
 		Trace.setTraceLevel(Level.INFO);
 
-		Engine m = new OwnEngine();
+		Engine m = new OwnEngine(2);
 		m.setSimulationTime(1000);
 		m.execute();
 		///
