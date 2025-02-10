@@ -27,7 +27,7 @@ public class GarbageShelter {
 	
 	private boolean reserved = false;
 
-	public static double thrashAmount = 0;
+	private double thrashAmount = 0;
 
 
 	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type){

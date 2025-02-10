@@ -33,13 +33,13 @@ public class OwnEngine extends Engine {
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-				GarbageShelter arrivingShelter = (GarbageShelter) t.getData(); // Retrieve the correct shelter
-				arrivingShelter.addToQueue(0);
-				arrivingShelter.arrivalProcess.generateNext();
+				GarbageShelter shelter = (GarbageShelter) t.getData(); // Retrieve the correct shelter
+				shelter.addToQueue(0);
+				shelter.arrivalProcess.generateNext();
 				break;
 
 			case THROW_TRASH:
-				GarbageShelter throwingShelter = (GarbageShelter) t.getData(); // Retrieve the correct shelter
+				GarbageShelter throwingShelter = (GarbageShelter) t.getData();
 				throwingShelter.getFromQueue();
 				break;
 					}
