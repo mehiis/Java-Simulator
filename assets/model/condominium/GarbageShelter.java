@@ -38,7 +38,7 @@ public class GarbageShelter {
 		this.generator 				= generator;
 		this.scheduledEventType 	= type;
 
-		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
+		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER, this);
 	}
 
 	public void addToQueue(Integer a){   // Jonon 1. asiakas aina palvelussa
@@ -59,7 +59,11 @@ public class GarbageShelter {
 		
 		reserved = true;
 		//double serviceTime = generator.sample();
-		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime())); //+serviceTime));
+		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime(), this)); //+serviceTime));
+	}
+
+	public int getId(){
+		return thisId;
 	}
 
 
