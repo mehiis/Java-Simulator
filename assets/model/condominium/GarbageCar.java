@@ -11,7 +11,7 @@ import java.util.LinkedList;
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class GarbageCar {
-	private final LinkedList<Integer> queue = new LinkedList<>(); // Tietorakennetoteutus
+	private final LinkedList<GarbageCar> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private final ArrayList<GarbageCan> garbageCans = new ArrayList<>();
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
@@ -30,12 +30,12 @@ public class GarbageCar {
 		this.scheduledEventType 	= type;
 	}
 
-	public void addToQueue(Integer a){   // Jonon 1. asiakas aina palvelussa
+	public void addToQueue(GarbageCar a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
 	}
 
 
-	public Integer getFromQueue(){  // Poistetaan palvelussa ollut
+	public GarbageCar getFromQueue(){  // Poistetaan palvelussa ollut
 		reserved = false;
 		return queue.poll(); //delete the first element
 	}

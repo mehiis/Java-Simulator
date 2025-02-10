@@ -9,7 +9,7 @@ import eduni.distributions.Normal;
 public class OwnEngine extends Engine {
 	private ArrivalProcess 		garbageCarArrivalProcess;
 	private GarbageShelter[] 	garbageShelters;
-	private GarbageCar[] garbageCar;
+	private GarbageCar[] 		garbageCar;
 
 	public OwnEngine(int howManyGarbageShelters) {
 		garbageShelters 	= new GarbageShelter[howManyGarbageShelters];
@@ -25,12 +25,13 @@ public class OwnEngine extends Engine {
 		garbageCar[1] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_MOVE);
 		garbageCar[2] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_COLLECT);
 
-		garbageCarArrivalProcess 		= new ArrivalProcess(new Negexp(10,(int) (Math.random() * 1000000)), 		eventList, EventType.ARRIVE_TO_SHELTER, garbageShelters[0]);
-
+		garbageCarArrivalProcess 		= new ArrivalProcess(new Negexp(1000,(int) (Math.random() * 1000000)), 		eventList, EventType.CAR_ARRIVE, garbageShelters[0]); //init
 	}
 
 	@Override
 	protected void init() {
+		garbageCarArrivalProcess.generateNext();
+
 		for (GarbageShelter shelter : garbageShelters) {
 			shelter.arrivalProcess.generateNext();
 		}
@@ -38,7 +39,10 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
-		switch ((EventType)t.getType()){
+		GarbageCar a;
+
+		switch ((EventType)t.getType())
+		{
 			case ARRIVE_TO_SHELTER:
 				GarbageShelter shelter = (GarbageShelter) t.getData(); // Retrieve the correct shelter
 				shelter.addToQueue(0);
@@ -49,7 +53,20 @@ public class OwnEngine extends Engine {
 				GarbageShelter throwingShelter = (GarbageShelter) t.getData();
 				throwingShelter.getFromQueue();
 				break;
-					}
+
+			case CAR_ARRIVE:
+				a = (GarbageCar) garbageCar[0].getFromQueue();
+				garbageCar[1].addToQueue(a);
+
+				garbageCarArrivalProcess.generateNext();
+				break;
+			case CAR_COLLECT:
+				//collect from the shelter which it is now set to collect from and move
+				break;
+			case CAR_MOVE:
+				//if garbage car is over the index of the shelters, remove it completely if not add +1 index and MOVE to next shelter.
+				break;
+		}
 	}
 
 	@Override
