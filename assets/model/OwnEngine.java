@@ -1,13 +1,15 @@
 package assets.model;
 
 import assets.framework.*;
+import assets.model.condominium.GarbageCar;
 import assets.model.condominium.GarbageShelter;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 
 public class OwnEngine extends Engine {
-	//private ArrivalProcess 		arrivalProcess;
+	private ArrivalProcess 		garbageCarArrivalProcess;
 	private GarbageShelter[] 	garbageShelters;
+	private GarbageCar[] garbageCar;
 
 	public OwnEngine(int howManyGarbageShelters) {
 		garbageShelters 	= new GarbageShelter[howManyGarbageShelters];
@@ -17,9 +19,14 @@ public class OwnEngine extends Engine {
 		garbageShelters[2] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 150);
 		garbageShelters[3] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 200);
 
+		garbageCar = new GarbageCar[3];
 
+		garbageCar[0] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_ARRIVE);
+		garbageCar[1] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_MOVE);
+		garbageCar[2] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_COLLECT);
 
-		//arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
+		garbageCarArrivalProcess 		= new ArrivalProcess(new Negexp(10,(int) (Math.random() * 1000000)), 		eventList, EventType.ARRIVE_TO_SHELTER, garbageShelters[0]);
+
 	}
 
 	@Override
