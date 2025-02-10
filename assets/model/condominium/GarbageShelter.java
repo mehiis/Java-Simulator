@@ -22,6 +22,7 @@ public class GarbageShelter {
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
+	private final int peopleAmt;
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
 	
@@ -30,15 +31,17 @@ public class GarbageShelter {
 	private double thrashAmount = 0;
 
 
-	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type){
+	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type, int peopleAmt){
 		id++;
 		thisId = id;
 
 		this.eventList 				= eventList;
 		this.generator 				= generator;
 		this.scheduledEventType 	= type;
+		// do some fancy math for people amount to acquire Nexexp mean
+		this.peopleAmt 				= peopleAmt;
 
-		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER, this);
+		arrivalProcess 		= new ArrivalProcess(new Negexp(peopleAmt,(int) (Math.random() * 1000000)), 		eventList, EventType.ARRIVE_TO_SHELTER, this);
 	}
 
 	public void addToQueue(Integer a){   // Jonon 1. asiakas aina palvelussa
