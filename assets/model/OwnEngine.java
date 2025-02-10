@@ -2,6 +2,7 @@ package assets.model;
 
 import assets.framework.*;
 import assets.model.condominium.GarbageCar;
+import assets.model.condominium.GarbageCarManager;
 import assets.model.condominium.GarbageShelter;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
@@ -9,7 +10,7 @@ import eduni.distributions.Normal;
 public class OwnEngine extends Engine {
 	private ArrivalProcess 		garbageCarArrivalProcess;
 	private GarbageShelter[] 	garbageShelters;
-	private GarbageCar[] 		garbageCar;
+	private GarbageCarManager[] 		garbageCar;
 
 	public OwnEngine(int howManyGarbageShelters) {
 		garbageShelters 	= new GarbageShelter[howManyGarbageShelters];
@@ -19,11 +20,10 @@ public class OwnEngine extends Engine {
 		garbageShelters[2] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 150);
 		garbageShelters[3] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 200);
 
-		garbageCar = new GarbageCar[3];
+		garbageCar = new GarbageCarManager[2];
 
-		garbageCar[0] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_ARRIVE);
-		garbageCar[1] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_MOVE);
-		garbageCar[2] = new GarbageCar(new Negexp(10, 100), eventList, EventType.CAR_COLLECT);
+		garbageCar[0] = new GarbageCarManager(new Negexp(10, 100), eventList, EventType.CAR_ARRIVE);
+		garbageCar[1] = new GarbageCarManager(new Negexp(10, 100), eventList, EventType.CAR_WORKING);
 
 		garbageCarArrivalProcess 		= new ArrivalProcess(new Negexp(1000,(int) (Math.random() * 1000000)), 		eventList, EventType.CAR_ARRIVE, garbageShelters[0]); //init
 	}
@@ -39,7 +39,7 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
-		GarbageCar a;
+		GarbageCar tempGarbageCar;
 
 		switch ((EventType)t.getType())
 		{
@@ -55,20 +55,27 @@ public class OwnEngine extends Engine {
 				break;
 
 			case CAR_ARRIVE:
-				a = (GarbageCar) garbageCar[0].getFromQueue();
-				garbageCar[1].addToQueue(a);
+				tempGarbageCar = (GarbageCar) garbageCar[0].getFromQueue();
+				garbageCar[1].addToQueue(tempGarbageCar);
 
 				garbageCarArrivalProcess.generateNext();
 				break;
 
-			case CAR_COLLECT:
-				//collect from the shelter which it is now set to collect from and move
-				a = (GarbageCar) garbageCar[1].getFromQueue();
-				garbageCar[2].addToQueue(a);
-				break;
+			case CAR_WORKING:
+				int nextShelter = garbageCar[1].servedShelters++;
 
-			case CAR_MOVE:
-				//if garbage car is over the index of the shelters, remove it completely if not add +1 index and MOVE to next shelter.
+				//continue working if all shelters have not been emptied!
+				if(nextShelter < garbageShelters.length) {
+					garbageShelters[nextShelter].emptyAllThrash();
+					System.out.println("Garbage collected from shelter with id: " + nextShelter + ". Moving to next one...");
+
+					garbageCar[1].addToQueue(new GarbageCar());
+				}else{
+					garbageCar[1].servedShelters = 0;
+					Trace.out(Trace.Level.INFO,"Garbage car has now collected all thrash. Work day completed.");
+				}
+
+				garbageCar[1].getFromQueue();
 				break;
 		}
 	}
@@ -81,7 +88,7 @@ public class OwnEngine extends Engine {
 			}
 		}
 
-		for (GarbageCar car: garbageCar){
+		for (GarbageCarManager car: garbageCar){
 			if (!car.isReserved() && car.isQueued()){
 				car.startService();
 			}

@@ -32,8 +32,8 @@ public class GarbageShelter {
 
 
 	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type, int peopleAmt){
-		id++;
 		thisId = id;
+		id++;
 
 		this.eventList 				= eventList;
 		this.generator 				= generator;
@@ -54,6 +54,9 @@ public class GarbageShelter {
 		return queue.poll(); //delete the first element
 	}
 
+	public void emptyAllThrash(){
+		this.thrashAmount = 0;
+	}
 
 	public void throwTrash(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		thrashAmount += 0.5;
