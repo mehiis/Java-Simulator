@@ -28,7 +28,6 @@ public class ServicePoint {
 
 	public void addToQueue(Customer a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
-		
 	}
 
 
@@ -52,8 +51,6 @@ public class ServicePoint {
 	public boolean isReserved(){
 		return reserved;
 	}
-
-
 
 	public boolean isQueued(){
 		return queue.size() != 0;

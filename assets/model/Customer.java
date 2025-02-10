@@ -33,7 +33,6 @@ public class Customer {
 	public void setArrivalTime(double saapumisaika) {
 		this.arrivalTime = saapumisaika;
 	}
-	
 
 
 	public int getId() {
@@ -41,10 +40,11 @@ public class Customer {
 	}
 	
 	public void report(){
-		Trace.out(Trace.Level.INFO, "\nAsiakas "+id+ " valmis! ");
-		Trace.out(Trace.Level.INFO, "Asiakas "+id+ " saapui: " + arrivalTime);
-		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " poistui: " + exitTime);
-		Trace.out(Trace.Level.INFO,"Asiakas "+id+ " viipyi: " +(exitTime - arrivalTime));
+		Trace.out(Trace.Level.INFO, 	"\nAsiakas "+id+ " valmis! 	"								);
+		Trace.out(Trace.Level.INFO, 	"Asiakas "	+id+ " saapui: 	" + arrivalTime					);
+		Trace.out(Trace.Level.INFO,		"Asiakas "	+id+ " poistui: " + exitTime					);
+		Trace.out(Trace.Level.INFO,		"Asiakas "	+id+ " viipyi: 	" +	(exitTime - arrivalTime)	);
+
 		sum += (exitTime - arrivalTime);
 		double average = sum/id;
 		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti "+ average);
