@@ -6,7 +6,7 @@ import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 
 public class OwnEngine extends Engine {
-	private ArrivalProcess 		arrivalProcess;
+	//private ArrivalProcess 		arrivalProcess;
 	private GarbageShelter[] 	garbageShelters;
 
 	public OwnEngine(int howManyGarbageShelters) {
@@ -19,23 +19,23 @@ public class OwnEngine extends Engine {
 
 
 
-		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
+		//arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
 	}
 
 	@Override
 	protected void init() {
-		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
+		for (int i = 0; i < garbageShelters.length -1; i++) {
+			garbageShelters[i].arrivalProcess.generateNext();
+		}
 	}
 
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
-		int a;
-
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
 					for (int i = 0; i < garbageShelters.length -1; i++) {
-						garbageShelters[0].addToQueue(0);
-						arrivalProcess.generateNext();
+						garbageShelters[i].addToQueue(0);
+						garbageShelters[i].arrivalProcess.generateNext();
 					}
 				break;
 			case THROW_TRASH:

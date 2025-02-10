@@ -4,15 +4,15 @@ import assets.framework.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-//import assets.model.Customer;
 import assets.model.EventType;
 import eduni.distributions.ContinuousGenerator;
+import eduni.distributions.Negexp;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class GarbageShelter {
 	public int howManyTimesThrashThrown = 0;
+	public ArrivalProcess 		arrivalProcess;
 
 	private static int id = 0;
 	private int thisId;
@@ -37,6 +37,8 @@ public class GarbageShelter {
 		this.eventList 				= eventList;
 		this.generator 				= generator;
 		this.scheduledEventType 	= type;
+
+		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
 	}
 
 	public void addToQueue(Integer a){   // Jonon 1. asiakas aina palvelussa
