@@ -4,10 +4,12 @@ public class Event implements Comparable<Event> {
 
 	private IEventType type;
 	private double time;
+	private Object data;
 	
-	public Event(IEventType type, double time){
+	public Event(IEventType type, double time, Object shelter) {
 		this.type = type;
 		this.time = time;
+		this.data = shelter;
 	}
 	
 	public void setType(IEventType type) {
@@ -28,6 +30,10 @@ public class Event implements Comparable<Event> {
 		if (this.time < arg.time) return -1;
 		else if (this.time > arg.time) return 1;
 		return 0;
+	}
+
+	public Object getData() {
+		return data;
 	}
 
 }

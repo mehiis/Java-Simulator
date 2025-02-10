@@ -24,8 +24,8 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void init() {
-		for (int i = 0; i < garbageShelters.length -1; i++) {
-			garbageShelters[i].arrivalProcess.generateNext();
+		for (GarbageShelter shelter : garbageShelters) {
+			shelter.arrivalProcess.generateNext();
 		}
 	}
 
@@ -33,17 +33,16 @@ public class OwnEngine extends Engine {
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-					for (int i = 0; i < garbageShelters.length -1; i++) {
-						garbageShelters[i].addToQueue(0);
-						garbageShelters[i].arrivalProcess.generateNext();
-					}
+				GarbageShelter arrivingShelter = (GarbageShelter) t.getData(); // Retrieve the correct shelter
+				arrivingShelter.addToQueue(0);
+				arrivingShelter.arrivalProcess.generateNext();
 				break;
+
 			case THROW_TRASH:
-				for (int i = 0; i < garbageShelters.length -1; i++) {
-					garbageShelters[0].getFromQueue();
-				}
+				GarbageShelter throwingShelter = (GarbageShelter) t.getData(); // Retrieve the correct shelter
+				throwingShelter.getFromQueue();
 				break;
-		}
+					}
 	}
 
 	@Override
