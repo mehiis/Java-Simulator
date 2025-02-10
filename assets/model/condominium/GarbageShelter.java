@@ -30,7 +30,7 @@ public class GarbageShelter {
 	public static double thrashAmount = 0;
 
 
-	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type, int id){
+	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type){
 		id++;
 		thisId = id;
 

@@ -12,10 +12,10 @@ public class OwnEngine extends Engine {
 	public OwnEngine(int howManyGarbageShelters) {
 		garbageShelters 	= new GarbageShelter[howManyGarbageShelters];
 
-		garbageShelters[0] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
-		garbageShelters[1] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
-		garbageShelters[2] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
-		garbageShelters[3] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
+		garbageShelters[0] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH);
+		garbageShelters[1] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH);
+		garbageShelters[2] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH);
+		garbageShelters[3] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH);
 
 
 
@@ -39,7 +39,9 @@ public class OwnEngine extends Engine {
 					}
 				break;
 			case THROW_TRASH:
-						garbageShelters[0].getFromQueue();
+				for (int i = 0; i < garbageShelters.length -1; i++) {
+					garbageShelters[0].getFromQueue();
+				}
 				break;
 		}
 	}
