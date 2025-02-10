@@ -21,13 +21,15 @@ public class GarbageCar {
 
 	private boolean reserved = false;
 
-	private double thrashAmount = 0;
+	private int whichShelter = 0;
 
 
 	public GarbageCar(ContinuousGenerator generator, EventList eventList, EventType type){
 		this.eventList 				= eventList;
 		this.generator 				= generator;
 		this.scheduledEventType 	= type;
+
+		whichShelter = 0;
 	}
 
 	public void addToQueue(GarbageCar a){   // Jonon 1. asiakas aina palvelussa
@@ -42,13 +44,15 @@ public class GarbageCar {
 
 
 	public void startService(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
-		thrashAmount += 0.5;
 
-		Trace.out(Trace.Level.INFO, "brum brum im in my mums car..... ");// + queue.peek().getId());
+
+		Trace.out(Trace.Level.INFO, "[Garbage car]: Collecting garbage from shelter " + whichShelter + " .");// + queue.peek().getId());
 		
 		reserved = true;
-		//double serviceTime = generator.sample();
-		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime(), this)); //+serviceTime));
+		double serviceTime = generator.sample();
+		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime() + serviceTime, this));
+
+		whichShelter++;
 	}
 
 	public boolean isReserved(){

@@ -60,9 +60,13 @@ public class OwnEngine extends Engine {
 
 				garbageCarArrivalProcess.generateNext();
 				break;
+
 			case CAR_COLLECT:
 				//collect from the shelter which it is now set to collect from and move
+				a = (GarbageCar) garbageCar[1].getFromQueue();
+				garbageCar[2].addToQueue(a);
 				break;
+
 			case CAR_MOVE:
 				//if garbage car is over the index of the shelters, remove it completely if not add +1 index and MOVE to next shelter.
 				break;
@@ -74,6 +78,12 @@ public class OwnEngine extends Engine {
 		for (GarbageShelter shelter: garbageShelters){
 			if (!shelter.isReserved() && shelter.isQueued()){
 				shelter.throwTrash();
+			}
+		}
+
+		for (GarbageCar car: garbageCar){
+			if (!car.isReserved() && car.isQueued()){
+				car.startService();
 			}
 		}
 	}
