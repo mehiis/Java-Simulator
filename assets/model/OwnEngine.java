@@ -5,7 +5,6 @@ import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 
 public class OwnEngine extends Engine {
-	
 	private ArrivalProcess 		arrivalProcess;
 	private GarbageShelter 	garbageShelters;
 
@@ -22,7 +21,7 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
-		Apartment a;
+		Apartment apartment;
 
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
@@ -30,13 +29,8 @@ public class OwnEngine extends Engine {
 					arrivalProcess.generateNext();
 				break;
 			case THROW_TRASH:
-						garbageShelters.getFromQueue();
-				   	   //servicePoints[1].addToQueue(a);
+						garbageShelters.getFromQueue(); //TRASH HAS BEEN THROWN! :)
 				break;
-			/*case DEP3:
-				       a = (Customer) servicePoints[2].getFromQueue();
-					   a.setExitTime(Clock.getInstance().getTime());
-			           a.report();*/
 		}
 	}
 
@@ -52,6 +46,4 @@ public class OwnEngine extends Engine {
 		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getTime());
 		System.out.println("Tulokset ... puuttuvat vielä");
 	}
-
-	
 }
