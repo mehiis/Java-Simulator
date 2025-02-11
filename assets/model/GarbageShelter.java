@@ -21,20 +21,6 @@ public class GarbageShelter {
 	private boolean reserved	 	= false;
 	private boolean isFull 			= false;
 
-	// Voidaan poistaa myöhemmin "default" constructor myöhemmin, säästetään nopeampia testauksia varten
-	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type){
-		this.eventList 				= eventList;
-		this.generator 				= generator;
-		this.scheduledEventType 	= type;
-
-		garbageCans.add(new GarbageCan(true, GarbageCanType.MIXED));
-		garbageCans.add(new GarbageCan(false, GarbageCanType.BIO));
-		garbageCans.add(new GarbageCan(true, GarbageCanType.CARDBOARD));
-		garbageCans.add(new GarbageCan(true, GarbageCanType.PLASTIC));
-		garbageCans.add(new GarbageCan(false, GarbageCanType.GLASS));
-		garbageCans.add(new GarbageCan(false, GarbageCanType.METAL));
-	}
-
 	// Constructor with custom amount of garbage cans
 	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type, ArrayList<GarbageCan> garbageCans){
 		this.eventList 				= eventList;
