@@ -4,12 +4,14 @@ import assets.framework.*;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 
+import java.util.ArrayList;
+
 public class OwnEngine extends Engine {
 	private ArrivalProcess 		arrivalProcess;
 	private GarbageShelter 	garbageShelters;
 
-	public OwnEngine() {
-		garbageShelters 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT);
+	public OwnEngine(ArrayList<GarbageCan> garbageCans){
+		garbageShelters 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, garbageCans);
 		arrivalProcess 		= new ArrivalProcess(new Negexp(15,(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
 	}
 
@@ -17,6 +19,7 @@ public class OwnEngine extends Engine {
 	@Override
 	protected void init() {
 		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
+		garbageShelters.printThrashCans(); // !for testing purposes! //
 	}
 
 	@Override

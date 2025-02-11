@@ -1,16 +1,14 @@
 package assets.model;
 
-enum GargeCanType {MIXED, BIO, CARDBOARD, PLASTIC, GLASS, METAL};
+;
 
 public class GarbageCan {
     private double currentCapacity;
     private double totalCapacity;
-
     private double weightMultiplier;
+    private GarbageCanType type;
 
-    private GargeCanType type;
-
-    public GarbageCan(boolean isBig, GargeCanType type){
+    public GarbageCan(boolean isBig, GarbageCanType type){
         if(isBig) totalCapacity = 660; else totalCapacity = 240;
         this.type = type;
     }
@@ -23,6 +21,10 @@ public class GarbageCan {
 
         this.currentCapacity = temp;
         return true;
+    }
+
+    public boolean checkCapacity(double thrashAmount){
+        return (currentCapacity + thrashAmount) <= totalCapacity;
     }
 
     public double getWeight(){
@@ -45,12 +47,16 @@ public class GarbageCan {
             case GLASS:
                 this.weightMultiplier = 1.25;
                 break;
-            case null, default:
+            default:
                 System.out.println("WHAT IS GOING OOON??!?!?!?!?!!?!?!? THIS SHOULD NOT HAPPEN?????????");
         }
 
         return currentCapacity * weightMultiplier;
     }
+
+    public double getCurrentCapacity(){return this.currentCapacity;}
+
+    public GarbageCanType getType(){return this.type;}
 
     public void empty(){this.currentCapacity = 0;}
 }

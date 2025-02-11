@@ -11,7 +11,7 @@ import eduni.distributions.ContinuousGenerator;
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class GarbageShelter {
 	private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
-	private final ArrayList<GarbageCan> garbageCans = new ArrayList<>();
+	private ArrayList<GarbageCan> garbageCans = new ArrayList<>();
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
@@ -21,15 +21,26 @@ public class GarbageShelter {
 	private boolean reserved	 	= false;
 	private boolean isFull 			= false;
 
-	public static double thrashAmount = 0; //poista tää ku roskikset rokkaa placeholderitäsvaamoi:)
-
-
+	// Voidaan poistaa myöhemmin "default" constructor myöhemmin, säästetään nopeampia testauksia varten
 	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type){
 		this.eventList 				= eventList;
 		this.generator 				= generator;
 		this.scheduledEventType 	= type;
 
-		//TO-DO: CREATE GARBAGE CANS!!!!
+		garbageCans.add(new GarbageCan(true, GarbageCanType.MIXED));
+		garbageCans.add(new GarbageCan(false, GarbageCanType.BIO));
+		garbageCans.add(new GarbageCan(true, GarbageCanType.CARDBOARD));
+		garbageCans.add(new GarbageCan(true, GarbageCanType.PLASTIC));
+		garbageCans.add(new GarbageCan(false, GarbageCanType.GLASS));
+		garbageCans.add(new GarbageCan(false, GarbageCanType.METAL));
+	}
+
+	// Constructor with custom amount of garbage cans
+	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type, ArrayList<GarbageCan> garbageCans){
+		this.eventList 				= eventList;
+		this.generator 				= generator;
+		this.scheduledEventType 	= type;
+		this.garbageCans 			= garbageCans;
 	}
 
 	public void addToQueue(Apartment a){   // Jonon 1. asiakas aina palvelussa
@@ -42,14 +53,32 @@ public class GarbageShelter {
 	}
 
 
-	public void throwTrash(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
-		thrashAmount += 0.5;
-
-		Trace.out(Trace.Level.INFO, "Resident throws thrash 0.5 kg, " + thrashAmount + " kg thrash in the shelter." + queue.peek().getId());
-		
+	public void throwTrash(){//Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana // parametrinä määrä + tyyppi?
 		reserved = true;
-		//double serviceTime = generator.sample();
-		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime())); //+serviceTime));
+		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
+		//double serviceTime = generator.sample();//+serviceTime));
+		boolean thrashThrown = false;
+		for (GarbageCan can : garbageCans){
+			if (can.checkCapacity(100)){
+				can.addGarbage(100);
+				System.out.println("Added 100 l of thrash to " + can.getType() + " trash can.");
+				System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " kg of trash.");
+				thrashThrown = true;
+				break;
+			}
+		}
+		if (!thrashThrown){
+			isFull = true;
+			System.out.println("All of the cans are full!");
+		}
+	}
+
+	// testing purposes
+	public void printThrashCans(){
+		System.out.println("Garbage cans in the shelter:");
+		for(GarbageCan can : garbageCans){
+			System.out.println(can.getType());
+		}
 	}
 
 	public boolean isReserved(){
