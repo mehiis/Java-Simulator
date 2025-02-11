@@ -1,7 +1,6 @@
 package assets.model;
 
 import assets.framework.*;
-import assets.model.condominium.GarbageShelter;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 
@@ -25,11 +24,11 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
-		Customer a;
+		Apartment a;
 
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-					garbageShelters[0].addToQueue(new Customer());
+					garbageShelters[0].addToQueue(new Apartment());
 					arrivalProcess.generateNext();
 				break;
 			case THROW_TRASH:

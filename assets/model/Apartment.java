@@ -4,14 +4,14 @@ import assets.framework.*;
 
 // TODO:
 // Asiakas koodataan simulointimallin edellyttämällä tavalla (data!)
-public class Customer {
+public class Apartment {
 	private double arrivalTime;
 	private double exitTime;
 	private int id;
 	private static int i = 1;
 	private static long sum = 0;
 	
-	public Customer(){
+	public Apartment(){
 	    id = i++;
 	    
 		arrivalTime = Clock.getInstance().getTime();

@@ -8,7 +8,6 @@ import assets.model.OwnEngine;
 public class Simulaattori { //Tekstipohjainen
 
 	public static void main(String[] args) {
-		
 		Trace.setTraceLevel(Level.INFO);
 
 		Engine m = new OwnEngine(1);

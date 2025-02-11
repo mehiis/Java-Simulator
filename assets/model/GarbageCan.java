@@ -1,4 +1,4 @@
-package assets.model.condominium;
+package assets.model;
 
 public class GarbageCan {
     private int currentCapacity;

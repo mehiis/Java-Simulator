@@ -1,12 +1,10 @@
-package assets.model.condominium;
+package assets.model;
 
 import assets.framework.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import assets.model.Customer;
-import assets.model.EventType;
 import eduni.distributions.ContinuousGenerator;
 
 // TODO:
@@ -15,7 +13,7 @@ public class GarbageShelter {
 	private static int id = 0;
 	private int thisId;
 
-	private final LinkedList<Customer> queue = new LinkedList<>(); // Tietorakennetoteutus
+	private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private final ArrayList<GarbageCan> garbageCans = new ArrayList<>();
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
@@ -37,12 +35,12 @@ public class GarbageShelter {
 		this.scheduledEventType 	= type;
 	}
 
-	public void addToQueue(Customer a){   // Jonon 1. asiakas aina palvelussa
+	public void addToQueue(Apartment a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
 	}
 
 
-	public Customer getFromQueue(){  // Poistetaan palvelussa ollut
+	public Apartment getFromQueue(){  // Poistetaan palvelussa ollut
 		reserved = false;
 		return queue.poll(); //delete the first element
 	}
