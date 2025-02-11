@@ -16,7 +16,6 @@ public class ArrivalProcess {
 	public void generateNext(){
 		Event t = new Event(tyyppi, Clock.getInstance().getTime()+generaattori.sample());
 		tapahtumalista.add(t);
-		//System.out.println("Uusi tapahtuma " + shelter.getId() + " shelteriin ");
 	}
 
 }

@@ -7,12 +7,10 @@ import eduni.distributions.Normal;
 public class OwnEngine extends Engine {
 	
 	private ArrivalProcess 		arrivalProcess;
-	private GarbageShelter[] 	garbageShelters;
+	private GarbageShelter 	garbageShelters;
 
-	public OwnEngine(int howManyGarbageShelters) {
-		garbageShelters 	= new GarbageShelter[howManyGarbageShelters];
-
-		garbageShelters[0] 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
+	public OwnEngine() {
+		garbageShelters 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
 		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
 	}
 
@@ -28,11 +26,11 @@ public class OwnEngine extends Engine {
 
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-					garbageShelters[0].addToQueue(new Apartment());
+					garbageShelters.addToQueue(new Apartment());
 					arrivalProcess.generateNext();
 				break;
 			case THROW_TRASH:
-						garbageShelters[0].getFromQueue();
+						garbageShelters.getFromQueue();
 				   	   //servicePoints[1].addToQueue(a);
 				break;
 			/*case DEP3:
@@ -44,11 +42,9 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void tryCtypeEvents(){
-		for (GarbageShelter p: garbageShelters){
-			if (!p.isReserved() && p.isQueued()){
-				p.throwTrash();
+			if (!garbageShelters.isReserved() && garbageShelters.isQueued()){
+				garbageShelters.throwTrash();
 			}
-		}
 	}
 
 	@Override
