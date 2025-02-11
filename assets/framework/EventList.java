@@ -18,6 +18,10 @@ public class EventList {
 		Trace.out(Trace.Level.INFO,"Tapahtumalistaan lisätään uusi " + t.getType() + " " + t.getTime());
 		list.add(t);
 	}
+
+	public Event peek(){
+		return list.peek();
+	}
 	
 	public double getNextTime(){
 		return list.peek().getTime();
