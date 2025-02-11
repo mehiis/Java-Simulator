@@ -9,7 +9,7 @@ public class OwnEngine extends Engine {
 	private GarbageShelter 	garbageShelters;
 
 	public OwnEngine() {
-		garbageShelters 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
+		garbageShelters 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, 0);
 		arrivalProcess 		= new ArrivalProcess(new Negexp(15,(int)(Math.random() * 10000)), 		eventList, EventType.ARRIVE_TO_SHELTER);
 	}
 
@@ -28,7 +28,7 @@ public class OwnEngine extends Engine {
 					garbageShelters.addToQueue(new Apartment());
 					arrivalProcess.generateNext();
 				break;
-			case THROW_TRASH:
+			case EXIT:
 						garbageShelters.getFromQueue(); //TRASH HAS BEEN THROWN! :)
 				break;
 		}
