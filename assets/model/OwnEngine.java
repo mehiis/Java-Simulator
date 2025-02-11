@@ -10,7 +10,7 @@ public class OwnEngine extends Engine {
 
 	public OwnEngine() {
 		garbageShelters 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.THROW_TRASH, 0);
-		arrivalProcess 		= new ArrivalProcess(new Negexp(15,5), 		eventList, EventType.ARRIVE_TO_SHELTER);
+		arrivalProcess 		= new ArrivalProcess(new Negexp(15,(int)(Math.random() * 10000)), 		eventList, EventType.ARRIVE_TO_SHELTER);
 	}
 
 
