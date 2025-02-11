@@ -36,7 +36,7 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void tryCtypeEvents(){
-			if (!garbageShelters.isReserved() && garbageShelters.isQueued() && !garbageShelters.isFull){
+			if (!garbageShelters.isReserved() && garbageShelters.isQueued() && !garbageShelters.isFull()){
 				garbageShelters.throwTrash();
 			}
 	}
