@@ -13,10 +13,11 @@ public class Simulaattori { //Tekstipohjainen
 		Specs startingSpecs = new Specs();
 
 		startingSpecs.setGarbageCanList();
+		startingSpecs.setHowOftenTrashIsTakenOut();
 		// startingSpecs.setDefaultGarbageCanList(); // For faster testing, can delete later (default = 1 of each)
 
 
-		Engine m = new OwnEngine(startingSpecs.getGarbageCanList());
+		Engine m = new OwnEngine(startingSpecs.getGarbageCanList(), startingSpecs.getMeanArrivalRate());
 		m.setSimulationTime(startingSpecs.getSimulationTime());
 		m.execute();
 		///

@@ -11,9 +11,9 @@ public class OwnEngine extends Engine {
 	private ArrivalProcess 		clearProcess;
 	private GarbageShelter 		garbageShelter;
 
-	public OwnEngine(ArrayList<GarbageCan> garbageCans){
+	public OwnEngine(ArrayList<GarbageCan> garbageCans, double arrivalRate){
 		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, garbageCans);
-		arrivalProcess 		= new ArrivalProcess(new Negexp(15,(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
+		arrivalProcess 		= new ArrivalProcess(new Negexp(arrivalRate,(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
 
 		clearProcess 		= new ArrivalProcess(new Normal(1000,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
