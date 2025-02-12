@@ -8,40 +8,48 @@ import java.util.ArrayList;
 
 public class OwnEngine extends Engine {
 	private ArrivalProcess 		arrivalProcess;
-	private GarbageShelter 	garbageShelters;
+	private ArrivalProcess 		clearProcess;
+	private GarbageShelter 		garbageShelter;
 
 	public OwnEngine(ArrayList<GarbageCan> garbageCans){
-		garbageShelters 	= new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, garbageCans);
+		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, garbageCans);
 		arrivalProcess 		= new ArrivalProcess(new Negexp(15,(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
+
+		clearProcess 		= new ArrivalProcess(new Normal(1000,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
 
 
 	@Override
 	protected void init() {
 		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
-		garbageShelters.printThrashCans(); // !for testing purposes! //
+		clearProcess.generateNext();
+		garbageShelter.printThrashCans(); // !for testing purposes! //
 	}
 
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
-		Apartment apartment;
-
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-					garbageShelters.addToQueue(new Apartment());
+					garbageShelter.addToQueue(new Apartment());
 					arrivalProcess.generateNext();
 				break;
 			case EXIT:
-						garbageShelters.getFromQueue(); //TRASH HAS BEEN THROWN! :)
+					garbageShelter.getFromQueue(); //TRASH HAS BEEN THROWN! :)
+				break;
+			case CLEAR_GARBAGE_FROM_SHELTER:
+					garbageShelter.clearGarbageCans();
+					clearProcess.generateNext();
 				break;
 		}
 	}
 
 	@Override
 	protected void tryCtypeEvents(){
-			if (!garbageShelters.isReserved() && garbageShelters.isQueued() && !garbageShelters.isFull()){
-				garbageShelters.throwTrash();
+			if (!garbageShelter.isReserved() && garbageShelter.isQueued() && !garbageShelter.isFull()){
+				garbageShelter.throwTrash();
 			}
+
+			garbageShelter.garbageCanStates();
 	}
 
 	@Override

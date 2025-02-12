@@ -23,6 +23,10 @@ public class GarbageCan {
         return true;
     }
 
+    public double getCapacity(){
+        return totalCapacity;
+    }
+
     public boolean checkCapacity(double thrashAmount){
         return (currentCapacity + thrashAmount) <= totalCapacity;
     }

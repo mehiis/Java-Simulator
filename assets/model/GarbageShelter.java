@@ -57,6 +57,8 @@ public class GarbageShelter {
 			isFull = true;
 			System.out.println("All of the cans are full!");
 		}
+
+
 	}
 
 	// testing purposes
@@ -77,4 +79,13 @@ public class GarbageShelter {
 
 	public boolean isFull(){return  isFull;}
 
+	public void garbageCanStates(){
+		for(GarbageCan can: garbageCans)
+			System.out.println(can.getType() + ": " + can.getCurrentCapacity() + "/"  + can.getCapacity() + ". Is full?: " + !can.checkCapacity(can.getCurrentCapacity()));
+	}
+
+	public void clearGarbageCans(){
+		for(GarbageCan can: garbageCans)
+			can.empty();
+	}
 }
