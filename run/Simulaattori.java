@@ -13,6 +13,7 @@ public class Simulaattori { //Tekstipohjainen
 		Specs startingSpecs = new Specs();
 
 		startingSpecs.setGarbageCanList();
+		startingSpecs.setHowManyResidents();
 		startingSpecs.setHowOftenTrashIsTakenOut();
 		// startingSpecs.setDefaultGarbageCanList(); // For faster testing, can delete later (default = 1 of each)
 

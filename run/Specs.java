@@ -74,4 +74,16 @@ public class Specs {
         }
         System.out.println("Mean resident garbage shelter arrival rate is calculated as every "+getMeanArrivalRate()+" minutes.");
     }
+
+    public void setHowManyResidents() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("How many residents are there in your condominium? (leaving this empty defaults to 50 residents)");
+        String amt = scanner.nextLine();
+        if (amt == "") {
+            System.out.println("Default value set at 50 residents");
+        } else {
+            System.out.println("Residents amounts set at: "+amt+" residents.");
+            howOftenTrashIsTakenOut = Integer.parseInt(amt);
+        }
+    }
 }
