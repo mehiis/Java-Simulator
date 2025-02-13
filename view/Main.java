@@ -1,12 +1,14 @@
-package run;
+package view;
 
 import assets.framework.Engine;
 import assets.framework.Trace;
 import assets.framework.Trace.Level;
 import assets.model.OwnEngine;
+import run.Specs;
+
 import java.util.Scanner;
 
-public class Simulaattori { //Tekstipohjainen
+public class Main { //Tekstipohjainen
 	public static void main(String[] args) {
 		Trace.setTraceLevel(Level.INFO);
 		Scanner scanner = new Scanner(System.in);
