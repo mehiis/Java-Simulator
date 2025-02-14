@@ -1,6 +1,8 @@
 package view;
 
 
+import assets.framework.Clock;
+import assets.framework.Trace;
 import controller.IControllerForView;
 import controller.Controller;
 import javafx.application.Application;
@@ -16,9 +18,9 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import simu.framework.Kello;
-import simu.framework.Trace;
-import simu.framework.Trace.Level;
+import assets.framework.Clock;
+import assets.framework.Trace;
+import assets.framework.Trace.Level;
 
 import java.text.DecimalFormat;
 
@@ -47,7 +49,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public void init() {
 
-        Trace.setTraceLevel(Level.INFO);
+        Trace.setTraceLevel(Trace.Level.INFO);
 
         kontrolleri = new Controller(this);
     }
@@ -155,8 +157,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public void setLoppuaika(double aika) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
         this.tulos.setText(formatter.format(aika));
-        kaynnistaButton.setDisable(false); // enabloi käynnistä-nappula
-        Kello.getInstance().setAika(0);
+        kaynnistaButton.setDisable(false); // enabloi käynnistä-nappula uudelleen
+        Clock.getInstance().setTime(0.0); // resetoi aika
     }
 
 
