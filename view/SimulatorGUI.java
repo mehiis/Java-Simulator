@@ -103,14 +103,20 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Scene createScene(){
         SplitPane horSplitPane = new SplitPane();
         SplitPane verSplitPane = new SplitPane();
-        horSplitPane.getItems().addAll(left(), center(), right());
+
+        VBox leftVBox   = left();
+        leftVBox.setId("leftVBox");
+
+        VBox rightVBOX  = right();
+        rightVBOX.setId("rightVBOX");
+
+        horSplitPane.getItems().addAll(leftVBox, center(), rightVBOX);
 
         //SET DEFAULT SIZE OF TOP PANELS HORIZONTALLY
         horSplitPane.getDividers().getFirst().setPosition(0.2);
         horSplitPane.getDividers().getLast().setPosition(0.25);
         horSplitPane.getDividers().get(1).setPosition(0.8);
         //END SETTING DEFAULT SIZES
-
 
         verSplitPane.getItems().addAll(horSplitPane, bottom());
         verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
@@ -122,27 +128,27 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return scene;
     }
 
-    private Region center(){
-        Region center = new Region();
-        center.setBorder(new Border(new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
-
-
+    private VBox center(){
         VBox midControl   = new VBox(new Label("Mid Control"));
+
+        //ONKO TÄÄ NY VBOX VAI JOKU GRID SYSTEMI????
         return midControl;
     }
 
-    private Region right(){
-        VBox leftControl  = new VBox(new Label("Left Control"));
+    private VBox right(){
+        VBox leftControl  = new VBox(new Label("right Control"));
         return leftControl;
     }
 
-    private Region left(){
+    private VBox left(){
         VBox leftControl  = new VBox(new Label("Left Control"));
         return leftControl;
     }
 
     private Region bottom(){
         HBox bottomControl = new HBox(new Label("Bottom Control"));
+
+        //MIKÄ TÄÄ ON OISKO JOKU VBOW VAI MITÄ EHMETTIÄ?!?!?!?
         return bottomControl;
     }
 }
