@@ -1,8 +1,9 @@
 package assets.framework;
 
-public abstract class Engine extends Thread{
+public abstract class Engine extends Thread implements IEngine{
 	
 	private double simulationTime = 0;
+	private long delayTime;
 
 	private Clock clock;
 	
@@ -23,7 +24,13 @@ public abstract class Engine extends Thread{
 		simulationTime = time;
 	}
 
-	
+	public void setDelay(long time) {
+		delayTime = time;
+	}
+
+	public long getDelay() {
+		return delayTime;
+	}
 	
 	public void run(){
 		init(); // luodaan mm. ensimmäinen tapahtuma

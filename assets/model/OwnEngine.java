@@ -9,12 +9,12 @@ import run.Specs.*;
 
 import java.util.ArrayList;
 
-public class OwnEngine extends Engine implements IEngine {
+public class OwnEngine extends Engine {
 	private ArrivalProcess 		arrivalProcess;
 	private ArrivalProcess 		clearProcess;
 	private GarbageShelter 		garbageShelter;
-	private Controller controller;
-	private long delayTime = 0;
+	private Controller 			controller;
+	private long 				delayTime = 0;
 
 
 	public OwnEngine(Controller controller){
@@ -68,13 +68,5 @@ public class OwnEngine extends Engine implements IEngine {
 	protected void results() {
 		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getTime());
 		System.out.println("Tulokset ... puuttuvat vielä");
-	}
-
-	public void setDelay(long time) {
-		delayTime = time;
-	}
-
-	public long getDelay() {
-		return delayTime;
 	}
 }
