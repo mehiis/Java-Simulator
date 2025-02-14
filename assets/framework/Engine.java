@@ -1,6 +1,6 @@
 package assets.framework;
 
-public abstract class Engine {
+public abstract class Engine extends Thread{
 	
 	private double simulationTime = 0;
 
@@ -13,6 +13,8 @@ public abstract class Engine {
 		clock = Clock.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 		
 		eventList = new EventList();
+
+		clock.setTime(0); // Asetetaan kello alkuarvoon
 		
 		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
 	}
@@ -23,7 +25,7 @@ public abstract class Engine {
 
 	
 	
-	public void execute(){
+	public void run(){
 		init(); // luodaan mm. ensimmäinen tapahtuma
 		while (simulation()){
 			

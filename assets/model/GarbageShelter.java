@@ -85,8 +85,10 @@ public class GarbageShelter {
 	}
 
 	public void clearGarbageCans(){
-		for(GarbageCan can: garbageCans)
+		for(GarbageCan can: garbageCans) {
 			can.empty();
-			isFull = false;
+		}
+
+		isFull = false;
 	}
 }
