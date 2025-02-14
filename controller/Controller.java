@@ -6,26 +6,25 @@ import assets.model.OwnEngine;
 import view.ISimulatorGUI;
 
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
-	
 	private IEngine engine;
 	private ISimulatorGUI ui;
 	
 	public Controller(ISimulatorGUI ui) {
 		this.ui = ui;
-		
 	}
-
 	
 	// Moottorin ohjausta:
-		
 	@Override
 	public void startSimulation() {
-		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
+		System.out.println("Start simulation.");
+
+		/*engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
 		engine.setSimulationTime(ui.getAika());
 		engine.setDelay(ui.getViive());
 		ui.getVisualisointi().tyhjennaNaytto();
-		((Thread)engine).start();
-		//((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?		
+
+
+		((Thread)engine).start();*/
 	}
 	
 	@Override
@@ -38,8 +37,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		engine.setDelay((long)(engine.getDelay()*0.9));
 	}
 	
-	
-	
+
 	// Simulointitulosten välittämistä käyttöliittymään.
 	// Koska FX-ui:n päivitykset tulevat moottorisäikeestä, ne pitää ohjata JavaFX-säikeeseen:
 		
@@ -57,7 +55,4 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 			}
 		});
 	}
-
-
-
 }
