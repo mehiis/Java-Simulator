@@ -1,19 +1,32 @@
 package assets.model;
 
 import assets.framework.*;
+import controller.Controller;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
+import run.Specs;
+import run.Specs.*;
 
 import java.util.ArrayList;
 
-public class OwnEngine extends Engine {
+public class OwnEngine extends Engine implements IEngine {
 	private ArrivalProcess 		arrivalProcess;
 	private ArrivalProcess 		clearProcess;
 	private GarbageShelter 		garbageShelter;
+	private Controller controller;
+	private long delayTime = 0;
 
-	public OwnEngine(ArrayList<GarbageCan> garbageCans, double arrivalRate){
-		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, garbageCans);
-		arrivalProcess 		= new ArrivalProcess(new Negexp(arrivalRate,(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
+
+	public OwnEngine(Controller controller){
+		this.controller = controller;
+
+		// added starting specs here for now! these should come from GUI simulation parameters panel in the end.
+		Specs startingSpecs = new Specs();
+
+		startingSpecs.setDefaultGarbageCanList();
+
+		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, startingSpecs.getGarbageCanList());
+		arrivalProcess 		= new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(),(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
 		clearProcess 		= new ArrivalProcess(new Normal(1000,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
 
@@ -55,5 +68,13 @@ public class OwnEngine extends Engine {
 	protected void results() {
 		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getTime());
 		System.out.println("Tulokset ... puuttuvat vielä");
+	}
+
+	public void setDelay(long time) {
+		delayTime = time;
+	}
+
+	public long getDelay() {
+		return delayTime;
 	}
 }

@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 public class Main { //Tekstipohjainen
 	public static void main(String[] args) {
+		SimulatorGUI.launch(SimulatorGUI.class);
+		/*
 		Trace.setTraceLevel(Level.INFO);
 		Scanner scanner = new Scanner(System.in);
 		Specs startingSpecs = new Specs();
@@ -23,6 +25,7 @@ public class Main { //Tekstipohjainen
 		Engine m = new OwnEngine(startingSpecs.getGarbageCanList(), startingSpecs.getMeanArrivalRate());
 		m.setSimulationTime(startingSpecs.getSimulationTime());
 		m.execute();
+		 */
 		///
 	}
 }

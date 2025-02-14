@@ -1,13 +1,13 @@
 package controller;
 
 import javafx.application.Platform;
-import simu.framework.IMoottori;
-import simu.model.OmaMoottori;
+import assets.framework.IEngine;
+import assets.model.OwnEngine;
 import view.ISimulatorGUI;
 
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	
-	private IMoottori moottori; 
+	private IEngine engine;
 	private ISimulatorGUI ui;
 	
 	public Controller(ISimulatorGUI ui) {
@@ -19,23 +19,23 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	// Moottorin ohjausta:
 		
 	@Override
-	public void kaynnistaSimulointi() {
-		moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
-		moottori.setSimulointiaika(ui.getAika());
-		moottori.setViive(ui.getViive());
+	public void startSimulation() {
+		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
+		engine.setSimulationTime(ui.getAika());
+		engine.setDelay(ui.getViive());
 		ui.getVisualisointi().tyhjennaNaytto();
-		((Thread)moottori).start();
+		((Thread)engine).start();
 		//((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?		
 	}
 	
 	@Override
 	public void hidasta() { // hidastetaan moottorisäiettä
-		moottori.setViive((long)(moottori.getViive()*1.10));
+		engine.setDelay((long)(engine.getDelay()*1.10));
 	}
 
 	@Override
 	public void nopeuta() { // nopeutetaan moottorisäiettä
-		moottori.setViive((long)(moottori.getViive()*0.9));
+		engine.setDelay((long)(engine.getDelay()*0.9));
 	}
 	
 	

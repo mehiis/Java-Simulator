@@ -18,9 +18,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import assets.framework.Clock;
-import assets.framework.Trace;
-import assets.framework.Trace.Level;
 
 import java.text.DecimalFormat;
 
@@ -75,7 +72,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
             kaynnistaButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    kontrolleri.kaynnistaSimulointi();
+                    kontrolleri.startSimulation();
                     kaynnistaButton.setDisable(true);
                 }
             });

@@ -3,7 +3,7 @@ package assets.framework;
 public abstract class Engine {
 	
 	private double simulationTime = 0;
-	
+
 	private Clock clock;
 	
 	protected EventList eventList;
@@ -20,6 +20,7 @@ public abstract class Engine {
 	public void setSimulationTime(double time) {
 		simulationTime = time;
 	}
+
 	
 	
 	public void execute(){
