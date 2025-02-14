@@ -104,6 +104,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         SplitPane horSplitPane = new SplitPane();
         SplitPane verSplitPane = new SplitPane();
 
+        double horizontalFirstPosition = 0.2;
+        double horizontalMiddlePosition = 0.8;
+        double horizontalLastPosition = 0.75;
+        double verticalPosition = 0.75;
+
         VBox leftVBox   = left();
         leftVBox.setId("leftVBox");
 
@@ -113,17 +118,32 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         horSplitPane.getItems().addAll(leftVBox, center(), rightVBOX);
 
         //SET DEFAULT SIZE OF TOP PANELS HORIZONTALLY
-        horSplitPane.getDividers().getFirst().setPosition(0.2);
-        horSplitPane.getDividers().getLast().setPosition(0.25);
-        horSplitPane.getDividers().get(1).setPosition(0.8);
+        horSplitPane.getDividers().getFirst().setPosition(horizontalFirstPosition);
+        horSplitPane.getDividers().getLast().setPosition(horizontalMiddlePosition);
+        horSplitPane.getDividers().get(1).setPosition(horizontalLastPosition);
         //END SETTING DEFAULT SIZES
 
         verSplitPane.getItems().addAll(horSplitPane, bottom());
         verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
-        verSplitPane.getDividers().getFirst().setPosition(0.75); //SET DEFAULT SIZE OF TOP PANEL VERTICALLY. (0.75 = 75% of the screen).
+        verSplitPane.getDividers().getFirst().setPosition(verticalPosition); //SET DEFAULT SIZE OF TOP PANEL VERTICALLY. (0.75 = 75% of the screen).
 
         Scene scene = new Scene(verSplitPane, width, height);
         scene.getStylesheets().add("style.css");
+
+        // Key event listeners
+        scene.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+                case SPACE:
+                    horSplitPane.getDividers().getFirst().setPosition(horizontalFirstPosition);
+                    horSplitPane.getDividers().getLast().setPosition(horizontalLastPosition);
+                    horSplitPane.getDividers().get(1).setPosition(horizontalMiddlePosition);
+                    verSplitPane.getDividers().getFirst().setPosition(verticalPosition);
+                    break;
+                // Add more keys if needed
+                default:
+                    break;
+            }
+        });
 
         return scene;
     }
