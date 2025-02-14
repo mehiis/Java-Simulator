@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
@@ -24,6 +25,11 @@ import java.text.DecimalFormat;
 public class SimulatorGUI extends Application implements ISimulatorGUI {
     //Kontrollerin esittely (tarvitaan käyttöliittymässä)
     private IControllerForView controller;
+
+    // settings
+    //ASPECT RATIO 16:9. Possible sizes are: 800x450, 1280x720, 1600x900, 1920x1080
+    private int width   = 1280;
+    private int height  = 720;
 
     // Käyttöliittymäkomponentit:
     private TextField time;
@@ -49,11 +55,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         // Käyttöliittymän rakentaminen
         try {
-
-            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent t) {
                     Platform.exit();
@@ -61,80 +66,15 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 }
             });
 
+            stage.setTitle("Garbage Collection Simulator");
 
-            primaryStage.setTitle("Garbage Collection Simulator");
-
-            startButton = new Button();
-            startButton.setText("Start");
-            startButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    controller.startSimulation();
-                    //startButton.setDisable(true);
-                }
-            });
-
-            slowButton = new Button();
-            slowButton.setText("Slow simulation");
-            slowButton.setOnAction(e -> System.out.println("biip")/*kontrolleri.hidasta()*/);
-
-            fastButton = new Button();
-            fastButton.setText("Fasten simulation");
-            fastButton.setOnAction(e -> System.out.println("boop")/*kontrolleri.nopeuta()*/);
-
-            timeLabel = new Label("Simulation time:");
-            timeLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            time = new TextField("2000");
-            time.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            time.setPrefWidth(150);
-
-            delayLabel = new Label("Simulation speed:");
-            delayLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            delay = new TextField("150");
-            delay.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            delay.setPrefWidth(150);
-
-            resultLabel = new Label("Time simulated: ");
-            resultLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            result = new Label();
-            result.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            result.setPrefWidth(150);
-
-            HBox hBox = new HBox();
-            hBox.setPadding(new Insets(15, 12, 15, 12)); // marginaalit ylä, oikea, ala, vasen
-            hBox.setSpacing(10);   // noodien välimatka 10 pikseliä
-
-            GridPane grid = new GridPane();
-            grid.setAlignment(Pos.CENTER);
-            grid.setVgap(10);
-            grid.setHgap(5);
-
-            grid.add(timeLabel, 0, 0);   // sarake, rivi
-            grid.add(time, 1, 0);          // sarake, rivi
-            grid.add(delayLabel, 0, 1);      // sarake, rivi
-            grid.add(delay, 1, 1);           // sarake, rivi
-            grid.add(resultLabel, 0, 2);      // sarake, rivi
-            grid.add(result, 1, 2);           // sarake, rivi
-            grid.add(startButton, 0, 3);  // sarake, rivi
-            grid.add(fastButton, 0, 4);   // sarake, rivi
-            grid.add(slowButton, 1, 4);   // sarake, rivi
-
-            view = new Visuals(400, 200);
-
-            hBox.getChildren().addAll(grid, (Canvas) view);
-
-            Scene scene = new Scene(hBox);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
+            stage.setScene(createScene());
+            stage.show();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
-    //Käyttöliittymän rajapintametodit (kutsutaan kontrollerista)
 
     @Override
     public double getTime() {
@@ -159,6 +99,50 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public IVisuals getVisualisointi() {
         return view;
     }
+
+    private Scene createScene(){
+        SplitPane horSplitPane = new SplitPane();
+        SplitPane verSplitPane = new SplitPane();
+
+        VBox leftControl  = new VBox(new Label("Left Control"));
+        VBox midControl   = new VBox(new Label("Mid Control"));
+        VBox rightControl = new VBox(new Label("Right Control"));
+
+        HBox bottomControl = new HBox(new Label("Bottom Control"));
+        horSplitPane.getItems().addAll(leftControl, midControl, rightControl);
+
+        verSplitPane.getItems().addAll(horSplitPane, bottomControl);
+        verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
+
+
+
+        Scene scene = new Scene(verSplitPane, width, height);
+
+        return scene;
+    }
+
+    private Group center(){
+        Group root = new Group();
+
+
+        return root;
+    }
+
+    private Group right(){
+        Group root = new Group();
+        return root;
+    }
+
+    private Group left(){
+        Group root = new Group();
+        return root;
+    }
+
+    private Group bottom(){
+        Group root = new Group();
+        return root;
+    }
+
 }
 
 

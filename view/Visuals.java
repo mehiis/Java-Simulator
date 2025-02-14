@@ -32,5 +32,4 @@ public class Visuals extends Canvas implements IVisuals {
 		//j = (j + 12) % this.getHeight();
 		if (i==0) j+=10;			
 	}
-	
 }
