@@ -46,7 +46,6 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void naytaLoppuaika(double aika) {
 		Platform.runLater(()->ui.setLoppuaika(aika)); 
 	}
-
 	
 	@Override
 	public void visualisoiAsiakas() {
