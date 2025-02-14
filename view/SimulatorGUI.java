@@ -103,48 +103,46 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Scene createScene(){
         SplitPane horSplitPane = new SplitPane();
         SplitPane verSplitPane = new SplitPane();
+        horSplitPane.getItems().addAll(left(), center(), right());
 
-        VBox leftControl  = new VBox(new Label("Left Control"));
-        VBox midControl   = new VBox(new Label("Mid Control"));
-        VBox rightControl = new VBox(new Label("Right Control"));
+        //SET DEFAULT SIZE OF TOP PANELS HORIZONTALLY
+        horSplitPane.getDividers().getFirst().setPosition(0.2);
+        horSplitPane.getDividers().getLast().setPosition(0.25);
+        horSplitPane.getDividers().get(1).setPosition(0.8);
+        //END SETTING DEFAULT SIZES
 
-        HBox bottomControl = new HBox(new Label("Bottom Control"));
-        horSplitPane.getItems().addAll(leftControl, midControl, rightControl);
 
-        verSplitPane.getItems().addAll(horSplitPane, bottomControl);
+        verSplitPane.getItems().addAll(horSplitPane, bottom());
         verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
-
-
+        verSplitPane.getDividers().getFirst().setPosition(0.75); //SET DEFAULT SIZE OF TOP PANEL VERTICALLY. (0.75 = 75% of the screen).
 
         Scene scene = new Scene(verSplitPane, width, height);
+        scene.getStylesheets().add("style.css");
 
         return scene;
     }
 
-    private Group center(){
-        Group root = new Group();
+    private Region center(){
+        Region center = new Region();
+        center.setBorder(new Border(new BorderStroke(null, BorderStrokeStyle.SOLID, null, new BorderWidths(3))));
 
 
-        return root;
+        VBox midControl   = new VBox(new Label("Mid Control"));
+        return midControl;
     }
 
-    private Group right(){
-        Group root = new Group();
-        return root;
+    private Region right(){
+        VBox leftControl  = new VBox(new Label("Left Control"));
+        return leftControl;
     }
 
-    private Group left(){
-        Group root = new Group();
-        return root;
+    private Region left(){
+        VBox leftControl  = new VBox(new Label("Left Control"));
+        return leftControl;
     }
 
-    private Group bottom(){
-        Group root = new Group();
-        return root;
+    private Region bottom(){
+        HBox bottomControl = new HBox(new Label("Bottom Control"));
+        return bottomControl;
     }
-
 }
-
-
-
-
