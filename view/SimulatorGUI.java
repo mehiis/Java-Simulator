@@ -13,6 +13,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -80,7 +81,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                     startButton.setDisable(true);
                 }
             });
-
             stage.setTitle("Garbage Collection Simulator");
 
             stage.setScene(createScene());
@@ -165,6 +165,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     private VBox center(){
+
         VBox midControl   = new VBox(new Label("Mid Control"));
 
         //ONKO TÄÄ NY VBOX VAI JOKU GRID SYSTEMI????
@@ -179,11 +180,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private VBox left(){
         final int TEXT_FIELD_WIDTH = 50;
+        final Font FONT = new Font("Dubai Medium", 15);
 
         // Simulation time
         BorderPane simulationTime = new BorderPane();
         simulationTimeValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label simulationTimeLabel = new Label("Simulation Time");
+        simulationTimeLabel.setFont(FONT);
         simulationTime.setLeft(simulationTimeLabel);
         simulationTime.setRight(simulationTimeValue);
 
@@ -191,6 +194,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane apartmentAmount = new BorderPane();
         apartmentAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label apartmentAmountLabel = new Label("Apartment Amount");
+        apartmentAmountLabel.setFont(FONT);
         apartmentAmount.setLeft(apartmentAmountLabel);
         apartmentAmount.setRight(apartmentAmountValue);
 
@@ -198,6 +202,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane mixedCanAmount = new BorderPane();
         mixedCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label mixedCanAmountLabel = new Label("Mixed");
+        mixedCanAmountLabel.setFont(FONT);
         mixedCanAmount.setLeft(mixedCanAmountLabel);
         mixedCanAmount.setRight(mixedCanAmountValue);
 
@@ -205,6 +210,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane plasticCanAmount = new BorderPane();
         plasticCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label plasticCanAmountLabel = new Label("Plastic");
+        plasticCanAmountLabel.setFont(FONT);
         plasticCanAmount.setLeft(plasticCanAmountLabel);
         plasticCanAmount.setRight(plasticCanAmountValue);
 
@@ -212,6 +218,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane bioCanAmount = new BorderPane();
         bioCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label bioCanAmountLabel = new Label("Bio");
+        bioCanAmountLabel.setFont(FONT);
+        bioCanAmountLabel.setFont(FONT);
         bioCanAmount.setLeft(bioCanAmountLabel);
         bioCanAmount.setRight(bioCanAmountValue);
 
@@ -219,6 +227,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane glassCanAmount = new BorderPane();
         glassCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label glassCanAmountLabel = new Label("Glass");
+        glassCanAmountLabel.setFont(FONT);
         glassCanAmount.setLeft(glassCanAmountLabel);
         glassCanAmount.setRight(glassCanAmountValue);
 
@@ -226,6 +235,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane paperCanAmount = new BorderPane();
         paperCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label paperCanAmountLabel = new Label("Paper");
+        paperCanAmountLabel.setFont(FONT);
         paperCanAmount.setLeft(paperCanAmountLabel);
         paperCanAmount.setRight(paperCanAmountValue);
 
@@ -233,11 +243,12 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane metalCanAmount = new BorderPane();
         metalCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label metalCanAmountLabel = new Label("Metal");
+        metalCanAmountLabel.setFont(FONT);
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
-
         VBox leftControl  = new VBox(simulationTime , apartmentAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
+        leftControl.setSpacing(10); // Spacing for each component
         return leftControl;
     }
 
