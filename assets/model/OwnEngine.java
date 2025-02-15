@@ -27,7 +27,8 @@ public class OwnEngine extends Engine {
 
 		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, startingSpecs.getGarbageCanList());
 		arrivalProcess 		= new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(),(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
-		clearProcess 		= new ArrivalProcess(new Normal(1000,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
+		// clearing happens every week which is 10080 minutes
+		clearProcess 		= new ArrivalProcess(new Normal(10080,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
 
 

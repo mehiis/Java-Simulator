@@ -32,7 +32,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private int height  = 720;
 
     // Käyttöliittymäkomponentit:
-    private TextField time;
+    private TextField time = new TextField();
     private TextField delay;
     private Label result;
     private Label timeLabel;
@@ -63,6 +63,16 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 public void handle(WindowEvent t) {
                     Platform.exit();
                     System.exit(0);
+                }
+            });
+
+            startButton = new Button();
+            startButton.setText("Käynnistä simulointi");
+            startButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    controller.startSimulation();
+                    startButton.setDisable(true);
                 }
             });
 
@@ -123,9 +133,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         horSplitPane.getDividers().get(1).setPosition(horizontalLastPosition);
         //END SETTING DEFAULT SIZES
 
-        verSplitPane.getItems().addAll(horSplitPane, bottom());
+        verSplitPane.getItems().addAll(horSplitPane, bottom(), startButton);
         verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
         verSplitPane.getDividers().getFirst().setPosition(verticalPosition); //SET DEFAULT SIZE OF TOP PANEL VERTICALLY. (0.75 = 75% of the screen).
+
+        leftVBox.getChildren().add(time);
 
         Scene scene = new Scene(verSplitPane, width, height);
         scene.getStylesheets().add("style.css");

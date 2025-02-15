@@ -3,15 +3,19 @@ package assets.model;
 import assets.framework.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import eduni.distributions.ContinuousGenerator;
+import assets.model.TrashDistribution.*;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class GarbageShelter {
 	private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private ArrayList<GarbageCan> garbageCans = new ArrayList<>();
+	private TrashDistribution trashGenerator = new TrashDistribution();
 	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
@@ -44,13 +48,16 @@ public class GarbageShelter {
 		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
 		//double serviceTime = generator.sample();//+serviceTime));
 		boolean thrashThrown = false;
+		// generate a trash distribution according to trash amt arg
+		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(4.0);
 		for (GarbageCan can : garbageCans){
-			if (can.checkCapacity(100)){
-				can.addGarbage(100);
-				System.out.println("Added 100 l of thrash to " + can.getType() + " trash can.");
+			// use trash can type to get amount of said trash
+			Double trashAmt = generatedTrash.get(can.getType());
+			if (can.checkCapacity(trashAmt)){
+				can.addGarbage(trashAmt);
+				System.out.println("Added "+trashAmt+" l of thrash to " + can.getType() + " trash can.");
 				System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " kg of trash.");
 				thrashThrown = true;
-				break;
 			}
 		}
 		if (!thrashThrown){
