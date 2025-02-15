@@ -28,13 +28,14 @@ public class TrashDistribution {
 
         ArrayList<Double> keyList = new ArrayList<>(trashDistribution.keySet()); // store percentage keys as a list for iteration
 
-        HashMap<GarbageCanType, Double> generatedTrash = new HashMap<>();
-        // initialize generatedTrash
+        HashMap<GarbageCanType, Double> generatedTrash = new HashMap<>();        // final generated trash HashMap
+
+        // initialize generatedTrash with keys and values
         for (GarbageCanType type: trashDistribution.values()) {
             generatedTrash.put(type, 0.0);
         }
 
-        // Generate ages according to the distribution:
+        // Generate trash according to the distribution:
         for (int i = 1; i <= TRASHITERATIONS; i++){
             GarbageCanType type;
             // min and max to make ABSOLUTELY sure the values stay withing 1.0 ... 100.0
