@@ -9,14 +9,10 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.*;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -32,7 +28,16 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private int height  = 720;
 
     // Käyttöliittymäkomponentit:
-    private TextField time = new TextField();
+    // Left Box values
+    private TextField simulationTimeValue = new TextField();
+    private TextField apartmentAmountValue = new TextField();
+    private TextField mixedCanAmountValue = new TextField();
+    private TextField plasticCanAmountValue = new TextField();
+    private TextField glassCanAmountValue = new TextField();
+    private TextField paperCanAmountValue = new TextField();
+    private TextField bioCanAmountValue = new TextField();
+    private TextField metalCanAmountValue = new TextField();
+    //
     private TextField delay;
     private Label result;
     private Label timeLabel;
@@ -87,8 +92,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     @Override
-    public double getTime() {
-        return Double.parseDouble(time.getText());
+    public double getSimulationTimeValue() {
+        return Double.parseDouble(simulationTimeValue.getText());
     }
 
     @Override
@@ -116,7 +121,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         double horizontalFirstPosition = 0.2;
         double horizontalMiddlePosition = 0.8;
-        double horizontalLastPosition = 0.75;
+        double horizontalLastPosition = 0.8;
         double verticalPosition = 0.75;
 
         VBox leftVBox   = left();
@@ -137,7 +142,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
         verSplitPane.getDividers().getFirst().setPosition(verticalPosition); //SET DEFAULT SIZE OF TOP PANEL VERTICALLY. (0.75 = 75% of the screen).
 
-        leftVBox.getChildren().add(time);
 
         Scene scene = new Scene(verSplitPane, width, height);
         scene.getStylesheets().add("style.css");
@@ -168,12 +172,72 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     private VBox right(){
+
         VBox leftControl  = new VBox(new Label("right Control"));
         return leftControl;
     }
 
     private VBox left(){
-        VBox leftControl  = new VBox(new Label("Left Control"));
+        final int TEXT_FIELD_WIDTH = 50;
+
+        // Simulation time
+        BorderPane simulationTime = new BorderPane();
+        simulationTimeValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label simulationTimeLabel = new Label("Simulation Time");
+        simulationTime.setLeft(simulationTimeLabel);
+        simulationTime.setRight(simulationTimeValue);
+
+        // Apartment amount
+        BorderPane apartmentAmount = new BorderPane();
+        apartmentAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label apartmentAmountLabel = new Label("Apartment Amount");
+        apartmentAmount.setLeft(apartmentAmountLabel);
+        apartmentAmount.setRight(apartmentAmountValue);
+
+        // Mixed can amount
+        BorderPane mixedCanAmount = new BorderPane();
+        mixedCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label mixedCanAmountLabel = new Label("Mixed");
+        mixedCanAmount.setLeft(mixedCanAmountLabel);
+        mixedCanAmount.setRight(mixedCanAmountValue);
+
+        // Plastic can amount
+        BorderPane plasticCanAmount = new BorderPane();
+        plasticCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label plasticCanAmountLabel = new Label("Plastic");
+        plasticCanAmount.setLeft(plasticCanAmountLabel);
+        plasticCanAmount.setRight(plasticCanAmountValue);
+
+        // Bio can amount
+        BorderPane bioCanAmount = new BorderPane();
+        bioCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label bioCanAmountLabel = new Label("Bio");
+        bioCanAmount.setLeft(bioCanAmountLabel);
+        bioCanAmount.setRight(bioCanAmountValue);
+
+        // Glass can amount
+        BorderPane glassCanAmount = new BorderPane();
+        glassCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label glassCanAmountLabel = new Label("Glass");
+        glassCanAmount.setLeft(glassCanAmountLabel);
+        glassCanAmount.setRight(glassCanAmountValue);
+
+        // Paper can amount
+        BorderPane paperCanAmount = new BorderPane();
+        paperCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label paperCanAmountLabel = new Label("Paper");
+        paperCanAmount.setLeft(paperCanAmountLabel);
+        paperCanAmount.setRight(paperCanAmountValue);
+
+        // Metal can amount
+        BorderPane metalCanAmount = new BorderPane();
+        metalCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label metalCanAmountLabel = new Label("Metal");
+        metalCanAmount.setLeft(metalCanAmountLabel);
+        metalCanAmount.setRight(metalCanAmountValue);
+
+
+        VBox leftControl  = new VBox(simulationTime , apartmentAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
         return leftControl;
     }
 

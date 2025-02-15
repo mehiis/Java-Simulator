@@ -3,7 +3,7 @@ package view;
 public interface ISimulatorGUI {
 	
 	// Kontrolleri tarvitsee syötteitä, jotka se välittää Moottorille
-	public double getTime();
+	public double getSimulationTimeValue();
 	public long getDelay();
 	
 	//Kontrolleri antaa käyttöliittymälle tuloksia, joita Moottori tuottaa 

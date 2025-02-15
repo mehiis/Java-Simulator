@@ -1,6 +1,5 @@
 package controller;
 
-import assets.framework.Clock;
 import javafx.application.Platform;
 import assets.framework.IEngine;
 import assets.model.OwnEngine;
@@ -20,7 +19,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 		System.out.println("Start simulation.");
 		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
-		engine.setSimulationTime(ui.getTime());
+		engine.setSimulationTime(ui.getSimulationTimeValue());
 		//engine.setDelay(ui.getViive());
 		//ui.getVisualisointi().tyhjennaNaytto();
 
