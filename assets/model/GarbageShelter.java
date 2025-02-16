@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import eduni.distributions.ContinuousGenerator;
 import assets.model.TrashDistribution.*;
+import assets.model.GarbageCanType;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
@@ -26,15 +27,20 @@ public class GarbageShelter {
 	private boolean isFull 			= false;
 
 	// Constructor with custom amount of garbage cans
-	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type, ArrayList<GarbageCan> garbageCans){
+	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type){
 		this.eventList 				= eventList;
 		this.generator 				= generator;
 		this.scheduledEventType 	= type;
-		this.garbageCans 			= garbageCans;
 	}
 
 	public void addToQueue(Apartment a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
+	}
+
+	public void addGarbageCan(GarbageCanType type, int amount){
+		for (int i = 0; i < amount; i++) {
+			garbageCans.add(new GarbageCan(true , type));
+		}
 	}
 
 	public Apartment getFromQueue(){  // Poistetaan palvelussa ollut

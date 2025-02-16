@@ -20,6 +20,13 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		System.out.println("Start simulation.");
 		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
 		engine.setSimulationTime(ui.getSimulationTimeValue());
+		engine.setMixedCanAmountValue(ui.getMixedCanAmountValue());
+		engine.setBioCanAmountValue(ui.getBioCanAmountValue());
+		engine.setPaperCanAmountValue(ui.getPaperCanAmountValue());
+		engine.setGlassCanAmountValue(ui.getGlassCanAmountValue());
+		engine.setMetalCanAmountValue(ui.getMetalCanAmountValue());
+		engine.setPlasticCanAmountValue(ui.getPlasticCanAmountValue());
+
 		//engine.setDelay(ui.getViive());
 		//ui.getVisualisointi().tyhjennaNaytto();
 

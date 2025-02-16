@@ -6,6 +6,7 @@ import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import run.Specs;
 import run.Specs.*;
+import assets.model.GarbageCanType;
 
 import java.util.ArrayList;
 
@@ -23,9 +24,9 @@ public class OwnEngine extends Engine {
 		// added starting specs here for now! these should come from GUI simulation parameters panel in the end.
 		Specs startingSpecs = new Specs();
 
-		startingSpecs.setDefaultGarbageCanList();
+		//startingSpecs.setDefaultGarbageCanList();
 
-		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT, startingSpecs.getGarbageCanList());
+		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT);
 		arrivalProcess 		= new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(),(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
 		// clearing happens every week which is 10080 minutes
 		clearProcess 		= new ArrivalProcess(new Normal(10080,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
@@ -36,7 +37,7 @@ public class OwnEngine extends Engine {
 	protected void init() {
 		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
 		clearProcess.generateNext();
-		garbageShelter.printThrashCans(); // !for testing purposes! //
+		garbageShelter.printThrashCans();// !for testing purposes! //
 	}
 
 	@Override
@@ -70,4 +71,22 @@ public class OwnEngine extends Engine {
 		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getTime());
 		System.out.println("Tulokset ... puuttuvat vielä");
 	}
+
+	@Override
+	public void setMixedCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.MIXED, amount);}
+
+	@Override
+	public void setPlasticCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.PLASTIC, amount);}
+
+	@Override
+	public void setGlassCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.GLASS, amount);}
+
+	@Override
+	public void setPaperCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.CARDBOARD, amount);}
+
+	@Override
+	public void setBioCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.BIO, amount);}
+
+	@Override
+	public void setMetalCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.METAL, amount);}
 }

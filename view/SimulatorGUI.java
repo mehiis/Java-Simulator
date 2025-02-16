@@ -27,6 +27,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     //ASPECT RATIO 16:9. Possible sizes are: 800x450, 1280x720, 1600x900, 1920x1080
     private int width   = 1280;
     private int height  = 720;
+    private final double defaultSimulationTime = 2500;
 
     // Käyttöliittymäkomponentit:
     // Left Box values
@@ -93,7 +94,52 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     @Override
     public double getSimulationTimeValue() {
+        if (simulationTimeValue.getText().isEmpty()) {
+            return defaultSimulationTime;
+        }
         return Double.parseDouble(simulationTimeValue.getText());
+    }
+
+    public int getMixedCanAmountValue() {
+        if (mixedCanAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        return Integer.parseInt(mixedCanAmountValue.getText());
+    }
+
+    public int getPlasticCanAmountValue() {
+        if (plasticCanAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        return Integer.parseInt(plasticCanAmountValue.getText());
+    }
+
+    public int getGlassCanAmountValue() {
+        if (glassCanAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        return Integer.parseInt(glassCanAmountValue.getText());
+    }
+
+    public int getPaperCanAmountValue() {
+        if (paperCanAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        return Integer.parseInt(paperCanAmountValue.getText());
+    }
+
+    public int getBioCanAmountValue() {
+        if (bioCanAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        return Integer.parseInt(bioCanAmountValue.getText());
+    }
+
+    public int getMetalCanAmountValue() {
+        if (metalCanAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        return Integer.parseInt(metalCanAmountValue.getText());
     }
 
     @Override
