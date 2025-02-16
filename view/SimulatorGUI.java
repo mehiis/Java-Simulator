@@ -97,49 +97,91 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         if (simulationTimeValue.getText().isEmpty()) {
             return defaultSimulationTime;
         }
-        return Double.parseDouble(simulationTimeValue.getText());
+        else {
+            try {
+                return Double.parseDouble(simulationTimeValue.getText());
+            } catch (NumberFormatException e) {
+                return defaultSimulationTime;
+            }
+        }
     }
 
     public int getMixedCanAmountValue() {
         if (mixedCanAmountValue.getText().isEmpty()) {
             return 1;
         }
-        return Integer.parseInt(mixedCanAmountValue.getText());
+        else {
+            try {
+                return Integer.parseInt(mixedCanAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
     }
 
     public int getPlasticCanAmountValue() {
         if (plasticCanAmountValue.getText().isEmpty()) {
             return 1;
         }
-        return Integer.parseInt(plasticCanAmountValue.getText());
+        else {
+            try {
+                return Integer.parseInt(plasticCanAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
     }
 
     public int getGlassCanAmountValue() {
         if (glassCanAmountValue.getText().isEmpty()) {
             return 1;
         }
-        return Integer.parseInt(glassCanAmountValue.getText());
+        else {
+            try {
+                return Integer.parseInt(glassCanAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
     }
 
     public int getPaperCanAmountValue() {
         if (paperCanAmountValue.getText().isEmpty()) {
             return 1;
         }
-        return Integer.parseInt(paperCanAmountValue.getText());
+        else {
+            try {
+                return Integer.parseInt(paperCanAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
     }
 
     public int getBioCanAmountValue() {
         if (bioCanAmountValue.getText().isEmpty()) {
             return 1;
         }
-        return Integer.parseInt(bioCanAmountValue.getText());
+        else {
+            try {
+                return Integer.parseInt(bioCanAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
     }
 
     public int getMetalCanAmountValue() {
         if (metalCanAmountValue.getText().isEmpty()) {
             return 1;
         }
-        return Integer.parseInt(metalCanAmountValue.getText());
+        else {
+            try {
+                return Integer.parseInt(metalCanAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
     }
 
     @Override
