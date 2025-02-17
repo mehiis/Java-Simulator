@@ -3,7 +3,7 @@ package assets.framework;
 public abstract class Engine extends Thread implements IEngine{
 	
 	private double simulationTime = 0;
-	private long delayTime;
+	private long delayTime = 500;
 
 	private Clock clock;
 	
@@ -35,6 +35,8 @@ public abstract class Engine extends Thread implements IEngine{
 	public void run(){
 		init(); // luodaan mm. ensimmäinen tapahtuma
 		while (simulation()){
+
+			delay();
 			
 			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + currentTime());
 			clock.setTime(currentTime());
@@ -69,6 +71,15 @@ public abstract class Engine extends Thread implements IEngine{
 
 	protected abstract void init(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
-	protected abstract void results(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+	protected abstract void results();// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+	private void delay() { // UUSI
+		Trace.out(Trace.Level.INFO, "Viive " + delayTime);
+		try {
+			sleep(delayTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	
 }

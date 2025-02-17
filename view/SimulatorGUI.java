@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -73,15 +74,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 }
             });
 
-            startButton = new Button();
-            startButton.setText("Käynnistä simulointi");
-            startButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    controller.startSimulation();
-                    startButton.setDisable(true);
-                }
-            });
             stage.setTitle("Garbage Collection Simulator");
 
             stage.setScene(createScene());
@@ -210,7 +202,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         double horizontalFirstPosition = 0.2;
         double horizontalMiddlePosition = 0.8;
         double horizontalLastPosition = 0.8;
-        double verticalPosition = 0.75;
+        double verticalPosition = 0.90;
 
         VBox leftVBox   = left();
         leftVBox.setId("leftVBox");
@@ -226,7 +218,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         horSplitPane.getDividers().get(1).setPosition(horizontalLastPosition);
         //END SETTING DEFAULT SIZES
 
-        verSplitPane.getItems().addAll(horSplitPane, bottom(), startButton);
+        verSplitPane.getItems().addAll(horSplitPane, bottom());
         verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
         verSplitPane.getDividers().getFirst().setPosition(verticalPosition); //SET DEFAULT SIZE OF TOP PANEL VERTICALLY. (0.75 = 75% of the screen).
 
@@ -341,7 +333,27 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     private Region bottom(){
-        HBox bottomControl = new HBox(new Label("Bottom Control"));
+        startButton = new Button();
+        startButton.setText("Käynnistä simulointi");
+        startButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                controller.startSimulation();
+                startButton.setDisable(true);
+            }
+        });
+
+        slowButton = new Button();
+        slowButton.setText("Hidasta");
+        slowButton.setOnAction(e -> controller.slowDown());
+
+        fastButton = new Button();
+        fastButton.setText("Nopeuta");
+        fastButton.setOnAction(e -> controller.speedUp());
+
+        HBox bottomControl = new HBox(slowButton, startButton, fastButton);
+        bottomControl.setAlignment(Pos.CENTER);
+        bottomControl.setSpacing(10);
 
         //MIKÄ TÄÄ ON OISKO JOKU VBOW VAI MITÄ EHMETTIÄ?!?!?!?
         return bottomControl;

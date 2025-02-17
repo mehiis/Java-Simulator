@@ -35,12 +35,12 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	}
 	
 	@Override
-	public void hidasta() { // hidastetaan moottorisäiettä
+	public void slowDown() { // hidastetaan moottorisäiettä
 		engine.setDelay((long)(engine.getDelay()*1.10));
 	}
 
 	@Override
-	public void nopeuta() { // nopeutetaan moottorisäiettä
+	public void speedUp() { // nopeutetaan moottorisäiettä
 		engine.setDelay((long)(engine.getDelay()*0.9));
 	}
 	
