@@ -273,7 +273,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Apartment amount
         BorderPane apartmentAmount = new BorderPane();
         apartmentAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
-        Label apartmentAmountLabel = new Label("Apartment Amount");
+        Label apartmentAmountLabel = new Label("Resident Amount");
         apartmentAmountLabel.setFont(FONT);
         apartmentAmount.setLeft(apartmentAmountLabel);
         apartmentAmount.setRight(apartmentAmountValue);

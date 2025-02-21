@@ -4,17 +4,14 @@ import assets.framework.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import eduni.distributions.ContinuousGenerator;
-import assets.model.TrashDistribution.*;
-import assets.model.GarbageCanType;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class GarbageShelter {
-	private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
+	private final LinkedList<Resident> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private ArrayList<GarbageCan> garbageCans = new ArrayList<>();
 	private TrashDistribution trashGenerator = new TrashDistribution();
 	private final ContinuousGenerator generator;
@@ -33,7 +30,7 @@ public class GarbageShelter {
 		this.scheduledEventType 	= type;
 	}
 
-	public void addToQueue(Apartment a){   // Jonon 1. asiakas aina palvelussa
+	public void addToQueue(Resident a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
 	}
 
@@ -43,7 +40,7 @@ public class GarbageShelter {
 		}
 	}
 
-	public Apartment getFromQueue(){  // Poistetaan palvelussa ollut
+	public Resident getFromQueue(){  // Poistetaan palvelussa ollut
 		reserved = false;
 		return queue.poll(); //delete the first element
 	}
