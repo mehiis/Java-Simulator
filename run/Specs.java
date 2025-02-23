@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Specs {
     private final ArrayList<GarbageCan> garbageCans = new ArrayList<>();
     private int simulationTime = 2500;
-
+    private final double avgTrashAmountPerYearPerPerson = 307.7954819; // in kg
     private int condominiumSize = 50;
     private double howOftenTrashIsTakenOut = 3.15; // default is in every 3.15 days
 
@@ -19,7 +19,7 @@ public class Specs {
         return simulationTime;
     }
 
-    public double getMeanArrivalRate() {
+    public double getMeanArrivalRate(int peopleAmt) {
         double individualDisposalsPerDay = 1 / howOftenTrashIsTakenOut;
         double meanArrivalRate = (1440 / (individualDisposalsPerDay * condominiumSize));
         return meanArrivalRate;
