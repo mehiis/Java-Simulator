@@ -33,7 +33,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     // Käyttöliittymäkomponentit:
     // Left Box values
     private TextField simulationTimeValue = new TextField();
-    private TextField residentAmountValue = new TextField();
+    private TextField apartmentAmountValue = new TextField();
     private TextField mixedCanAmountValue = new TextField();
     private TextField plasticCanAmountValue = new TextField();
     private TextField glassCanAmountValue = new TextField();
@@ -270,13 +270,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         simulationTime.setLeft(simulationTimeLabel);
         simulationTime.setRight(simulationTimeValue);
 
-        // Resident amount
-        BorderPane residentAmount = new BorderPane();
-        residentAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
-        Label residentAmountLabel = new Label("Resident Amount");
-        residentAmountLabel.setFont(FONT);
-        residentAmount.setLeft(residentAmountLabel);
-        residentAmount.setRight(residentAmountValue);
+        // Apartment amount
+        BorderPane apartmentAmount = new BorderPane();
+        apartmentAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label apartmentAmountLabel = new Label("Resident Amount");
+        apartmentAmountLabel.setFont(FONT);
+        apartmentAmount.setLeft(apartmentAmountLabel);
+        apartmentAmount.setRight(apartmentAmountValue);
 
         // Mixed can amount
         BorderPane mixedCanAmount = new BorderPane();
@@ -327,7 +327,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
-        VBox leftControl  = new VBox(simulationTime , residentAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
+        VBox leftControl  = new VBox(simulationTime , apartmentAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
         leftControl.setSpacing(10); // Spacing for each component
         return leftControl;
     }
