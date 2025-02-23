@@ -1,6 +1,9 @@
 package run;
 import assets.model.GarbageCan;
 import assets.model.GarbageCanType;
+import eduni.distributions.ContinuousGenerator;
+import eduni.distributions.Normal;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,9 +22,11 @@ public class Specs {
         return simulationTime;
     }
 
-    public double getMeanArrivalRate(int peopleAmt) {
-        double individualDisposalsPerDay = 1 / howOftenTrashIsTakenOut;
-        double meanArrivalRate = (1440 / (individualDisposalsPerDay * condominiumSize));
+    public double getMeanArrivalRate(int peopleAmt, int apartmentAmt) {
+        ContinuousGenerator generatorHowMuchPeopleTakeTrashOutAtOnceUsually = new Normal(6.0, 4.0); // an educated guess
+        howOftenTrashIsTakenOut = 365 / ((avgTrashAmountPerYearPerPerson * peopleAmt) / generatorHowMuchPeopleTakeTrashOutAtOnceUsually.sample()); // in days
+        double disposalsPerDay = 1 / howOftenTrashIsTakenOut;
+        double meanArrivalRate = apartmentAmt / (1440 / disposalsPerDay); // how often trash is taken, in minutes. number of apartments of given size is taken into account here.
         return meanArrivalRate;
     }
 
@@ -61,7 +66,7 @@ public class Specs {
             System.out.println("Invalid input, simulation time set to default (2500)");
         }
     }
-
+/*
     public void setHowOftenTrashIsTakenOut() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("How often do people take their trash out? (leaving this empty defaults to 3.15 days)");
@@ -72,7 +77,7 @@ public class Specs {
             System.out.println("Frequency set to every: "+freq+" days.");
             howOftenTrashIsTakenOut = Double.parseDouble(freq);
         }
-        System.out.println("Mean resident garbage shelter arrival rate is calculated as every "+getMeanArrivalRate()+" minutes.");
+        System.out.println("Mean resident garbage shelter arrival rate is calculated as every "+getMeanArrivalRate(1)+" minutes.");
     }
 
     public void setHowManyResidents() {
@@ -85,5 +90,5 @@ public class Specs {
             System.out.println("Residents amounts set at: "+amt+" residents.");
             howOftenTrashIsTakenOut = Integer.parseInt(amt);
         }
-    }
+    } */
 }

@@ -5,13 +5,12 @@ import controller.Controller;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import run.Specs;
-import run.Specs.*;
-import assets.model.GarbageCanType;
-
-import java.util.ArrayList;
 
 public class OwnEngine extends Engine {
-	private ArrivalProcess 		arrivalProcess;
+	private ArrivalProcess yksioArrivalProcess;
+	private ArrivalProcess kaksioArrivalProcess;
+	private ArrivalProcess kolmioArrivalProcess;
+	private ArrivalProcess nelioArrivalProcess;
 	private ArrivalProcess 		clearProcess;
 	private GarbageShelter 		garbageShelter;
 	private Controller 			controller;
@@ -27,7 +26,13 @@ public class OwnEngine extends Engine {
 		//startingSpecs.setDefaultGarbageCanList();
 
 		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT);
-		arrivalProcess 		= new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(),(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
+		// GUI should be read; which arrival processes to create and use. GUI should also decide apt amt.
+		// people amt is basically a multiplier for the base amount of trash a specific type of apt generates.
+		yksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(1, 6),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
+		kaksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(2, 3),(int)(Math.random() * 10000)), eventList, EventType.KAKSIO_ARRIVE_TO_SHELTER);
+		kolmioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(3, 2),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
+		nelioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(4, 1),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
+
 		// clearing happens every week which is 10080 minutes
 		clearProcess 		= new ArrivalProcess(new Normal(10080,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
@@ -35,7 +40,11 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void init() {
-		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
+		yksioArrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
+		kaksioArrivalProcess.generateNext();
+		kolmioArrivalProcess.generateNext();
+		nelioArrivalProcess.generateNext();
+		// should arrival processes be created for each apartment?????? this should be read with controller from GUI
 		clearProcess.generateNext();
 		garbageShelter.printThrashCans();// !for testing purposes! //
 	}
@@ -43,9 +52,21 @@ public class OwnEngine extends Engine {
 	@Override
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
 		switch ((EventType)t.getType()){
-			case ARRIVE_TO_SHELTER:
+			case YKSIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
-					arrivalProcess.generateNext();
+					yksioArrivalProcess.generateNext();
+				break;
+			case KAKSIO_ARRIVE_TO_SHELTER:
+					garbageShelter.addToQueue(new Apartment());
+					kaksioArrivalProcess.generateNext();
+				break;
+			case KOLMIO_ARRIVE_TO_SHELTER:
+					garbageShelter.addToQueue(new Apartment());
+					kolmioArrivalProcess.generateNext();
+				break;
+			case NELIO_ARRIVE_TO_SHELTER:
+					garbageShelter.addToQueue(new Apartment());
+					nelioArrivalProcess.generateNext();
 				break;
 			case EXIT:
 					garbageShelter.getFromQueue(); //TRASH HAS BEEN THROWN! :)
