@@ -5,10 +5,14 @@ import controller.Controller;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import run.Specs;
+import run.Specs.*;
+import assets.model.GarbageCanType;
+
+import java.util.ArrayList;
 
 public class OwnEngine extends Engine {
-	private ArrivalProcess 		residentArrivalProcess;
-	private ArrivalProcess 		clearGarbageShelterProcess;
+	private ArrivalProcess 		arrivalProcess;
+	private ArrivalProcess 		clearProcess;
 	private GarbageShelter 		garbageShelter;
 	private Controller 			controller;
 	private long 				delayTime = 0;
@@ -23,16 +27,16 @@ public class OwnEngine extends Engine {
 		//startingSpecs.setDefaultGarbageCanList();
 
 		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT);
-		residentArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(),(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
+		arrivalProcess 		= new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(),(int)(Math.random() * 10000)), eventList, EventType.ARRIVE_TO_SHELTER);
 		// clearing happens every week which is 10080 minutes
-		clearGarbageShelterProcess = new ArrivalProcess(new Normal(10080,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
+		clearProcess 		= new ArrivalProcess(new Normal(10080,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
 
 
 	@Override
 	protected void init() {
-		residentArrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
-		clearGarbageShelterProcess.generateNext();
+		arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
+		clearProcess.generateNext();
 		garbageShelter.printThrashCans();// !for testing purposes! //
 	}
 
@@ -40,15 +44,15 @@ public class OwnEngine extends Engine {
 	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
 		switch ((EventType)t.getType()){
 			case ARRIVE_TO_SHELTER:
-					garbageShelter.addToQueue(new Resident());
-					residentArrivalProcess.generateNext();
+					garbageShelter.addToQueue(new Apartment());
+					arrivalProcess.generateNext();
 				break;
 			case EXIT:
 					garbageShelter.getFromQueue(); //TRASH HAS BEEN THROWN! :)
 				break;
 			case CLEAR_GARBAGE_FROM_SHELTER:
 					garbageShelter.clearGarbageCans();
-					clearGarbageShelterProcess.generateNext();
+					clearProcess.generateNext();
 				break;
 		}
 	}
