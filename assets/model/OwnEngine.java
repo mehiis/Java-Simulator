@@ -23,8 +23,6 @@ public class OwnEngine extends Engine {
 		// added starting specs here for now! these should come from GUI simulation parameters panel in the end.
 		Specs startingSpecs = new Specs();
 
-		//startingSpecs.setDefaultGarbageCanList();
-
 		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT);
 		// GUI should be read; which arrival processes to create and use. GUI should also decide apt amt.
 		// people amt is basically a multiplier for the base amount of trash a specific type of apt generates.
@@ -40,11 +38,11 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void init() {
+		// start needed arrival processes as defined in GUI as params
 		yksioArrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
 		kaksioArrivalProcess.generateNext();
 		kolmioArrivalProcess.generateNext();
 		nelioArrivalProcess.generateNext();
-		// should arrival processes be created for each apartment?????? this should be read with controller from GUI
 		clearProcess.generateNext();
 		garbageShelter.printThrashCans();// !for testing purposes! //
 	}
