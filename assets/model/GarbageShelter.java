@@ -4,17 +4,15 @@ import assets.framework.*;
 
 import java.util.*;
 
-import eduni.distributions.ContinuousGenerator;
-
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class GarbageShelter {
 	private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private ArrayList<GarbageCan> garbageCans = new ArrayList<>();
 	private TrashDistribution trashGenerator = new TrashDistribution();
-	private final ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
+	private final double trashThrowAmtMean;
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
 	
@@ -42,10 +40,11 @@ public class GarbageShelter {
 
 
 	// Constructor with custom amount of garbage cans
-	public GarbageShelter(ContinuousGenerator generator, EventList eventList, EventType type){
+	public GarbageShelter(EventList eventList, EventType type, double meanTrashThrowAmt){
 		this.eventList 				= eventList;
-		this.generator 				= generator;
 		this.scheduledEventType 	= type;
+		// trash throw amt is passed from GUI -> controller -> engine -> here -> trash distribution
+		this.trashThrowAmtMean = meanTrashThrowAmt;
 	}
 
 	public void addToQueue(Apartment a){   // Jonon 1. asiakas aina palvelussa
@@ -69,7 +68,7 @@ public class GarbageShelter {
 		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
 		//double serviceTime = generator.sample();//+serviceTime));
 		// generate a trash distribution according to trash amt arg
-		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(6.0);
+		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(trashThrowAmtMean);
 		for (GarbageCan can : garbageCans){
 			// use trash can type to get amount of said trash
 			Double trashAmt = generatedTrash.get(can.getType());

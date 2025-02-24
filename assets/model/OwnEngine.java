@@ -25,7 +25,7 @@ public class OwnEngine extends Engine {
 
 		meanTrashThrowAmt = controller.getMeanTrashPerThrowAmt();
 
-		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT);
+		garbageShelter = new GarbageShelter(eventList, EventType.EXIT, meanTrashThrowAmt);
 		// GUI should be read; which arrival processes to create and use. GUI should also decide apt amt.
 		// people amt is basically a multiplier for the base amount of trash a specific type of apt generates.
 		yksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(1, controller.getSingleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
