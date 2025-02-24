@@ -59,6 +59,7 @@ public class GarbageShelter {
 		for (GarbageCan can : garbageCans){
 			// use trash can type to get amount of said trash
 			Double trashAmt = generatedTrash.get(can.getType());
+			generatedTrash.put(can.getType(), 0.0); // zero out trash in hashmap after getting it once, effectively simulating trash has been thrown to one of the cans only
 			if (can.checkCapacity(trashAmt)){
 				can.addGarbage(trashAmt);
 				System.out.println("Added "+trashAmt+" l of thrash to " + can.getType() + " trash can.");
