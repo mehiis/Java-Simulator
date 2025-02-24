@@ -64,6 +64,7 @@ public class GarbageShelter {
 		return queue.poll(); //delete the first element
 	}
 
+	// SORRY ABOUT THE MESS
 	// final trash placement into respective cans, separated this out to prevent nested ifs
 	public void putTrash(GarbageCan can, double trashAmt, HashMap<GarbageCanType, Double> generatedTrash) {
 		if (can.checkCapacity(trashAmt)){
@@ -75,7 +76,6 @@ public class GarbageShelter {
 			//Data collection
 			howManyTimeThrashThrown++;
 			calculateThrashAmountByType(can, trashAmt);
-
 		}
 		else {
 			// get type
