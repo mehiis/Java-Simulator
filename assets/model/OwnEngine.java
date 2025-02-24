@@ -107,7 +107,15 @@ public class OwnEngine extends Engine {
 								"CARDBOARD: " 	+ garbageShelter.getAverageRateOfType(GarbageCanType.CARDBOARD) 	+ "%.\n" +
 								"PLASTIC: " 	+ garbageShelter.getAverageRateOfType(GarbageCanType.PLASTIC) 	+ "%.\n" +
 								"GLASS: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.GLASS) 	+ "%.\n" +
-								"METAL: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.METAL) 	+ "%.\n"
+								"METAL: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.METAL) 	+ "%.\n\n" +
+
+						"Trash overflows: \n" +
+								"MIXED: " + garbageShelter.getOverflowTrash(GarbageCanType.MIXED) + " l\n" +
+								"BIO: " + garbageShelter.getOverflowTrash(GarbageCanType.BIO) + " l\n" +
+								"CARDBOARD: " + garbageShelter.getOverflowTrash(GarbageCanType.CARDBOARD) + " l\n" +
+								"PLASTIC: " + garbageShelter.getOverflowTrash(GarbageCanType.PLASTIC) + " l\n" +
+								"GLASS: " + garbageShelter.getOverflowTrash(GarbageCanType.GLASS) + " l\n" +
+								"METAL: " + garbageShelter.getOverflowTrash(GarbageCanType.METAL) + " l\n"
 		);
 	}
 

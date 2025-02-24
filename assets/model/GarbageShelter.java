@@ -22,6 +22,7 @@ public class GarbageShelter {
 	private boolean isFull 			= false;
 
 	//data variables
+	private HashMap<GarbageCanType, Double> overflowTrash = new HashMap<>();
 	private double[] thrashTotalInLitres 			= new double[GarbageCanType.values().length];;
 	private double[] tharshThrownInKg				= new double[GarbageCanType.values().length];
 	private int howManyTimeThrashThrown 			= 0;
@@ -67,7 +68,6 @@ public class GarbageShelter {
 		reserved = true;
 		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
 		//double serviceTime = generator.sample();//+serviceTime));
-		boolean thrashThrown = false;
 		// generate a trash distribution according to trash amt arg
 		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(4.0);
 		for (GarbageCan can : garbageCans){
@@ -83,12 +83,18 @@ public class GarbageShelter {
 				howManyTimeThrashThrown++;
 				calculateThrashAmountByType(can, trashAmt);
 
-				thrashThrown = true;
 			}
-		}
-		if (!thrashThrown){
-			isFull = true;
-			System.out.println("All of the cans are full!");
+			else {
+				// get type
+				GarbageCanType type = can.getType();
+				// Init entry if absent
+				overflowTrash.putIfAbsent(type, 0.0);
+				// add trash to the entry value
+				overflowTrash.put(type, overflowTrash.get(type) + trashAmt);
+
+				System.out.println("OVERFLOW IN " + type + " CAN! Added " + trashAmt + " to overflow" );
+
+			}
 		}
 	}
 
@@ -246,5 +252,12 @@ public class GarbageShelter {
 		data[1] = (double) Math.round(data[1] * 100) / 100;
 
 		return data;
+	}
+
+
+	public double getOverflowTrash(GarbageCanType type) {
+		if (overflowTrash.isEmpty()) return 0; // if there is not any overflow
+
+		return overflowTrash.get(type);
 	}
 }
