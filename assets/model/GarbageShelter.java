@@ -90,19 +90,13 @@ public class GarbageShelter {
 		}
 	}
 
-	public void throwTrash(){//Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana // parametrinä määrä + tyyppi?
+	public void throwTrash(){
 		reserved = true;
 		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
 		//double serviceTime = generator.sample();//+serviceTime));
 
 		// generate a trash distribution according to trash amt arg
 		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(trashThrowAmtMean);
-
-		// form a list of types to prepare for duplicate checking
-		List<GarbageCanType> garbageCanTypesList = new ArrayList<>();
-		for (GarbageCan can: garbageCans) {
-			garbageCanTypesList.add(can.getType());
-		}
 
 		for (GarbageCanType currentCanType : generatedTrash.keySet()) {
 			Double trashAmt = generatedTrash.get(currentCanType);
