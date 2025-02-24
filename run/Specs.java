@@ -26,7 +26,7 @@ public class Specs {
         ContinuousGenerator generatorHowMuchPeopleTakeTrashOutAtOnceUsually = new Normal(6.0, 0.2); // an educated guess
         howOftenTrashIsTakenOut = 365 / ((avgTrashAmountPerYearPerPerson * peopleAmt) / generatorHowMuchPeopleTakeTrashOutAtOnceUsually.sample()); // in days
         double disposalsPerDay = 1 / howOftenTrashIsTakenOut;
-        double meanArrivalRate = (1440 / disposalsPerDay) / apartmentAmt; // how often trash is taken, in minutes. number of apartments of given size is taken into account here.
+        double meanArrivalRate = (1440 / disposalsPerDay) / apartmentAmt; // how often trash is taken, converted from days to in minutes. number of apartments of given size is taken into account here.
         System.out.println("mean arrival rate at shelter for apt. of "+peopleAmt+" people is: "+meanArrivalRate+" minutes.");
         return meanArrivalRate;
     }

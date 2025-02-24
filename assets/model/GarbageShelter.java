@@ -59,7 +59,7 @@ public class GarbageShelter {
 		//double serviceTime = generator.sample();//+serviceTime));
 		boolean thrashThrown = false;
 		// generate a trash distribution according to trash amt arg
-		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(4.0);
+		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(6.0);
 		for (GarbageCan can : garbageCans){
 			// use trash can type to get amount of said trash
 			Double trashAmt = generatedTrash.get(can.getType());
