@@ -1,8 +1,12 @@
 package assets.model;
 
 import assets.framework.*;
+import eduni.distributions.ContinuousGenerator;
+import eduni.distributions.Negexp;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.function.*;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
@@ -37,13 +41,11 @@ public class GarbageShelter {
 		}
 	};
 
-
-
 	// Constructor with custom amount of garbage cans
 	public GarbageShelter(EventList eventList, EventType type, double meanTrashThrowAmt){
 		this.eventList 				= eventList;
 		this.scheduledEventType 	= type;
-		// trash throw amt is passed from GUI -> controller -> engine -> here -> trash distribution
+		// trash throw amt is passed from GUI -> controller -> engine -> here -> throwTrash()/trash distribution
 		this.trashThrowAmtMean = meanTrashThrowAmt;
 	}
 
@@ -62,37 +64,66 @@ public class GarbageShelter {
 		return queue.poll(); //delete the first element
 	}
 
+	// final trash placement into respective cans, separated this out to prevent nested ifs
+	public void putTrash(GarbageCan can, double trashAmt, HashMap<GarbageCanType, Double> generatedTrash) {
+		if (can.checkCapacity(trashAmt)){
+			can.addGarbage(trashAmt);
+			generatedTrash.put(can.getType(), 0.0); // zero out trash in hashmap after getting it once, effectively simulating trash has been thrown to one of the cans only
+			System.out.println("Added "+trashAmt+" l of thrash to " + can.getType() + " trash can.");
+			System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " l of trash.");
+
+			//Data collection
+			howManyTimeThrashThrown++;
+			calculateThrashAmountByType(can, trashAmt);
+
+		}
+		else {
+			// get type
+			GarbageCanType type = can.getType();
+			// Init entry if absent
+			overflowTrash.putIfAbsent(type, 0.0);
+			// add trash to the entry value
+			overflowTrash.put(type, overflowTrash.get(type) + trashAmt);
+
+			System.out.println("OVERFLOW IN " + type + " CAN! Added " + trashAmt + " to overflow" );
+
+		}
+	}
 
 	public void throwTrash(){//Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana // parametrinä määrä + tyyppi?
 		reserved = true;
 		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
 		//double serviceTime = generator.sample();//+serviceTime));
+
 		// generate a trash distribution according to trash amt arg
 		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(trashThrowAmtMean);
-		for (GarbageCan can : garbageCans){
-			// use trash can type to get amount of said trash
-			Double trashAmt = generatedTrash.get(can.getType());
-			generatedTrash.put(can.getType(), 0.0); // zero out trash in hashmap after getting it once, effectively simulating trash has been thrown to one of the cans only
-			if (can.checkCapacity(trashAmt)){
-				can.addGarbage(trashAmt);
-				System.out.println("Added "+trashAmt+" l of thrash to " + can.getType() + " trash can.");
-				System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " l of trash.");
 
-				//Data collection
-				howManyTimeThrashThrown++;
-				calculateThrashAmountByType(can, trashAmt);
+		// form a list of types to prepare for duplicate checking
+		List<GarbageCanType> garbageCanTypesList = new ArrayList<>();
+		for (GarbageCan can: garbageCans) {
+			garbageCanTypesList.add(can.getType());
+		}
 
-			}
-			else {
-				// get type
-				GarbageCanType type = can.getType();
-				// Init entry if absent
-				overflowTrash.putIfAbsent(type, 0.0);
-				// add trash to the entry value
-				overflowTrash.put(type, overflowTrash.get(type) + trashAmt);
+		for (GarbageCanType currentCanType : generatedTrash.keySet()) {
+			Double trashAmt = generatedTrash.get(currentCanType);
 
-				System.out.println("OVERFLOW IN " + type + " CAN! Added " + trashAmt + " to overflow" );
+			// find all cans of the current type
+			List<GarbageCan> cansOfType = garbageCans.stream().filter(can -> can.getType() == currentCanType).toList();
 
+			if (cansOfType.size() > 1) {
+				// if there are multiple cans of the same type, use Negexp to choose one
+				ContinuousGenerator chooseCan = new Negexp(1.0);
+				//math.min() to constrain chosen index to available indices
+				int chosenIndex = (int) Math.min(cansOfType.size() - 1, chooseCan.sample() * cansOfType.size());
+				GarbageCan chosenCan = cansOfType.get(chosenIndex);
+				// place trash
+				putTrash(chosenCan, trashAmt, generatedTrash);
+			} else {
+				if (cansOfType.size() == 1) {
+					// if only one can of this type, throw trash into it
+					GarbageCan chosenCan = cansOfType.get(0);
+					putTrash(chosenCan, trashAmt, generatedTrash);
+				}
 			}
 		}
 	}
