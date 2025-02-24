@@ -34,6 +34,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     // Left Box values
     private TextField simulationTimeValue = new TextField();
 
+    private TextField meanThrashAmountPerThrowValue = new TextField();
+
     private TextField singleAptAmountValue = new TextField();
     private TextField doubleAptAmountValue = new TextField();
     private TextField tripleAptAmountValue = new TextField();
@@ -99,6 +101,20 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 return Double.parseDouble(simulationTimeValue.getText());
             } catch (NumberFormatException e) {
                 return defaultSimulationTime;
+            }
+        }
+    }
+
+    @Override
+    public double getMeanTrashAmtPerThrow() {
+        if (meanThrashAmountPerThrowValue.getText().isEmpty()) {
+            return 1;
+        }
+        else {
+            try {
+                return Double.parseDouble(meanThrashAmountPerThrowValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
             }
         }
     }
@@ -331,6 +347,15 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         simulationTime.setLeft(simulationTimeLabel);
         simulationTime.setRight(simulationTimeValue);
 
+        // meanThrashAmountPerThrow
+        meanThrashAmountPerThrowValue.setText("6.0"); // set default
+        BorderPane meanThrashAmountPerThrow = new BorderPane();
+        meanThrashAmountPerThrowValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label meanTrashAmountPerThrowLabel = new Label("Mean Trash Amount per Throw");
+        meanTrashAmountPerThrowLabel.setFont(FONT);
+        meanThrashAmountPerThrow.setLeft(meanTrashAmountPerThrowLabel);
+        meanThrashAmountPerThrow.setRight(meanThrashAmountPerThrowValue);
+
         // Apartment amounts
         BorderPane singleAptAmount = new BorderPane();
         BorderPane doubleAptAmount = new BorderPane();
@@ -410,7 +435,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
-        VBox leftControl  = new VBox(simulationTime , singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
+        VBox leftControl  = new VBox(simulationTime, meanThrashAmountPerThrow, singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
         leftControl.setSpacing(10); // Spacing for each component
         return leftControl;
     }
