@@ -27,7 +27,17 @@ public class GarbageShelter {
 	private int howManyTimeThrashThrown 			= 0;
 	private int howManyTimesCarArrived				= 0;
 	private double[] thrashAccessibilityRateByType 	= new double[GarbageCanType.values().length];
-	private List<Double> shelterUsageRate			= new LinkedList<>();
+	private HashMap<GarbageCanType, LinkedList<Double>> shelterUsageRate = new HashMap<>() {
+		{
+			put(GarbageCanType.MIXED, new LinkedList<>());
+			put(GarbageCanType.BIO, new LinkedList<>());
+			put(GarbageCanType.CARDBOARD, new LinkedList<>());
+			put(GarbageCanType.PLASTIC, new LinkedList<>());
+			put(GarbageCanType.GLASS, new LinkedList<>());
+			put(GarbageCanType.METAL, new LinkedList<>());
+		}
+	};
+
 
 
 	// Constructor with custom amount of garbage cans
@@ -110,6 +120,7 @@ public class GarbageShelter {
 		howManyTimesCarArrived++;
 
 		for(GarbageCan can: garbageCans) {
+			calculateUsageRate(can);
 			can.empty();
 		}
 
@@ -145,6 +156,34 @@ public class GarbageShelter {
 		}
 	}
 
+	private void calculateUsageRate(GarbageCan can){
+		double usageRate = (double) Math.round((can.getCurrentCapacity() / can.getCapacity()) * 100) / 100;
+
+		System.out.println("Usage rate of " + can.getType() + " can: " + usageRate + "%." + " Current capacity: " + can.getCurrentCapacity() + " l divided by " + can.getCapacity() + " l.");
+
+		shelterUsageRate.get(can.getType()).add(usageRate);
+	}
+
+	public double getAverageUsageRateTotal(){
+		double totalUsageRate = 0;
+
+		for (GarbageCanType type: GarbageCanType.values()){
+			totalUsageRate += getAverageRateOfType(type);
+		}
+
+		return (double) Math.round((totalUsageRate / GarbageCanType.values().length) * 100) / 100;
+	}
+
+	public double getAverageRateOfType(GarbageCanType type){
+		double totalUsageRate = 0;
+
+		for (double rate: shelterUsageRate.get(type)){
+			totalUsageRate += rate;
+		}
+
+		return (double) Math.round((totalUsageRate / shelterUsageRate.get(type).size()) * 100) / 100;
+	}
+
 	public int getHowManyTimeThrashThrown(){
 		return  this.howManyTimeThrashThrown;
 	}
@@ -173,7 +212,7 @@ public class GarbageShelter {
 		return (double)(Math.round(totalAmount * 100) / 100); //round to one decimal place.
 	}
 
-	public double[] getTharshAmountByType(GarbageCanType type){
+	public double[] getThrashAmountByType(GarbageCanType type){
 		double[] data = new double[2];
 
 		switch (type){
