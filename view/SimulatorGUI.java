@@ -28,7 +28,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     //ASPECT RATIO 16:9. Possible sizes are: 800x450, 1280x720, 1600x900, 1920x1080
     private int width   = 1280;
     private int height  = 720;
-    private final double defaultSimulationTime = 2500;
+    private final double defaultSimulationTime = 14400; // 10 days
 
     // Käyttöliittymäkomponentit:
     // Left Box values
@@ -265,7 +265,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Simulation time
         BorderPane simulationTime = new BorderPane();
         simulationTimeValue.setPrefWidth(TEXT_FIELD_WIDTH);
-        Label simulationTimeLabel = new Label("Simulation Time");
+        Label simulationTimeLabel = new Label("Simulation Time (Days)");
         simulationTimeLabel.setFont(FONT);
         simulationTime.setLeft(simulationTimeLabel);
         simulationTime.setRight(simulationTimeValue);
