@@ -22,8 +22,8 @@ public class Specs {
         return simulationTime;
     }
 
-    public double getMeanArrivalRate(int peopleAmt, int apartmentAmt) {
-        ContinuousGenerator generatorHowMuchPeopleTakeTrashOutAtOnceUsually = new Normal(6.0, 0.2); // an educated guess
+    public double getMeanArrivalRate(int peopleAmt, int apartmentAmt, double meanTrashThrowAmt) {
+        ContinuousGenerator generatorHowMuchPeopleTakeTrashOutAtOnceUsually = new Normal(meanTrashThrowAmt, 0.2); // an educated guess
         howOftenTrashIsTakenOut = 365 / ((avgTrashAmountPerYearPerPerson * peopleAmt) / generatorHowMuchPeopleTakeTrashOutAtOnceUsually.sample()); // in days
         double disposalsPerDay = 1 / howOftenTrashIsTakenOut;
         double meanArrivalRate = (1440 / disposalsPerDay) / apartmentAmt; // how often trash is taken, converted from days to in minutes. number of apartments of given size is taken into account here.

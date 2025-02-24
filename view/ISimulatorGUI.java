@@ -5,10 +5,12 @@ public interface ISimulatorGUI {
 	// Kontrolleri tarvitsee syötteitä, jotka se välittää Moottorille
 	public double getSimulationTimeValue();
 
-	public int getSingleAptAmt();
-	public int getDoubleAptAmt();
-	public int getTripleAptAmt();
-	public int getQuadAptAmt();
+	double getMeanTrashAmtPerThrow();
+
+	int getSingleAptAmt();
+	int getDoubleAptAmt();
+	int getTripleAptAmt();
+	int getQuadAptAmt();
 
 
 	public int getMixedCanAmountValue();

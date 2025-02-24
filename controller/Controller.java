@@ -51,6 +51,11 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	// Koska FX-ui:n päivitykset tulevat moottorisäikeestä, ne pitää ohjata JavaFX-säikeeseen:
 
 	@Override
+	public double getMeanTrashPerThrowAmt() {
+		return ui.getMeanTrashAmtPerThrow();
+	}
+
+	@Override
 	public int getSingleAptAmt() {
 		return ui.getSingleAptAmt();
 	}

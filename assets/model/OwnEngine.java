@@ -15,6 +15,7 @@ public class OwnEngine extends Engine {
 	private GarbageShelter 		garbageShelter;
 	private Controller 			controller;
 	private long 				delayTime = 0;
+	private double meanTrashThrowAmt;
 
 	public OwnEngine(Controller controller){
 		this.controller = controller;
@@ -22,13 +23,15 @@ public class OwnEngine extends Engine {
 		// added starting specs here for now! these should come from GUI simulation parameters panel in the end.
 		Specs startingSpecs = new Specs();
 
+		meanTrashThrowAmt = controller.getMeanTrashPerThrowAmt();
+
 		garbageShelter = new GarbageShelter(new Normal(10, 6), 	eventList, EventType.EXIT);
 		// GUI should be read; which arrival processes to create and use. GUI should also decide apt amt.
 		// people amt is basically a multiplier for the base amount of trash a specific type of apt generates.
-		yksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(1, controller.getSingleAptAmt()),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
-		kaksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(2, controller.getDoubleAptAmt()),(int)(Math.random() * 10000)), eventList, EventType.KAKSIO_ARRIVE_TO_SHELTER);
-		kolmioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(3, controller.getTripleAptAmt()),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
-		nelioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(4, controller.getQuadAptAmt()),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
+		yksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(1, controller.getSingleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
+		kaksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(2, controller.getDoubleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KAKSIO_ARRIVE_TO_SHELTER);
+		kolmioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(3, controller.getTripleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
+		nelioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(4, controller.getQuadAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
 
 		// clearing happens every week which is 10080 minutes
 		clearProcess 		= new ArrivalProcess(new Normal(10080,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
