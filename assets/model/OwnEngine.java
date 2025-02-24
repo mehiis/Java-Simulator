@@ -109,12 +109,12 @@ public class OwnEngine extends Engine {
 								"METAL: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.METAL) 	+ "%.\n\n" +
 
 						"Trash overflows: \n" +
-								"MIXED: " + garbageShelter.getOverflowTrash(GarbageCanType.MIXED) + " l\n" +
-								"BIO: " + garbageShelter.getOverflowTrash(GarbageCanType.BIO) + " l\n" +
-								"CARDBOARD: " + garbageShelter.getOverflowTrash(GarbageCanType.CARDBOARD) + " l\n" +
-								"PLASTIC: " + garbageShelter.getOverflowTrash(GarbageCanType.PLASTIC) + " l\n" +
-								"GLASS: " + garbageShelter.getOverflowTrash(GarbageCanType.GLASS) + " l\n" +
-								"METAL: " + garbageShelter.getOverflowTrash(GarbageCanType.METAL) + " l\n"
+								" MIXED: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.MIXED)) + " l\n" +
+								" BIO: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.BIO)) + " l\n" +
+								" CARDBOARD: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.CARDBOARD)) + " l\n" +
+								" PLASTIC: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.PLASTIC)) + " l\n" +
+								" GLASS: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.GLASS)) + " l\n" +
+								" METAL: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.METAL)) + " l\n"
 		);
 	}
 
