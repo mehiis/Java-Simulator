@@ -18,8 +18,9 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void startSimulation() {
 
 		System.out.println("Start simulation.");
+		double daysToMinutes = (ui.getSimulationTimeValue() * 1440);
 		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
-		engine.setSimulationTime(ui.getSimulationTimeValue());
+		engine.setSimulationTime(daysToMinutes);
 		engine.setMixedCanAmountValue(ui.getMixedCanAmountValue());
 		engine.setBioCanAmountValue(ui.getBioCanAmountValue());
 		engine.setPaperCanAmountValue(ui.getPaperCanAmountValue());
