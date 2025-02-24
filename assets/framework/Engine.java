@@ -38,13 +38,13 @@ public abstract class Engine extends Thread implements IEngine{
 
 			delay();
 			
-			Trace.out(Trace.Level.INFO, "\nA-vaihe: kello on " + currentTime());
+			Trace.out(Trace.Level.INFO, "\nA-Stage: simulation time is " + currentTime() + " minutes.");
 			clock.setTime(currentTime());
 			
-			Trace.out(Trace.Level.INFO, "\nB-vaihe:" );
+			Trace.out(Trace.Level.INFO, "\nB-Stage:" );
 			executeBtypeEvents();
 			
-			Trace.out(Trace.Level.INFO, "\nC-vaihe:" );
+			Trace.out(Trace.Level.INFO, "\nC-Stage:" );
 			tryCtypeEvents();
 
 		}
@@ -74,7 +74,7 @@ public abstract class Engine extends Thread implements IEngine{
 	protected abstract void results();// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	private void delay() { // UUSI
-		Trace.out(Trace.Level.INFO, "Viive " + delayTime);
+		Trace.out(Trace.Level.INFO, "delay " + delayTime + " ms.");
 		try {
 			sleep(delayTime);
 		} catch (InterruptedException e) {

@@ -87,8 +87,20 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void results() {
-		System.out.println("Simulointi päättyi kello " + Clock.getInstance().getTime());
-		System.out.println("Tulokset ... puuttuvat vielä");
+		System.out.println("\n\n### SIMULATION ENDED###\nSimulation lasted for " + (double)(Math.round(Clock.getInstance().getTime()*100)/100) + " minutes.");
+		System.out.println(
+						"\nCOLLECTED DATA PRINT:\n" +
+						"Thrash thrown " + garbageShelter.getHowManyTimeThrashThrown() + " times.\n" +
+						"Garbage truck arrived " + garbageShelter.getGarbageCarArriveTimes() + " times.\n" +
+						"Thrash thrown in total: " + garbageShelter.getThrashTotalInLitres() + " litres/" + garbageShelter.getThrashTotalInKg() +" kg. \n" +
+								"MIXED: " + garbageShelter.getTharshAmountByType(GarbageCanType.MIXED)[0] + "l/" + garbageShelter.getTharshAmountByType(GarbageCanType.MIXED)[1] + "kg.\n" +
+								"BIO: " + garbageShelter.getTharshAmountByType(GarbageCanType.BIO)[0] + "l/" + garbageShelter.getTharshAmountByType(GarbageCanType.BIO)[1] + "kg.\n" +
+								"CARDBOARD: " + garbageShelter.getTharshAmountByType(GarbageCanType.CARDBOARD)[0] + "l/" + garbageShelter.getTharshAmountByType(GarbageCanType.CARDBOARD)[1] + "kg.\n" +
+								"PLASTIC: " + garbageShelter.getTharshAmountByType(GarbageCanType.PLASTIC)[0] + "l/" + garbageShelter.getTharshAmountByType(GarbageCanType.PLASTIC)[1] + "kg.\n" +
+								"GLASS: " + garbageShelter.getTharshAmountByType(GarbageCanType.GLASS)[0] + "l/" + garbageShelter.getTharshAmountByType(GarbageCanType.GLASS)[1] + "kg.\n" +
+								"METAL: " + garbageShelter.getTharshAmountByType(GarbageCanType.METAL)[0] + "l/" + garbageShelter.getTharshAmountByType(GarbageCanType.METAL)[1] + "kg.\n"
+
+		);
 	}
 
 	@Override
