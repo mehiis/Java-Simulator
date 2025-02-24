@@ -280,8 +280,6 @@ public class GarbageShelter {
 
 
 	public double getOverflowTrash(GarbageCanType type) {
-		if (overflowTrash.isEmpty()) return 0; // if there is not any overflow
-
-		return overflowTrash.get(type);
+		return overflowTrash.getOrDefault(type, 0.0); // return default if no overflow occurred in the can
 	}
 }
