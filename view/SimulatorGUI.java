@@ -33,7 +33,12 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     // Käyttöliittymäkomponentit:
     // Left Box values
     private TextField simulationTimeValue = new TextField();
-    private TextField apartmentAmountValue = new TextField();
+
+    private TextField singleAptAmountValue = new TextField();
+    private TextField doubleAptAmountValue = new TextField();
+    private TextField tripleAptAmountValue = new TextField();
+    private TextField quadAptAmountValue = new TextField();
+
     private TextField mixedCanAmountValue = new TextField();
     private TextField plasticCanAmountValue = new TextField();
     private TextField glassCanAmountValue = new TextField();
@@ -94,6 +99,62 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 return Double.parseDouble(simulationTimeValue.getText());
             } catch (NumberFormatException e) {
                 return defaultSimulationTime;
+            }
+        }
+    }
+
+    @Override
+    public int getSingleAptAmt() {
+        if (singleAptAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        else {
+            try {
+                return Integer.parseInt(singleAptAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
+    }
+
+    @Override
+    public int getDoubleAptAmt() {
+        if (doubleAptAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        else {
+            try {
+                return Integer.parseInt(doubleAptAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
+    }
+
+    @Override
+    public int getTripleAptAmt() {
+        if (tripleAptAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        else {
+            try {
+                return Integer.parseInt(tripleAptAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
+            }
+        }
+    }
+
+    @Override
+    public int getQuadAptAmt() {
+        if (quadAptAmountValue.getText().isEmpty()) {
+            return 1;
+        }
+        else {
+            try {
+                return Integer.parseInt(quadAptAmountValue.getText());
+            } catch (NumberFormatException e) {
+                return 1;
             }
         }
     }
@@ -270,13 +331,35 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         simulationTime.setLeft(simulationTimeLabel);
         simulationTime.setRight(simulationTimeValue);
 
-        // Apartment amount
-        BorderPane apartmentAmount = new BorderPane();
-        apartmentAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
-        Label apartmentAmountLabel = new Label("Apartment Amount");
-        apartmentAmountLabel.setFont(FONT);
-        apartmentAmount.setLeft(apartmentAmountLabel);
-        apartmentAmount.setRight(apartmentAmountValue);
+        // Apartment amounts
+        BorderPane singleAptAmount = new BorderPane();
+        BorderPane doubleAptAmount = new BorderPane();
+        BorderPane tripleAptAmount = new BorderPane();
+        BorderPane quadAptAmount = new BorderPane();
+
+        singleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label singleAptAmountLabel = new Label("Single Apartment Amount");
+        singleAptAmountLabel.setFont(FONT);
+        singleAptAmount.setLeft(singleAptAmountLabel);
+        singleAptAmount.setRight(singleAptAmountValue);
+
+        doubleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label doubleAptAmountLabel = new Label("Double Apartment Amount");
+        doubleAptAmountLabel.setFont(FONT);
+        doubleAptAmount.setLeft(doubleAptAmountLabel);
+        doubleAptAmount.setRight(doubleAptAmountValue);
+
+        tripleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label tripleAptAmountLabel = new Label("Triple Apartment Amount");
+        tripleAptAmountLabel.setFont(FONT);
+        tripleAptAmount.setLeft(tripleAptAmountLabel);
+        tripleAptAmount.setRight(tripleAptAmountValue);
+
+        quadAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label quadAptAmountLabel = new Label("Quad Apartment Amount");
+        quadAptAmountLabel.setFont(FONT);
+        quadAptAmount.setLeft(quadAptAmountLabel);
+        quadAptAmount.setRight(quadAptAmountValue);
 
         // Mixed can amount
         BorderPane mixedCanAmount = new BorderPane();
@@ -327,7 +410,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
-        VBox leftControl  = new VBox(simulationTime , apartmentAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
+        VBox leftControl  = new VBox(simulationTime , singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
         leftControl.setSpacing(10); // Spacing for each component
         return leftControl;
     }

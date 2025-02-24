@@ -21,6 +21,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		double daysToMinutes = (ui.getSimulationTimeValue() * 1440);
 		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
 		engine.setSimulationTime(daysToMinutes);
+
 		engine.setMixedCanAmountValue(ui.getMixedCanAmountValue());
 		engine.setBioCanAmountValue(ui.getBioCanAmountValue());
 		engine.setPaperCanAmountValue(ui.getPaperCanAmountValue());
@@ -48,7 +49,27 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 	// Simulointitulosten välittämistä käyttöliittymään.
 	// Koska FX-ui:n päivitykset tulevat moottorisäikeestä, ne pitää ohjata JavaFX-säikeeseen:
-		
+
+	@Override
+	public int getSingleAptAmt() {
+		return ui.getSingleAptAmt();
+	}
+
+	@Override
+	public int getDoubleAptAmt() {
+		return ui.getDoubleAptAmt();
+	}
+
+	@Override
+	public int getTripleAptAmt() {
+		return ui.getTripleAptAmt();
+	}
+
+	@Override
+	public int getQuadAptAmt() {
+		return ui.getQuadAptAmt();
+	}
+
 	@Override
 	public void naytaLoppuaika(double aika) {
 		Platform.runLater(()->ui.setLoppuaika(aika)); 
