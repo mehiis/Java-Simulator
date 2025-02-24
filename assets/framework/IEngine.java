@@ -3,6 +3,7 @@ package assets.framework;
 public interface IEngine { // UUSI
 		
 	// Kontrolleri käyttää tätä rajapintaa
+
 	public void setMixedCanAmountValue(int amount);
 	public void setPlasticCanAmountValue(int amount);
 	public void setGlassCanAmountValue(int amount);
