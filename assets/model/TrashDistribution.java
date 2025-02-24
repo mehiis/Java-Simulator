@@ -9,7 +9,7 @@ public class TrashDistribution {
     public HashMap<GarbageCanType, Double> getTrash(double trashAmtMean) {
         final int TRASHITERATIONS = 1000;
         // generate randomness to trash amount with normal distribution
-        final double dividedTrash = new Normal(trashAmtMean, 2.2).sample() / TRASHITERATIONS;
+        final double dividedTrash = new Normal(trashAmtMean, 0.2).sample() / TRASHITERATIONS;
 
         // parallel arrays with matched indices: cumulative percentages and trash types
         double[] cumulativePercentages = {61.01, 76.11, 90.66, 93.51, 97.28, 100.0};
