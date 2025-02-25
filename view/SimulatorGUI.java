@@ -57,11 +57,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     // Performance variables
 
     private Label mixedTotal = new Label("");
-    private Label bioTotal;
-    private Label cardboardTotal;
-    private Label plasticTotal;
-    private Label glassTotal;
-    private Label metalTotal;
+    private Label bioTotal = new Label("");
+    private Label cardboardTotal = new Label("");
+    private Label plasticTotal = new Label("");
+    private Label glassTotal = new Label("");
+    private Label metalTotal = new Label("");
 
     private Label mixedUsage;
     private Label bioUsage;
@@ -200,109 +200,109 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public void setMixedTotal(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        mixedTotal.setText("Total amount of mixed trash: "+df.format(value));
+        mixedTotal.setText("Mixed trash: " + df.format(value) + " kg");
     }
 
     @Override
     public void setBioTotal(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        bioTotal.setText(df.format(value));
+        bioTotal.setText("Bio trash: " + df.format(value) + " kg");
     }
 
     @Override
     public void setCardboardTotal(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        cardboardTotal.setText(df.format(value));
+        cardboardTotal.setText("Cardboard trash: " + df.format(value) + " kg");
     }
 
     @Override
     public void setPlasticTotal(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        plasticTotal.setText(df.format(value));
+        plasticTotal.setText("Plastic trash: " + df.format(value) + " kg");
     }
 
     @Override
     public void setGlassTotal(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        glassTotal.setText(df.format(value));
+        glassTotal.setText("Glass trash: " + df.format(value) + " kg");
     }
 
     @Override
     public void setMetalTotal(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        metalTotal.setText(df.format(value));
+        metalTotal.setText("Metal trash: " + df.format(value) + " kg");
     }
 
     @Override
     public void setMixedUsage(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        mixedUsage.setText(df.format(value));
+        mixedUsage.setText("Mixed usage: " + df.format(value) + "%");
     }
 
     @Override
     public void setBioUsage(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        bioUsage.setText(df.format(value));
+        bioUsage.setText("Bio usage: " + df.format(value) + "%");
     }
 
     @Override
     public void setCardboardUsage(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        cardboardUsage.setText(df.format(value));
+        cardboardUsage.setText("Cardboard usage: " + df.format(value) + "%");
     }
 
     @Override
     public void setPlasticUsage(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        plasticUsage.setText(df.format(value));
+        plasticUsage.setText("Plastic usage: " + df.format(value) + "%");
     }
 
     @Override
     public void setGlassUsage(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        glassUsage.setText(df.format(value));
+        glassUsage.setText("Glass usage: " + df.format(value) + "%");
     }
 
     @Override
     public void setMetalUsage(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        metalUsage.setText(df.format(value));
+        metalUsage.setText("Metal usage: " + df.format(value) + "%");
     }
 
     @Override
     public void setMixedOverflow(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        mixedOverflow.setText(df.format(value));
+        mixedOverflow.setText("Mixed overflow: " + df.format(value) + " kg");
     }
 
     @Override
     public void setBioOverflow(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        bioOverflow.setText(df.format(value));
+        bioOverflow.setText("Bio overflow: " + df.format(value) + " kg");
     }
 
     @Override
     public void setCardboardOverflow(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        cardboardOverflow.setText(df.format(value));
+        cardboardOverflow.setText("Cardboard overflow: " + df.format(value) + " kg");
     }
 
     @Override
     public void setPlasticOverflow(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        plasticOverflow.setText(df.format(value));
+        plasticOverflow.setText("Plastic overflow: " + df.format(value) + " kg");
     }
 
     @Override
     public void setGlassOverflow(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        glassOverflow.setText(df.format(value));
+        glassOverflow.setText("Glass overflow: " + df.format(value) + " kg");
     }
 
     @Override
     public void setMetalOverflow(double value) {
         DecimalFormat df = new DecimalFormat("#0.00");
-        metalOverflow.setText(df.format(value));
+        metalOverflow.setText("Metal overflow: " + df.format(value) + " kg");
     }
 
     public int getMixedCanAmountValue() {
@@ -475,7 +475,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         Label trashOverflows = new Label("Trash overflow: ");
         trashOverflows.setFont(FONT);
 
-        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, mixedTotal, shelterUsageRates, trashOverflows, endTime);
+        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal, shelterUsageRates, trashOverflows, endTime);
         rightControl.setSpacing(10.0);
         return rightControl;
     }

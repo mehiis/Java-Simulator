@@ -82,7 +82,92 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 	@Override
 	public void setMixedTotal(double amt) {
-		Platform.runLater(()->ui.setMixedTotal(amt));
+		Platform.runLater(() -> ui.setMixedTotal(amt));
+	}
+
+	@Override
+	public void setBioTotal(double amt) {
+		Platform.runLater(() -> ui.setBioTotal(amt));
+	}
+
+	@Override
+	public void setCardboardTotal(double amt) {
+		Platform.runLater(() -> ui.setCardboardTotal(amt));
+	}
+
+	@Override
+	public void setPlasticTotal(double amt) {
+		Platform.runLater(() -> ui.setPlasticTotal(amt));
+	}
+
+	@Override
+	public void setGlassTotal(double amt) {
+		Platform.runLater(() -> ui.setGlassTotal(amt));
+	}
+
+	@Override
+	public void setMetalTotal(double amt) {
+		Platform.runLater(() -> ui.setMetalTotal(amt));
+	}
+
+	@Override
+	public void setMixedUsage(double amt) {
+		Platform.runLater(() -> ui.setMixedUsage(amt));
+	}
+
+	@Override
+	public void setBioUsage(double amt) {
+		Platform.runLater(() -> ui.setBioUsage(amt));
+	}
+
+	@Override
+	public void setCardboardUsage(double amt) {
+		Platform.runLater(() -> ui.setCardboardUsage(amt));
+	}
+
+	@Override
+	public void setPlasticUsage(double amt) {
+		Platform.runLater(() -> ui.setPlasticUsage(amt));
+	}
+
+	@Override
+	public void setGlassUsage(double amt) {
+		Platform.runLater(() -> ui.setGlassUsage(amt));
+	}
+
+	@Override
+	public void setMetalUsage(double amt) {
+		Platform.runLater(() -> ui.setMetalUsage(amt));
+	}
+
+	@Override
+	public void setMixedOverflow(double amt) {
+		Platform.runLater(() -> ui.setMixedOverflow(amt));
+	}
+
+	@Override
+	public void setBioOverflow(double amt) {
+		Platform.runLater(() -> ui.setBioOverflow(amt));
+	}
+
+	@Override
+	public void setCardboardOverflow(double amt) {
+		Platform.runLater(() -> ui.setCardboardOverflow(amt));
+	}
+
+	@Override
+	public void setPlasticOverflow(double amt) {
+		Platform.runLater(() -> ui.setPlasticOverflow(amt));
+	}
+
+	@Override
+	public void setGlassOverflow(double amt) {
+		Platform.runLater(() -> ui.setGlassOverflow(amt));
+	}
+
+	@Override
+	public void setMetalOverflow(double amt) {
+		Platform.runLater(() -> ui.setMetalOverflow(amt));
 	}
 	
 	@Override

@@ -91,6 +91,12 @@ public class OwnEngine extends Engine {
 	protected void results() {
 		controller.naytaLoppuaika(Clock.getInstance().getTime());
 		controller.setMixedTotal(garbageShelter.getThrashAmountByType(GarbageCanType.MIXED)[0]);
+		controller.setBioTotal(garbageShelter.getThrashAmountByType(GarbageCanType.BIO)[0] );
+		controller.setCardboardTotal(garbageShelter.getThrashAmountByType(GarbageCanType.CARDBOARD)[0]);
+		controller.setPlasticTotal(garbageShelter.getThrashAmountByType(GarbageCanType.PLASTIC)[0]);
+		controller.setGlassTotal(garbageShelter.getThrashAmountByType(GarbageCanType.GLASS)[0] );
+		controller.setMetalTotal(garbageShelter.getThrashAmountByType(GarbageCanType.METAL)[0]);
+
 		System.out.println("\n\n### SIMULATION ENDED###\nSimulation lasted for " + (double)(Math.round(Clock.getInstance().getTime()*100)/100) + " minutes.");
 		System.out.println(
 						"\nCOLLECTED DATA PRINT:\n" +
