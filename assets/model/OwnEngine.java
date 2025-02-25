@@ -89,6 +89,7 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void results() {
+		controller.naytaLoppuaika(Clock.getInstance().getTime());
 		System.out.println("\n\n### SIMULATION ENDED###\nSimulation lasted for " + (double)(Math.round(Clock.getInstance().getTime()*100)/100) + " minutes.");
 		System.out.println(
 						"\nCOLLECTED DATA PRINT:\n" +

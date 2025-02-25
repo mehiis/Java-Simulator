@@ -49,7 +49,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private TextField metalCanAmountValue = new TextField();
     //
     private TextField delay;
-    private Label result;
+    private Label endTime = new Label("");
     private Label timeLabel;
     private Label delayLabel;
     private Label resultLabel;
@@ -284,7 +284,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public void setLoppuaika(double aika) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
-        this.result.setText(formatter.format(aika));
+        this.endTime.setText("Simulation end time: "+formatter.format(aika)+" minutes, "+formatter.format(aika / 1440)+" days.");
         //startButton.setDisable(false); // enabloi käynnistä-nappula uudelleen
         Clock.getInstance().setTime(0.0); // reset time
     }
@@ -368,7 +368,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         Label trashOverflows = new Label("Trash overflow: ");
         trashOverflows.setFont(FONT);
 
-        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, shelterUsageRates, trashOverflows);
+        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, shelterUsageRates, trashOverflows, endTime);
         rightControl.setSpacing(10.0);
         return rightControl;
     }
