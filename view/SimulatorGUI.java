@@ -56,6 +56,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     // Performance variables
 
+    private Label trashThrownTotalKilos = new Label("");
+    private Label trashThrownTotalLiters = new Label("");
+
     private Label mixedTotal = new Label("");
     private Label bioTotal = new Label("");
     private Label cardboardTotal = new Label("");
@@ -305,6 +308,28 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalOverflow.setText("Metal overflow: " + df.format(value) + " kg");
     }
 
+    @Override
+    public void setTrashThrowTimes(double amt) {
+
+    }
+
+    @Override
+    public void setShelterClearedTimes(double amt) {
+
+    }
+
+    @Override
+    public void setTrashThrownTotalLiters(double liters) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        trashThrownTotalLiters.setText("Total trash thrown in liters: " + df.format(liters) + " l");
+    }
+
+    @Override
+    public void setTrashThrownTotalKilos(double kg) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        trashThrownTotalKilos.setText("Total trash thrown in kilograms: " + df.format(kg) + " kg");
+    }
+
     public int getMixedCanAmountValue() {
         if (mixedCanAmountValue.getText().isEmpty()) {
             return 1;
@@ -396,7 +421,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         Clock.getInstance().setTime(0.0); // reset time
     }
 
-
     @Override
     public IVisuals getVisualisointi() {
         return view;
@@ -414,10 +438,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         VBox leftVBox   = left();
         leftVBox.setId("leftVBox");
 
-        VBox rightVBOX  = right();
-        rightVBOX.setId("rightVBOX");
+        ScrollPane rightPanel  = right();
+        rightPanel.setId("rightPanel");
 
-        horSplitPane.getItems().addAll(leftVBox, center(), rightVBOX);
+        horSplitPane.getItems().addAll(leftVBox, center(), rightPanel);
 
         //SET DEFAULT SIZE OF TOP PANELS HORIZONTALLY
         horSplitPane.getDividers().getFirst().setPosition(horizontalFirstPosition);
@@ -459,14 +483,14 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return midControl;
     }
 
-    private VBox right(){
+    private ScrollPane right(){
         final int TEXT_FIELD_WIDTH = 50;
         final Font FONT = new Font("Dubai Medium", 15);
 
         Label collectedDataTitle = new Label("COLLECTED DATA: ");
         collectedDataTitle.setFont(FONT);
 
-        Label trashThrownTotals = new Label("Trash thrown in total: ");
+        Label trashThrownTotals = new Label("Trash thrown: ");
         trashThrownTotals.setFont(FONT);
 
         Label shelterUsageRates = new Label("Shelter usage rates: ");
@@ -477,13 +501,15 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         VBox rightControl  = new VBox(
                 collectedDataTitle,
-                trashThrownTotals, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal,
+                trashThrownTotals, trashThrownTotalKilos, trashThrownTotalLiters, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal,
                 shelterUsageRates, mixedUsage, bioUsage, cardboardUsage, plasticUsage, glassUsage, metalUsage,
                 trashOverflows, mixedOverflow, bioOverflow, cardboardOverflow, plasticOverflow, glassOverflow, metalOverflow, endTime
         );
+        rightControl.setSpacing(8.0);
 
-        rightControl.setSpacing(10.0);
-        return rightControl;
+        ScrollPane scrollPane = new ScrollPane(rightControl);
+
+        return scrollPane;
     }
 
     private VBox left(){

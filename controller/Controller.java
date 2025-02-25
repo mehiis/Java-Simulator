@@ -81,6 +81,22 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	}
 
 	@Override
+	public void setTrashThrownTimes(double amt) {
+		Platform.runLater(() -> ui.setTrashThrowTimes(amt));
+	}
+
+	@Override
+	public void setShelterClearedTimes(double amt) {
+		Platform.runLater(() -> ui.setShelterClearedTimes(amt));
+	}
+
+	@Override
+	public void setTrashThrownTotal(double liters, double kg) {
+		Platform.runLater(() -> ui.setTrashThrownTotalLiters(liters));
+		Platform.runLater(() -> ui.setTrashThrownTotalKilos(kg));
+	}
+
+	@Override
 	public void setMixedTotal(double amt) {
 		Platform.runLater(() -> ui.setMixedTotal(amt));
 	}

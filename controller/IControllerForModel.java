@@ -13,6 +13,12 @@ public interface IControllerForModel {
 
     public void naytaLoppuaika(double aika);
 
+    void setTrashThrownTimes(double amt);
+
+    void setShelterClearedTimes(double amt);
+
+    void setTrashThrownTotal(double liters, double kg);
+
     // pass performance data to controller from engine
     void setMixedTotal(double amt);
 

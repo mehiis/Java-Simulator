@@ -12,6 +12,23 @@ public interface ISimulatorGUI {
 	int getTripleAptAmt();
 	int getQuadAptAmt();
 
+	public int getMixedCanAmountValue();
+	public int getPlasticCanAmountValue();
+	public int getGlassCanAmountValue();
+	public int getPaperCanAmountValue();
+	public int getBioCanAmountValue();
+	public int getMetalCanAmountValue();
+
+	public long getDelay();
+	
+	//Kontrolleri antaa käyttöliittymälle tuloksia, joita Moottori tuottaa 
+	public void setLoppuaika(double aika);
+
+	void setTrashThrowTimes(double amt);
+	void setShelterClearedTimes(double amt);
+	void setTrashThrownTotalLiters(double liters);
+	void setTrashThrownTotalKilos(double kg);
+
 	// setters for results that will be passed from controller to GUI
 	void setMixedTotal(double value);
 	void setBioTotal(double value);
@@ -31,18 +48,6 @@ public interface ISimulatorGUI {
 	void setPlasticOverflow(double value);
 	void setGlassOverflow(double value);
 	void setMetalOverflow(double value);
-
-	public int getMixedCanAmountValue();
-	public int getPlasticCanAmountValue();
-	public int getGlassCanAmountValue();
-	public int getPaperCanAmountValue();
-	public int getBioCanAmountValue();
-	public int getMetalCanAmountValue();
-
-	public long getDelay();
-	
-	//Kontrolleri antaa käyttöliittymälle tuloksia, joita Moottori tuottaa 
-	public void setLoppuaika(double aika);
 	
 	// Kontrolleri tarvitsee  
 	public IVisuals getVisualisointi();
