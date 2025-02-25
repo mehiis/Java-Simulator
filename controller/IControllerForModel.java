@@ -13,9 +13,9 @@ public interface IControllerForModel {
 
     public void naytaLoppuaika(double aika);
 
-    void setTrashThrownTimes(double amt);
+    void setTrashThrownTimes(int amt);
 
-    void setShelterClearedTimes(double amt);
+    void setShelterClearedTimes(int amt);
 
     void setTrashThrownTotal(double liters, double kg);
 

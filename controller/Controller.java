@@ -81,12 +81,12 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	}
 
 	@Override
-	public void setTrashThrownTimes(double amt) {
+	public void setTrashThrownTimes(int amt) {
 		Platform.runLater(() -> ui.setTrashThrowTimes(amt));
 	}
 
 	@Override
-	public void setShelterClearedTimes(double amt) {
+	public void setShelterClearedTimes(int amt) {
 		Platform.runLater(() -> ui.setShelterClearedTimes(amt));
 	}
 

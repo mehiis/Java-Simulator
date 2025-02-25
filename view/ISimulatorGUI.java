@@ -24,8 +24,8 @@ public interface ISimulatorGUI {
 	//Kontrolleri antaa käyttöliittymälle tuloksia, joita Moottori tuottaa 
 	public void setLoppuaika(double aika);
 
-	void setTrashThrowTimes(double amt);
-	void setShelterClearedTimes(double amt);
+	void setTrashThrowTimes(int amt);
+	void setShelterClearedTimes(int amt);
 	void setTrashThrownTotalLiters(double liters);
 	void setTrashThrownTotalKilos(double kg);
 

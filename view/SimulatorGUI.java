@@ -56,6 +56,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     // Performance variables
 
+    private Label trashThrownTimes = new Label("");
+    private Label trashClearedTimes = new Label("");
+
     private Label trashThrownTotalKilos = new Label("");
     private Label trashThrownTotalLiters = new Label("");
 
@@ -309,13 +312,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     @Override
-    public void setTrashThrowTimes(double amt) {
-
+    public void setTrashThrowTimes(int amt) {
+        trashThrownTimes.setText("Trash was thrown "+amt+" times");
     }
 
     @Override
-    public void setShelterClearedTimes(double amt) {
-
+    public void setShelterClearedTimes(int amt) {
+        trashClearedTimes.setText("Trash was cleared by truck "+amt+" times");
     }
 
     @Override
@@ -501,6 +504,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         VBox rightControl  = new VBox(
                 collectedDataTitle,
+                trashThrownTimes, trashClearedTimes,
                 trashThrownTotals, trashThrownTotalKilos, trashThrownTotalLiters, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal,
                 shelterUsageRates, mixedUsage, bioUsage, cardboardUsage, plasticUsage, glassUsage, metalUsage,
                 trashOverflows, mixedOverflow, bioOverflow, cardboardOverflow, plasticOverflow, glassOverflow, metalOverflow, endTime

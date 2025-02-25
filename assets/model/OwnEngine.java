@@ -92,6 +92,9 @@ public class OwnEngine extends Engine {
 
 		controller.naytaLoppuaika(Clock.getInstance().getTime());
 
+		controller.setTrashThrownTimes(garbageShelter.getHowManyTimeThrashThrown());
+		controller.setShelterClearedTimes(garbageShelter.getGarbageCarArriveTimes());
+
 		controller.setTrashThrownTotal(garbageShelter.getThrashTotalInKg(), garbageShelter.getThrashTotalInLitres());
 
 		controller.setMixedTotal(garbageShelter.getThrashAmountByType(GarbageCanType.MIXED)[0]);
