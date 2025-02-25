@@ -56,7 +56,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     // Performance variables
 
-    private Label mixedTotal;
+    private Label mixedTotal = new Label("");
     private Label bioTotal;
     private Label cardboardTotal;
     private Label plasticTotal;
@@ -82,7 +82,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Button fastButton;
 
     private IVisuals view;
-
 
     @Override
     public void init() {
@@ -196,6 +195,114 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 return 1;
             }
         }
+    }
+
+    @Override
+    public void setMixedTotal(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        mixedTotal.setText("Total amount of mixed trash: "+df.format(value));
+    }
+
+    @Override
+    public void setBioTotal(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        bioTotal.setText(df.format(value));
+    }
+
+    @Override
+    public void setCardboardTotal(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        cardboardTotal.setText(df.format(value));
+    }
+
+    @Override
+    public void setPlasticTotal(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        plasticTotal.setText(df.format(value));
+    }
+
+    @Override
+    public void setGlassTotal(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        glassTotal.setText(df.format(value));
+    }
+
+    @Override
+    public void setMetalTotal(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        metalTotal.setText(df.format(value));
+    }
+
+    @Override
+    public void setMixedUsage(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        mixedUsage.setText(df.format(value));
+    }
+
+    @Override
+    public void setBioUsage(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        bioUsage.setText(df.format(value));
+    }
+
+    @Override
+    public void setCardboardUsage(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        cardboardUsage.setText(df.format(value));
+    }
+
+    @Override
+    public void setPlasticUsage(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        plasticUsage.setText(df.format(value));
+    }
+
+    @Override
+    public void setGlassUsage(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        glassUsage.setText(df.format(value));
+    }
+
+    @Override
+    public void setMetalUsage(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        metalUsage.setText(df.format(value));
+    }
+
+    @Override
+    public void setMixedOverflow(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        mixedOverflow.setText(df.format(value));
+    }
+
+    @Override
+    public void setBioOverflow(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        bioOverflow.setText(df.format(value));
+    }
+
+    @Override
+    public void setCardboardOverflow(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        cardboardOverflow.setText(df.format(value));
+    }
+
+    @Override
+    public void setPlasticOverflow(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        plasticOverflow.setText(df.format(value));
+    }
+
+    @Override
+    public void setGlassOverflow(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        glassOverflow.setText(df.format(value));
+    }
+
+    @Override
+    public void setMetalOverflow(double value) {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        metalOverflow.setText(df.format(value));
     }
 
     public int getMixedCanAmountValue() {
@@ -368,7 +475,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         Label trashOverflows = new Label("Trash overflow: ");
         trashOverflows.setFont(FONT);
 
-        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, shelterUsageRates, trashOverflows, endTime);
+        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, mixedTotal, shelterUsageRates, trashOverflows, endTime);
         rightControl.setSpacing(10.0);
         return rightControl;
     }

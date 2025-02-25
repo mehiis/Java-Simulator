@@ -12,6 +12,25 @@ public interface ISimulatorGUI {
 	int getTripleAptAmt();
 	int getQuadAptAmt();
 
+	// setters for results that will be passed from controller to GUI
+	void setMixedTotal(double value);
+	void setBioTotal(double value);
+	void setCardboardTotal(double value);
+	void setPlasticTotal(double value);
+	void setGlassTotal(double value);
+	void setMetalTotal(double value);
+	void setMixedUsage(double value);
+	void setBioUsage(double value);
+	void setCardboardUsage(double value);
+	void setPlasticUsage(double value);
+	void setGlassUsage(double value);
+	void setMetalUsage(double value);
+	void setMixedOverflow(double value);
+	void setBioOverflow(double value);
+	void setCardboardOverflow(double value);
+	void setPlasticOverflow(double value);
+	void setGlassOverflow(double value);
+	void setMetalOverflow(double value);
 
 	public int getMixedCanAmountValue();
 	public int getPlasticCanAmountValue();

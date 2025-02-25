@@ -12,5 +12,9 @@ public interface IControllerForModel {
     int getQuadAptAmt();
 
     public void naytaLoppuaika(double aika);
+
+    // pass performance data to controller from engine
+    void setMixedTotal(double amt);
+
     public void visualisoiAsiakas();
 }

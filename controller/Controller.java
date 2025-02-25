@@ -79,6 +79,11 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void naytaLoppuaika(double aika) {
 		Platform.runLater(()->ui.setLoppuaika(aika)); 
 	}
+
+	@Override
+	public void setMixedTotal(double amt) {
+		Platform.runLater(()->ui.setMixedTotal(amt));
+	}
 	
 	@Override
 	public void visualisoiAsiakas() {
