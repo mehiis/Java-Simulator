@@ -63,19 +63,19 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Label glassTotal = new Label("");
     private Label metalTotal = new Label("");
 
-    private Label mixedUsage;
-    private Label bioUsage;
-    private Label cardboardUsage;
-    private Label plasticUsage;
-    private Label glassUsage;
-    private Label metalUsage;
+    private Label mixedUsage = new Label("");
+    private Label bioUsage = new Label("");
+    private Label cardboardUsage = new Label("");
+    private Label plasticUsage = new Label("");
+    private Label glassUsage = new Label("");
+    private Label metalUsage = new Label("");
 
-    private Label mixedOverflow;
-    private Label bioOverflow;
-    private Label cardboardOverflow;
-    private Label plasticOverflow;
-    private Label glassOverflow;
-    private  Label metalOverflow;
+    private Label mixedOverflow = new Label("");
+    private Label bioOverflow = new Label("");
+    private Label cardboardOverflow = new Label("");
+    private Label plasticOverflow = new Label("");
+    private Label glassOverflow = new Label("");
+    private  Label metalOverflow = new Label("");
 
     private Button startButton;
     private Button slowButton;
@@ -475,7 +475,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         Label trashOverflows = new Label("Trash overflow: ");
         trashOverflows.setFont(FONT);
 
-        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal, shelterUsageRates, trashOverflows, endTime);
+        VBox rightControl  = new VBox(
+                collectedDataTitle,
+                trashThrownTotals, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal,
+                shelterUsageRates, mixedUsage, bioUsage, cardboardUsage, plasticUsage, glassUsage, metalUsage,
+                trashOverflows, mixedOverflow, bioOverflow, cardboardOverflow, plasticOverflow, glassOverflow, metalOverflow, endTime
+        );
+
         rightControl.setSpacing(10.0);
         return rightControl;
     }

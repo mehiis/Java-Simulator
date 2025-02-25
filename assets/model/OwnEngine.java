@@ -97,6 +97,20 @@ public class OwnEngine extends Engine {
 		controller.setGlassTotal(garbageShelter.getThrashAmountByType(GarbageCanType.GLASS)[0] );
 		controller.setMetalTotal(garbageShelter.getThrashAmountByType(GarbageCanType.METAL)[0]);
 
+		controller.setMixedUsage(garbageShelter.getAverageRateOfType(GarbageCanType.MIXED) );
+		controller.setBioUsage(garbageShelter.getAverageRateOfType(GarbageCanType.BIO) );
+		controller.setCardboardUsage(garbageShelter.getAverageRateOfType(GarbageCanType.CARDBOARD));
+		controller.setPlasticUsage(garbageShelter.getAverageRateOfType(GarbageCanType.PLASTIC));
+		controller.setGlassUsage(garbageShelter.getAverageRateOfType(GarbageCanType.GLASS));
+		controller.setMetalUsage(garbageShelter.getAverageRateOfType(GarbageCanType.METAL));
+
+		controller.setMixedOverflow(garbageShelter.getOverflowTrash(GarbageCanType.MIXED));
+		controller.setBioOverflow(garbageShelter.getOverflowTrash(GarbageCanType.BIO));
+		controller.setCardboardOverflow(garbageShelter.getOverflowTrash(GarbageCanType.CARDBOARD));
+		controller.setPlasticOverflow(garbageShelter.getOverflowTrash(GarbageCanType.PLASTIC));
+		controller.setGlassOverflow(garbageShelter.getOverflowTrash(GarbageCanType.GLASS));
+		controller.setMetalOverflow(garbageShelter.getOverflowTrash(GarbageCanType.METAL));
+
 		System.out.println("\n\n### SIMULATION ENDED###\nSimulation lasted for " + (double)(Math.round(Clock.getInstance().getTime()*100)/100) + " minutes.");
 		System.out.println(
 						"\nCOLLECTED DATA PRINT:\n" +
