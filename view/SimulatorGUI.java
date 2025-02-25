@@ -54,6 +54,29 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Label delayLabel;
     private Label resultLabel;
 
+    // Performance variables
+
+    private Label mixedTotal;
+    private Label bioTotal;
+    private Label cardboardTotal;
+    private Label plasticTotal;
+    private Label glassTotal;
+    private Label metalTotal;
+
+    private Label mixedUsage;
+    private Label bioUsage;
+    private Label cardboardUsage;
+    private Label plasticUsage;
+    private Label glassUsage;
+    private Label metalUsage;
+
+    private Label mixedOverflow;
+    private Label bioOverflow;
+    private Label cardboardOverflow;
+    private Label plasticOverflow;
+    private Label glassOverflow;
+    private  Label metalOverflow;
+
     private Button startButton;
     private Button slowButton;
     private Button fastButton;
@@ -330,9 +353,24 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     private VBox right(){
+        final int TEXT_FIELD_WIDTH = 50;
+        final Font FONT = new Font("Dubai Medium", 15);
 
-        VBox leftControl  = new VBox(new Label("right Control"));
-        return leftControl;
+        Label collectedDataTitle = new Label("COLLECTED DATA: ");
+        collectedDataTitle.setFont(FONT);
+
+        Label trashThrownTotals = new Label("Trash thrown in total: ");
+        trashThrownTotals.setFont(FONT);
+
+        Label shelterUsageRates = new Label("Shelter usage rates: ");
+        shelterUsageRates.setFont(FONT);
+
+        Label trashOverflows = new Label("Trash overflow: ");
+        trashOverflows.setFont(FONT);
+
+        VBox rightControl  = new VBox(collectedDataTitle, trashThrownTotals, shelterUsageRates, trashOverflows);
+        rightControl.setSpacing(10.0);
+        return rightControl;
     }
 
     private VBox left(){
@@ -447,7 +485,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
             @Override
             public void handle(ActionEvent event) {
                 controller.startSimulation();
-                startButton.setDisable(true);
+                //startButton.setDisable(true); //SHOULD DISABLE SIMU BUTTON AND ENABLE IT AFTER
             }
         });
 
