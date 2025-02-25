@@ -89,6 +89,7 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void results() {
+
 		controller.naytaLoppuaika(Clock.getInstance().getTime());
 
 		controller.setTrashThrownTotal(garbageShelter.getThrashTotalInKg(), garbageShelter.getThrashTotalInLitres());
