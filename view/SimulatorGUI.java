@@ -483,7 +483,12 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private VBox center(){
 
-        VBox midControl   = new VBox(new Label("Mid Control"));
+        Visuals canvas = new Visuals(600, 600);
+
+        BorderPane rootPane = new BorderPane();
+        rootPane.setCenter(canvas);
+
+        VBox midControl   = new VBox(new Label("Mid Control"), rootPane);
 
         //ONKO TÄÄ NY VBOX VAI JOKU GRID SYSTEMI????
         return midControl;
