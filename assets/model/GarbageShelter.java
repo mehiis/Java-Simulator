@@ -74,7 +74,6 @@ public class GarbageShelter {
 			System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " l of trash.");
 
 			//Data collection
-			howManyTimeThrashThrown++;
 			calculateThrashAmountByType(can, trashAmt);
 		}
 		else {
@@ -91,6 +90,9 @@ public class GarbageShelter {
 	}
 
 	public void throwTrash(){
+		//Data collection, do this here because it needs to be incremented only once
+		howManyTimeThrashThrown++;
+
 		reserved = true;
 		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
 		//double serviceTime = generator.sample();//+serviceTime));
