@@ -50,31 +50,34 @@ public class OwnEngine extends Engine {
 	}
 
 	@Override
-	protected void executeEvent(Event t){  // B-vaiheen tapahtumat
+	protected void executeEvent(Event t){// B-vaiheen tapahtumat
+
+		controller.setDay();
+
 		switch ((EventType)t.getType()){
 			case YKSIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					yksioArrivalProcess.generateNext();
-				break;
+					break;
 			case KAKSIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					kaksioArrivalProcess.generateNext();
-				break;
+					break;
 			case KOLMIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					kolmioArrivalProcess.generateNext();
-				break;
+					break;
 			case NELIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					nelioArrivalProcess.generateNext();
-				break;
+					break;
 			case EXIT:
-					garbageShelter.getFromQueue(); //TRASH HAS BEEN THROWN! :)
-				break;
+					garbageShelter.getFromQueue();//TRASH HAS BEEN THROWN! :)
+					break;
 			case CLEAR_GARBAGE_FROM_SHELTER:
 					garbageShelter.clearGarbageCans();
 					clearProcess.generateNext();
-				break;
+					break;
 		}
 	}
 

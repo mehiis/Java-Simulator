@@ -16,7 +16,7 @@ public abstract class Engine extends Thread implements IEngine{
 		eventList = new EventList();
 
 		clock.setTime(0); // Asetetaan kello alkuarvoon
-		
+
 		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
 	}
 

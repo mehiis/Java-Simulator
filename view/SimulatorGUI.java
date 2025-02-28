@@ -5,6 +5,8 @@ import assets.framework.Clock;
 import assets.framework.Trace;
 import controller.IControllerForView;
 import controller.Controller;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
@@ -50,6 +53,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private TextField paperCanAmountValue = new TextField();
     private TextField bioCanAmountValue = new TextField();
     private TextField metalCanAmountValue = new TextField();
+    // Middle Control
+    private Label dayLabel = new Label("Day: 1");
+
     //
     private TextField delay;
     private Label endTime = new Label("");
@@ -120,6 +126,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setDay(int day) {
+        dayLabel.setText("Day: " + day);
     }
 
     @Override
@@ -487,8 +497,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         BorderPane rootPane = new BorderPane();
         rootPane.setCenter(canvas);
+        dayLabel.setFont(new Font("Dubai Medium", 20));
+        dayLabel.setVisible(false);
 
-        VBox midControl   = new VBox(new Label("Mid Control"), rootPane);
+        VBox midControl   = new VBox(dayLabel, rootPane);
 
         //ONKO TÄÄ NY VBOX VAI JOKU GRID SYSTEMI????
         return midControl;
@@ -643,6 +655,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                dayLabel.setVisible(true);
                 controller.startSimulation();
                 //startButton.setDisable(true); //SHOULD DISABLE SIMU BUTTON AND ENABLE IT AFTER
             }

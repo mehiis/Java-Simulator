@@ -1,5 +1,6 @@
 package controller;
 
+import assets.framework.Clock;
 import javafx.application.Platform;
 import assets.framework.IEngine;
 import assets.model.OwnEngine;
@@ -35,7 +36,17 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 		((Thread)engine).start();
 	}
-	
+	public void setDay() {
+		int day;
+		if (Math.floor((Clock.getInstance().getTime()/1440)) == 0) { // Just for the first day
+			day = 1;
+		} else {
+			day = (int) ((Clock.getInstance().getTime()/1440));
+		}
+		
+		Platform.runLater(() -> ui.setDay(day));
+	}
+
 	@Override
 	public void slowDown() { // hidastetaan moottorisäiettä
 		engine.setDelay((long)(engine.getDelay()*1.10));

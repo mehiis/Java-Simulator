@@ -48,8 +48,8 @@ public interface ISimulatorGUI {
 	void setPlasticOverflow(double value);
 	void setGlassOverflow(double value);
 	void setMetalOverflow(double value);
+	void setDay(int day);
 	
 	// Kontrolleri tarvitsee  
 	public IVisuals getVisualisointi();
-
 }

@@ -19,7 +19,7 @@ public class Visuals2 extends Canvas implements IVisuals {
 	
 
 	public void tyhjennaNaytto() {
-		gc.setFill(Color.YELLOW);
+		gc.setFill(Color.DARKGREY);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}
 	
