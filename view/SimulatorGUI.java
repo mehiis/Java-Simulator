@@ -7,8 +7,10 @@ import controller.IControllerForView;
 import controller.Controller;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.*;
@@ -19,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class SimulatorGUI extends Application implements ISimulatorGUI {
     //Kontrollerin esittely (tarvitaan käyttöliittymässä)
@@ -509,7 +512,15 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 shelterUsageRates, mixedUsage, bioUsage, cardboardUsage, plasticUsage, glassUsage, metalUsage,
                 trashOverflows, mixedOverflow, bioOverflow, cardboardOverflow, plasticOverflow, glassOverflow, metalOverflow, endTime
         );
-        rightControl.setSpacing(8.0);
+
+        // set padding to all Labels in rightControl
+        ObservableList<Node> controls = rightControl.getChildren();
+        for (Node node: controls) {
+            if (node.getClass() == Label.class) {
+                ((Label) node).setPadding(new Insets(8, 8, 8, 8));
+            }
+        }
+        rightControl.setSpacing(6.0);
 
         ScrollPane scrollPane = new ScrollPane(rightControl);
 
