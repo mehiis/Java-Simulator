@@ -64,17 +64,27 @@ public class Visuals extends Canvas implements IVisuals {
 		trashCanImagesArea[0] = this.getWidth();
 		trashCanImagesArea[1] = this.getHeight() / 3;
 
-		bioImg = loadImage("src/main/resources/biowaste.png");
-		cardboardImg = loadImage("src/main/resources/cardboardwaste.png");
-		glasswasteImg = loadImage("src/main/resources/glasswaste.png");
-		kaksioImg = loadImage("src/main/resources/kaksio.png");
-		kolmioImg = loadImage("src/main/resources/kolmio.png");
-		metalImg = loadImage("src/main/resources/metalwaste.png");
-		mixedImg = loadImage("src/main/resources/mixedwaste.png");
-		nelioImg = loadImage("src/main/resources/nelio.png");
-		personImg = loadImage("src/main/resources/person.png");
-		plasticImg = loadImage("src/main/resources/plasticwaste.png");
-		yksioImg = loadImage("src/main/resources/yksio.png");
+		bioImg = loadImage("src/main/resources/biowaste.png", 50, 50);
+		cardboardImg = loadImage("src/main/resources/cardboardwaste.png", 50, 50);
+		glasswasteImg = loadImage("src/main/resources/glasswaste.png",50, 50);
+		kaksioImg = loadImage("src/main/resources/kaksio.png", 50, 50);
+		kolmioImg = loadImage("src/main/resources/kolmio.png", 50, 50);
+		metalImg = loadImage("src/main/resources/metalwaste.png", 50, 50);
+		mixedImg = loadImage("src/main/resources/mixedwaste.png", 50, 50);
+		nelioImg = loadImage("src/main/resources/nelio.png", 50, 50);
+		personImg = loadImage("src/main/resources/person.png", 50, 50);
+		plasticImg = loadImage("src/main/resources/plasticwaste.png", 50, 50);
+		yksioImg = loadImage("src/main/resources/yksio.png", 50, 50);
+	}
+
+	private Image loadImage(String filepath, int sizeX, int sizeY) {
+		try {
+			FileInputStream inputStream = new FileInputStream(filepath);
+			return new Image(inputStream, sizeX, sizeY, false, false);
+		} catch (IOException e) {
+			System.err.println(e);
+		}
+		return null;
 	}
 
 	private Image loadImage(String filepath) {
@@ -99,6 +109,41 @@ public class Visuals extends Canvas implements IVisuals {
 
 	@Override
 	public Canvas updateVisuals() {
+		double apartmentImgVSize = yksioImg.getHeight();
+		double apartmentImgHSize = yksioImg.getWidth();
+
+		double yLoc = 0;
+
+		for (ApartmentType type: apartmentCounts.keySet()) {
+			double xLoc = 0;
+
+			if (type == ApartmentType.YKSIO) {
+				for (int i = 0; i < apartmentCounts.get(ApartmentType.YKSIO); i++) {
+					gc.drawImage(yksioImg, xLoc, yLoc);
+					xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
+				}
+			}
+			if (type == ApartmentType.KAKSIO) {
+				for (int i = 0; i < apartmentCounts.get(ApartmentType.KAKSIO); i++) {
+					gc.drawImage(kaksioImg, xLoc, yLoc);
+					xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
+				}
+			}
+			if (type == ApartmentType.KOLMIO) {
+				for (int i = 0; i < apartmentCounts.get(ApartmentType.KOLMIO); i++) {
+					gc.drawImage(kolmioImg, xLoc, yLoc);
+					xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
+				}
+			}
+			if (type == ApartmentType.NELIO) {
+				for (int i = 0; i < apartmentCounts.get(ApartmentType.NELIO); i++) {
+					gc.drawImage(nelioImg, xLoc, yLoc);
+					xLoc = +apartmentImgHSize + 5; // increment x loc by image width plus padding
+				}
+			}
+			yLoc += apartmentImgVSize + 5; // increment y loc by image height plus padding
+		}
+
 		gc.drawImage(bioImg, 0, 0);
 		return this;
 	}
