@@ -54,9 +54,9 @@ public class Visuals extends Canvas implements IVisuals {
 		trashCanCounts.put(GarbageCanType.GLASS, 1);
 		trashCanCounts.put(GarbageCanType.METAL, 1);
 
-		apartmentCounts.put(ApartmentType.YKSIO, 1);
+		apartmentCounts.put(ApartmentType.YKSIO, 8);
 		apartmentCounts.put(ApartmentType.KAKSIO, 1);
-		apartmentCounts.put(ApartmentType.KOLMIO, 1);
+		apartmentCounts.put(ApartmentType.KOLMIO, 4);
 		apartmentCounts.put(ApartmentType.NELIO, 1);
 
 		apartmentImagesArea[0] = this.getWidth();
@@ -117,29 +117,32 @@ public class Visuals extends Canvas implements IVisuals {
 		for (ApartmentType type: apartmentCounts.keySet()) {
 			double xLoc = 0;
 
-			if (type == ApartmentType.YKSIO) {
-				for (int i = 0; i < apartmentCounts.get(ApartmentType.YKSIO); i++) {
-					gc.drawImage(yksioImg, xLoc, yLoc);
-					xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
-				}
-			}
-			if (type == ApartmentType.KAKSIO) {
-				for (int i = 0; i < apartmentCounts.get(ApartmentType.KAKSIO); i++) {
-					gc.drawImage(kaksioImg, xLoc, yLoc);
-					xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
-				}
-			}
-			if (type == ApartmentType.KOLMIO) {
-				for (int i = 0; i < apartmentCounts.get(ApartmentType.KOLMIO); i++) {
-					gc.drawImage(kolmioImg, xLoc, yLoc);
-					xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
-				}
-			}
-			if (type == ApartmentType.NELIO) {
-				for (int i = 0; i < apartmentCounts.get(ApartmentType.NELIO); i++) {
-					gc.drawImage(nelioImg, xLoc, yLoc);
-					xLoc = +apartmentImgHSize + 5; // increment x loc by image width plus padding
-				}
+			switch (type) {
+				case YKSIO:
+					for (int i = 0; i < apartmentCounts.get(ApartmentType.YKSIO); i++) {
+						gc.drawImage(yksioImg, xLoc, yLoc);
+						xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
+					}
+					break;
+				case KAKSIO:
+					for (int i = 0; i < apartmentCounts.get(ApartmentType.KAKSIO); i++) {
+						gc.drawImage(kaksioImg, xLoc, yLoc);
+						xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
+					}
+					break;
+				case KOLMIO:
+					for (int i = 0; i < apartmentCounts.get(ApartmentType.KOLMIO); i++) {
+						gc.drawImage(kolmioImg, xLoc, yLoc);
+						xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
+					}
+					break;
+				case NELIO:
+					for (int i = 0; i < apartmentCounts.get(ApartmentType.NELIO); i++) {
+						gc.drawImage(nelioImg, xLoc, yLoc);
+						xLoc =+ apartmentImgHSize + 5; // increment x loc by image width plus padding
+					}
+					break;
+
 			}
 			yLoc += apartmentImgVSize + 5; // increment y loc by image height plus padding
 		}
