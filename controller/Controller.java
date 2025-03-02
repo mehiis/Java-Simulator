@@ -34,6 +34,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		//engine.setDelay(ui.getViive());
 		//ui.getVisualisointi().tyhjennaNaytto();
 
+		// for now: this is here for testing, to draw things once when simulator is launched!!!
 		ui.getVisualisointi().updateVisuals();
 
 		((Thread)engine).start();

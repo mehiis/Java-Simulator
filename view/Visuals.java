@@ -64,17 +64,17 @@ public class Visuals extends Canvas implements IVisuals {
 		trashCanImagesArea[0] = this.getWidth();
 		trashCanImagesArea[1] = this.getHeight() / 3;
 
-		bioImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\biowaste.png");
-		cardboardImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\cardboardwaste.png");
-		glasswasteImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\glasswaste.png");
-		kaksioImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\kaksio.png");
-		kolmioImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\kolmio.png");
-		metalImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\metalwaste.png");
-		mixedImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\mixedwaste.png");
-		nelioImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\nelio.png");
-		personImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\person.png");
-		plasticImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\plasticwaste.png");
-		yksioImg = loadImage("C:\\Users\\D\\IdeaProjects\\Java-Simulator\\src\\main\\resources\\yksio.png");
+		bioImg = loadImage("src/main/resources/biowaste.png");
+		cardboardImg = loadImage("src/main/resources/cardboardwaste.png");
+		glasswasteImg = loadImage("src/main/resources/glasswaste.png");
+		kaksioImg = loadImage("src/main/resources/kaksio.png");
+		kolmioImg = loadImage("src/main/resources/kolmio.png");
+		metalImg = loadImage("src/main/resources/metalwaste.png");
+		mixedImg = loadImage("src/main/resources/mixedwaste.png");
+		nelioImg = loadImage("src/main/resources/nelio.png");
+		personImg = loadImage("src/main/resources/person.png");
+		plasticImg = loadImage("src/main/resources/plasticwaste.png");
+		yksioImg = loadImage("src/main/resources/yksio.png");
 	}
 
 	private Image loadImage(String filepath) {
