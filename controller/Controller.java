@@ -61,6 +61,11 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	// Simulointitulosten välittämistä käyttöliittymään.
 	// Koska FX-ui:n päivitykset tulevat moottorisäikeestä, ne pitää ohjata JavaFX-säikeeseen:
 
+
+	public int getGarbageTruckArrivalInterval () {
+		return ui.getGarbageTruckArrivalInterval() * 1440;
+	}
+
 	@Override
 	public double getMeanTrashPerThrowAmt() {
 		return ui.getMeanTrashAmtPerThrow();

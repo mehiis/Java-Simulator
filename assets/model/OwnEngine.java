@@ -33,8 +33,7 @@ public class OwnEngine extends Engine {
 		kolmioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(3, controller.getTripleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
 		nelioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(4, controller.getQuadAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
 
-		// clearing happens every week which is 10080 minutes
-		clearProcess 		= new ArrivalProcess(new Normal(10080,1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
+		clearProcess 		= new ArrivalProcess(new Normal(controller.getGarbageTruckArrivalInterval(),1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
 
 

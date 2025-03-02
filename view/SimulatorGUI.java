@@ -5,8 +5,6 @@ import assets.framework.Clock;
 import assets.framework.Trace;
 import controller.IControllerForView;
 import controller.Controller;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -21,10 +19,8 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
 
 import java.text.DecimalFormat;
-import java.util.Objects;
 
 public class SimulatorGUI extends Application implements ISimulatorGUI {
     //Kontrollerin esittely (tarvitaan käyttöliittymässä)
@@ -41,6 +37,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private TextField simulationTimeValue = new TextField();
 
     private TextField meanThrashAmountPerThrowValue = new TextField();
+
+    private TextField garbageTruckArrivalValue = new TextField();
 
     private TextField singleAptAmountValue = new TextField();
     private TextField doubleAptAmountValue = new TextField();
@@ -156,6 +154,19 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 return Double.parseDouble(meanThrashAmountPerThrowValue.getText());
             } catch (NumberFormatException e) {
                 return 1;
+            }
+        }
+    }
+
+    public int getGarbageTruckArrivalInterval() {
+        if (garbageTruckArrivalValue.getText().isEmpty()) {
+            return 7;
+        }
+        else {
+            try {
+                return Integer.parseInt(garbageTruckArrivalValue.getText());
+            } catch (NumberFormatException e) {
+                return 7;
             }
         }
     }
@@ -565,6 +576,14 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         meanThrashAmountPerThrow.setLeft(meanTrashAmountPerThrowLabel);
         meanThrashAmountPerThrow.setRight(meanThrashAmountPerThrowValue);
 
+        // Garbage truck emptying interval
+        BorderPane garbageTruckTime = new BorderPane();
+        garbageTruckArrivalValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        Label garbageTruckTimeLabel = new Label("Garbage Truck Arrival Interval (Days)");
+        garbageTruckTimeLabel.setFont(FONT);
+        garbageTruckTime.setLeft(garbageTruckTimeLabel);
+        garbageTruckTime.setRight(garbageTruckArrivalValue);
+
         // Apartment amounts
         BorderPane singleAptAmount = new BorderPane();
         BorderPane doubleAptAmount = new BorderPane();
@@ -644,7 +663,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
-        VBox leftControl  = new VBox(simulationTime, meanThrashAmountPerThrow, singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
+        VBox leftControl  = new VBox(simulationTime, meanThrashAmountPerThrow, garbageTruckTime,  singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
         leftControl.setSpacing(10); // Spacing for each component
         return leftControl;
     }

@@ -6,6 +6,7 @@ public interface ISimulatorGUI {
 	public double getSimulationTimeValue();
 
 	double getMeanTrashAmtPerThrow();
+	int getGarbageTruckArrivalInterval();
 
 	int getSingleAptAmt();
 	int getDoubleAptAmt();
