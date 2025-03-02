@@ -53,4 +53,5 @@ public interface ISimulatorGUI {
 	// Kontrolleri tarvitsee  
 	public IVisuals getVisualisointi();
 
+	void setDay(int day);
 }
