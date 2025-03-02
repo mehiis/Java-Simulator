@@ -176,13 +176,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public int getSingleAptAmt() {
         if (singleAptAmountValue.getText().isEmpty()) {
-            return 1;
+            return 10;
         }
         else {
             try {
                 return Integer.parseInt(singleAptAmountValue.getText());
             } catch (NumberFormatException e) {
-                return 1;
+                return 10;
             }
         }
     }
@@ -190,13 +190,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public int getDoubleAptAmt() {
         if (doubleAptAmountValue.getText().isEmpty()) {
-            return 1;
+            return 8;
         }
         else {
             try {
                 return Integer.parseInt(doubleAptAmountValue.getText());
             } catch (NumberFormatException e) {
-                return 1;
+                return 8;
             }
         }
     }
@@ -204,13 +204,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public int getTripleAptAmt() {
         if (tripleAptAmountValue.getText().isEmpty()) {
-            return 1;
+            return 6;
         }
         else {
             try {
                 return Integer.parseInt(tripleAptAmountValue.getText());
             } catch (NumberFormatException e) {
-                return 1;
+                return 6;
             }
         }
     }
@@ -218,13 +218,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public int getQuadAptAmt() {
         if (quadAptAmountValue.getText().isEmpty()) {
-            return 1;
+            return 4;
         }
         else {
             try {
                 return Integer.parseInt(quadAptAmountValue.getText());
             } catch (NumberFormatException e) {
-                return 1;
+                return 4;
             }
         }
     }
@@ -567,6 +567,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Simulation time
         BorderPane simulationTime = new BorderPane();
         simulationTimeValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        simulationTimeValue.setPromptText("10");
         Label simulationTimeLabel = new Label("Simulation Time (Days)");
         simulationTimeLabel.setFont(FONT);
         simulationTime.setLeft(simulationTimeLabel);
@@ -584,6 +585,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Garbage truck emptying interval
         BorderPane garbageTruckTime = new BorderPane();
         garbageTruckArrivalValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        garbageTruckArrivalValue.setPromptText("7");
         Label garbageTruckTimeLabel = new Label("Garbage Truck Arrival Interval (Days)");
         garbageTruckTimeLabel.setFont(FONT);
         garbageTruckTime.setLeft(garbageTruckTimeLabel);
@@ -596,24 +598,28 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane quadAptAmount = new BorderPane();
 
         singleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        singleAptAmountValue.setPromptText("10");
         Label singleAptAmountLabel = new Label("Single Apartment Amount");
         singleAptAmountLabel.setFont(FONT);
         singleAptAmount.setLeft(singleAptAmountLabel);
         singleAptAmount.setRight(singleAptAmountValue);
 
         doubleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        doubleAptAmountValue.setPromptText("8");
         Label doubleAptAmountLabel = new Label("Double Apartment Amount");
         doubleAptAmountLabel.setFont(FONT);
         doubleAptAmount.setLeft(doubleAptAmountLabel);
         doubleAptAmount.setRight(doubleAptAmountValue);
 
         tripleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        tripleAptAmountValue.setPromptText("6");
         Label tripleAptAmountLabel = new Label("Triple Apartment Amount");
         tripleAptAmountLabel.setFont(FONT);
         tripleAptAmount.setLeft(tripleAptAmountLabel);
         tripleAptAmount.setRight(tripleAptAmountValue);
 
         quadAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        quadAptAmountValue.setPromptText("4");
         Label quadAptAmountLabel = new Label("Quad Apartment Amount");
         quadAptAmountLabel.setFont(FONT);
         quadAptAmount.setLeft(quadAptAmountLabel);
@@ -622,6 +628,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Mixed can amount
         BorderPane mixedCanAmount = new BorderPane();
         mixedCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        mixedCanAmountValue.setPromptText("1");
         Label mixedCanAmountLabel = new Label("Mixed");
         mixedCanAmountLabel.setFont(FONT);
         mixedCanAmount.setLeft(mixedCanAmountLabel);
@@ -630,6 +637,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Plastic can amount
         BorderPane plasticCanAmount = new BorderPane();
         plasticCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        plasticCanAmountValue.setPromptText("1");
         Label plasticCanAmountLabel = new Label("Plastic");
         plasticCanAmountLabel.setFont(FONT);
         plasticCanAmount.setLeft(plasticCanAmountLabel);
@@ -638,6 +646,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Bio can amount
         BorderPane bioCanAmount = new BorderPane();
         bioCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        bioCanAmountValue.setPromptText("1");
         Label bioCanAmountLabel = new Label("Bio");
         bioCanAmountLabel.setFont(FONT);
         bioCanAmountLabel.setFont(FONT);
@@ -647,6 +656,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Glass can amount
         BorderPane glassCanAmount = new BorderPane();
         glassCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        glassCanAmountValue.setPromptText("1");
         Label glassCanAmountLabel = new Label("Glass");
         glassCanAmountLabel.setFont(FONT);
         glassCanAmount.setLeft(glassCanAmountLabel);
@@ -655,6 +665,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Paper can amount
         BorderPane paperCanAmount = new BorderPane();
         paperCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        paperCanAmountValue.setPromptText("1");
         Label paperCanAmountLabel = new Label("Paper");
         paperCanAmountLabel.setFont(FONT);
         paperCanAmount.setLeft(paperCanAmountLabel);
@@ -663,6 +674,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         // Metal can amount
         BorderPane metalCanAmount = new BorderPane();
         metalCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        metalCanAmountValue.setPromptText("1");
         Label metalCanAmountLabel = new Label("Metal");
         metalCanAmountLabel.setFont(FONT);
         metalCanAmount.setLeft(metalCanAmountLabel);
