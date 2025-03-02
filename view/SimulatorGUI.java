@@ -96,6 +96,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private IVisuals view;
 
+    private Visuals canvas;
+
     @Override
     public void init() {
 
@@ -448,11 +450,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         Clock.getInstance().setTime(0.0); // reset time
     }
 
-    @Override
-    public IVisuals getVisualisointi() {
-        return view;
-    }
-
     private Scene createScene(){
         SplitPane horSplitPane = new SplitPane();
         SplitPane verSplitPane = new SplitPane();
@@ -502,11 +499,19 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return scene;
     }
 
+    @Override
+    public IVisuals getVisualisointi() {
+        return canvas;
+    }
+
     private VBox center(){
 
-        Visuals canvas = new Visuals(600, 600);
+        // INITIALIZING VISUALS HERE!!!
+        // controller can access canvas with getVisualisointi()
+        canvas = new Visuals(600, 600);
 
         BorderPane rootPane = new BorderPane();
+
         rootPane.setCenter(canvas);
         dayLabel.setFont(new Font("Dubai Medium", 20));
         dayLabel.setVisible(false);

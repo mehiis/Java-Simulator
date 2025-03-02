@@ -1,5 +1,7 @@
 package view;
 
+import assets.model.ApartmentType;
+import assets.model.GarbageCanType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -16,7 +18,22 @@ public class Visuals2 extends Canvas implements IVisuals {
 		gc = this.getGraphicsContext2D();
 		tyhjennaNaytto();
 	}
-	
+
+
+	@Override
+	public void setApartmentCounts(ApartmentType type, Integer count) {
+
+	}
+
+	@Override
+	public void setTrashCanCounts(GarbageCanType type, Integer count) {
+
+	}
+
+	@Override
+	public Canvas updateVisuals() {
+		return this;
+	}
 
 	public void tyhjennaNaytto() {
 		gc.setFill(Color.DARKGREY);
