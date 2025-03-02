@@ -485,6 +485,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private VBox center(){
 
+        // INITIALIZING VISUALS HERE!!!
+        // controller can access canvas with getVisualisointi()
         canvas = new Visuals(600, 600);
 
         BorderPane rootPane = new BorderPane();
