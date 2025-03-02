@@ -92,6 +92,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private IVisuals view;
 
+    private Visuals canvas;
+
     @Override
     public void init() {
 
@@ -478,16 +480,16 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     @Override
     public IVisuals getVisualisointi() {
-        return view;
+        return canvas;
     }
 
     private VBox center(){
 
-        Visuals view = new Visuals(600, 600);
+        canvas = new Visuals(600, 600);
 
         BorderPane rootPane = new BorderPane();
 
-        rootPane.setCenter(view);
+        rootPane.setCenter(canvas);
 
         VBox midControl   = new VBox(new Label("Mid Control"), rootPane);
 

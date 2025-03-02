@@ -50,6 +50,6 @@ public interface ISimulatorGUI {
 	void setMetalOverflow(double value);
 	
 	// Kontrolleri tarvitsee  
-	public IVisuals getVisualisointi();
+	IVisuals getVisualisointi();
 
 }

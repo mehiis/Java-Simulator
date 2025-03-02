@@ -98,8 +98,9 @@ public class Visuals extends Canvas implements IVisuals {
 	}
 
 	@Override
-	public void updateVisuals() {
+	public Canvas updateVisuals() {
 		gc.drawImage(bioImg, 0, 0);
+		return this;
 	}
 
 	@Override

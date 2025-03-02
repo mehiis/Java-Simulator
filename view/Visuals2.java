@@ -31,8 +31,8 @@ public class Visuals2 extends Canvas implements IVisuals {
 	}
 
 	@Override
-	public void updateVisuals() {
-
+	public Canvas updateVisuals() {
+		return this;
 	}
 
 	public void tyhjennaNaytto() {
