@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import assets.framework.IEngine;
 import assets.model.OwnEngine;
 import view.ISimulatorGUI;
+import view.IVisuals;
 
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
@@ -32,6 +33,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		//engine.setDelay(ui.getViive());
 		//ui.getVisualisointi().tyhjennaNaytto();
 
+		ui.getVisualisointi().updateVisuals();
 
 		((Thread)engine).start();
 	}
@@ -190,7 +192,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void visualisoiAsiakas() {
 		Platform.runLater(new Runnable(){
 			public void run(){
-				ui.getVisualisointi().uusiAsiakas();
+				ui.getVisualisointi().updateVisuals();
 			}
 		});
 	}
