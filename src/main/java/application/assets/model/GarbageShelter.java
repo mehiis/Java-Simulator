@@ -204,7 +204,7 @@ public class GarbageShelter {
 			totalUsageRate += getAverageRateOfType(type);
 		}
 
-		return (double) (Math.round((totalUsageRate / GarbageCanType.values().length) * 100) / 100) * 100;
+		return (double) Math.round((totalUsageRate / GarbageCanType.values().length) * 100);
 	}
 
 	public double getAverageRateOfType(GarbageCanType type){
@@ -214,7 +214,7 @@ public class GarbageShelter {
 			totalUsageRate += rate;
 		}
 
-		return (double) (Math.round((totalUsageRate / shelterUsageRate.get(type).size()) * 100) / 100)*100;
+		return (double) Math.round((totalUsageRate / shelterUsageRate.get(type).size()) * 100);
 	}
 
 	public int getHowManyTimeThrashThrown(){
