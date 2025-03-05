@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.assets.framework.Clock;
+import application.assets.model.EventType;
 import javafx.application.Platform;
 import application.assets.framework.IEngine;
 import application.assets.model.OwnEngine;
@@ -205,10 +206,10 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	}
 	
 	@Override
-	public void visualisoiAsiakas() {
+	public void visualizeResident(EventType eventType) {
 		Platform.runLater(new Runnable(){
 			public void run(){
-				ui.getVisualisointi().updateVisuals();
+				ui.getVisualisointi().newResident(eventType);
 			}
 		});
 	}

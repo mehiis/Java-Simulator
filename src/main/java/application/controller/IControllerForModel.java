@@ -1,5 +1,7 @@
 package application.controller;
 
+import application.assets.model.EventType;
+
 public interface IControllerForModel {
 
     // Rajapinta, joka tarjotaan moottorille:
@@ -56,5 +58,5 @@ public interface IControllerForModel {
 
     void setMetalOverflow(double amt);
 
-    public void visualisoiAsiakas();
+    public void visualizeResident(EventType eventType);
 }

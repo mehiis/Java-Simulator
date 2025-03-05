@@ -1,10 +1,14 @@
 package application.view;
 
+import application.assets.model.Apartment;
 import application.assets.model.ApartmentType;
+import application.assets.model.EventType;
 import application.assets.model.GarbageCanType;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -94,6 +98,12 @@ public class Visuals extends Canvas implements IVisuals {
 				// clearing screen for animation frames is done here!
 				clearDrawArea();
 				for (Resident resident: residentRenderList) {
+					resident.getTimeline().setOnFinished(new EventHandler<ActionEvent>() {
+						@Override
+						public void handle(ActionEvent actionEvent) {
+							residentRenderList.remove(resident);
+						}
+					});
 					System.out.println(resident.getyLoc());
 					gc.drawImage(personImg, resident.getxLoc(), resident.getyLoc());
 				}
@@ -215,9 +225,6 @@ public class Visuals extends Canvas implements IVisuals {
 	public Canvas updateVisuals() {
 		constructAptList();
 		constructGarbageCanList();
-		newResident(0.0);
-		newResident(100.0);
-		newResident(200.0);
 
 		return this;
 	}
@@ -228,8 +235,25 @@ public class Visuals extends Canvas implements IVisuals {
 		gc.fillRect(135, 0, this.getWidth() - 135*2, this.getHeight());
 	}
 
-	public void newResident(double startYPos) {
+	public void newResident(EventType eventType) {
 		// y loc should be get from apartment type somehow
+		double apartmentImgVSize = yksioImg.getHeight();
+		double offset = 50.0;
+		double startYPos = 0.0;
+		switch (eventType){
+			case YKSIO_ARRIVE_TO_SHELTER:
+				startYPos = 0.0 + offset;
+				break;
+			case KAKSIO_ARRIVE_TO_SHELTER:
+				startYPos = apartmentImgVSize + offset;
+				break;
+			case KOLMIO_ARRIVE_TO_SHELTER:
+				startYPos = apartmentImgVSize * 2 + offset;
+				break;
+			case NELIO_ARRIVE_TO_SHELTER:
+				startYPos = apartmentImgVSize * 3 + offset;
+				break;
+		}
 		residentRenderList.add(new Resident(startYPos));
 	}
 }

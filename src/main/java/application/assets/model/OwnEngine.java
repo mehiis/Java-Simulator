@@ -61,18 +61,22 @@ public class OwnEngine extends Engine {
 			case YKSIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					yksioArrivalProcess.generateNext();
+					controller.visualizeResident(EventType.YKSIO_ARRIVE_TO_SHELTER);
 					break;
 			case KAKSIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					kaksioArrivalProcess.generateNext();
+					controller.visualizeResident(EventType.KAKSIO_ARRIVE_TO_SHELTER);
 					break;
 			case KOLMIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					kolmioArrivalProcess.generateNext();
+					controller.visualizeResident(EventType.KOLMIO_ARRIVE_TO_SHELTER);
 					break;
 			case NELIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					nelioArrivalProcess.generateNext();
+					controller.visualizeResident(EventType.NELIO_ARRIVE_TO_SHELTER);
 					break;
 			case EXIT:
 					garbageShelter.getFromQueue();//TRASH HAS BEEN THROWN! :)

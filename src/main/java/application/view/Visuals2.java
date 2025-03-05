@@ -1,6 +1,7 @@
 package application.view;
 
 import application.assets.model.ApartmentType;
+import application.assets.model.EventType;
 import application.assets.model.GarbageCanType;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
@@ -42,7 +43,7 @@ public class Visuals2 extends Canvas implements IVisuals {
 	}
 
 	@Override
-	public void newResident(double startYPos) {
+	public void newResident(EventType eventType) {
 
 	}
 

@@ -12,6 +12,8 @@ public class Resident {
     private DoubleProperty xLoc  = new SimpleDoubleProperty();
     private DoubleProperty yLoc  = new SimpleDoubleProperty();
 
+    Timeline timeline;
+
     public double getxLoc() {
         return xLoc.get();
     }
@@ -22,20 +24,25 @@ public class Resident {
 
     public Resident(double startPosY) {
 
-        Timeline timeline = new Timeline(
+        timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0),
                         new KeyValue(xLoc, 125),
                         new KeyValue(yLoc, startPosY)
                 ),
-                new KeyFrame(Duration.seconds(3),
+                new KeyFrame(Duration.seconds(0.1),
                         new KeyValue(xLoc, 400),
-                        new KeyValue(yLoc, startPosY)
+                        new KeyValue(yLoc, 250)
                 )
         );
 
         timeline.setAutoReverse(true);
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.getOnFinished();
+        //timeline.setCycleCount(Timeline.INDEFINITE);
 
         timeline.play();
+    }
+
+    public Timeline getTimeline() {
+        return timeline;
     }
 }

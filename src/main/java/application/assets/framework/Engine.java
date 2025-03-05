@@ -3,7 +3,7 @@ package application.assets.framework;
 public abstract class Engine extends Thread implements IEngine{
 	
 	private double simulationTime = 0;
-	private long delayTime = 0; // Adjust later
+	private long delayTime = 250; // Adjust later
 
 	private Clock clock;
 	
