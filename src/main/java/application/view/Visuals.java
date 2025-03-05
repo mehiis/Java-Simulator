@@ -6,10 +6,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Visuals extends Canvas implements IVisuals {
 
@@ -18,11 +20,7 @@ public class Visuals extends Canvas implements IVisuals {
 	double i = 0;
 	double j = 10;
 
-	// define the allowed areas for both types of images, calculated in constructor
-	double[] trashCanImagesArea = new double[2];
-	double[] apartmentImagesArea = new double[2];
-
-	private HashMap<GarbageCanType, Integer> trashCanCounts = new HashMap<>();
+	private LinkedHashMap<GarbageCanType, Integer> trashCanCounts = new LinkedHashMap<>();
 	private Image mixedImg;
 	private Image bioImg;
 	private Image cardboardImg;
@@ -30,7 +28,7 @@ public class Visuals extends Canvas implements IVisuals {
 	private Image glasswasteImg;
 	private Image metalImg;
 
-	private HashMap<ApartmentType, Integer> apartmentCounts = new HashMap<>();
+	private LinkedHashMap<ApartmentType, Integer> apartmentCounts = new LinkedHashMap<>();
 	private Image yksioImg;
 	private Image kaksioImg;
 	private Image kolmioImg;
@@ -44,7 +42,7 @@ public class Visuals extends Canvas implements IVisuals {
 		gc = this.getGraphicsContext2D();
 		tyhjennaNaytto();
 
-		// initializing hashmaps to have 1 of each
+		// get counts to display from controller and gui
 		trashCanCounts.put(GarbageCanType.MIXED, 1);
 		trashCanCounts.put(GarbageCanType.BIO, 1);
 		trashCanCounts.put(GarbageCanType.CARDBOARD, 1);
@@ -57,24 +55,31 @@ public class Visuals extends Canvas implements IVisuals {
 		apartmentCounts.put(ApartmentType.KOLMIO, 4);
 		apartmentCounts.put(ApartmentType.NELIO, 1);
 
-		apartmentImagesArea[0] = this.getWidth();
-		apartmentImagesArea[1] = this.getHeight() / 3;
-		trashCanImagesArea[0] = this.getWidth();
-		trashCanImagesArea[1] = this.getHeight() / 3;
+		// Set text properties
+		gc.setFont(new Font("Dubai", 24)); // Set font and size
+		gc.setFill(Color.BLUE); // Set text color
 
-		bioImg = loadImage("src/main/resources/biowaste.png", 50, 50);
-		cardboardImg = loadImage("src/main/resources/cardboardwaste.png", 50, 50);
-		glasswasteImg = loadImage("src/main/resources/glasswaste.png",50, 50);
-		kaksioImg = loadImage("src/main/resources/kaksio.png", 50, 50);
-		kolmioImg = loadImage("src/main/resources/kolmio.png", 50, 50);
-		metalImg = loadImage("src/main/resources/metalwaste.png", 50, 50);
-		mixedImg = loadImage("src/main/resources/mixedwaste.png", 50, 50);
-		nelioImg = loadImage("src/main/resources/nelio.png", 50, 50);
-		personImg = loadImage("src/main/resources/person.png", 50, 50);
-		plasticImg = loadImage("src/main/resources/plasticwaste.png", 50, 50);
-		yksioImg = loadImage("src/main/resources/yksio.png", 50, 50);
+		// size of apartment images
+		int houseImgSizeX =  (int) (289*0.28);
+		int houseImgSizeY =  (int) (512*0.28);
+
+		// size of trashcan images
+		int trashImgSize = (int) (512 * 0.15);
+
+		bioImg = loadImage("src/main/resources/biowaste.png", trashImgSize, trashImgSize);
+		cardboardImg = loadImage("src/main/resources/cardboardwaste.png", trashImgSize, trashImgSize);
+		glasswasteImg = loadImage("src/main/resources/glasswaste.png",trashImgSize, trashImgSize);
+		kaksioImg = loadImage("src/main/resources/kaksio.png", houseImgSizeX, houseImgSizeY);
+		kolmioImg = loadImage("src/main/resources/kolmio.png", houseImgSizeX, houseImgSizeY);
+		metalImg = loadImage("src/main/resources/metalwaste.png", trashImgSize, trashImgSize);
+		mixedImg = loadImage("src/main/resources/mixedwaste.png", trashImgSize, trashImgSize);
+		nelioImg = loadImage("src/main/resources/nelio.png", houseImgSizeX, houseImgSizeY);
+		personImg = loadImage("src/main/resources/person.png", trashImgSize, trashImgSize);
+		plasticImg = loadImage("src/main/resources/plasticwaste.png", trashImgSize, trashImgSize);
+		yksioImg = loadImage("src/main/resources/yksio.png", houseImgSizeX, houseImgSizeY);
 	}
 
+	// image load with draw size args
 	private Image loadImage(String filepath, int sizeX, int sizeY) {
 		try {
 			FileInputStream inputStream = new FileInputStream(filepath);
@@ -85,6 +90,7 @@ public class Visuals extends Canvas implements IVisuals {
 		return null;
 	}
 
+	// image load without draw size args
 	private Image loadImage(String filepath) {
 		try {
 			FileInputStream inputStream = new FileInputStream(filepath);
@@ -105,47 +111,82 @@ public class Visuals extends Canvas implements IVisuals {
 		trashCanCounts.put(type, count);
 	}
 
-	@Override
-	public Canvas updateVisuals() {
+	private void constructAptList() {
 		double apartmentImgVSize = yksioImg.getHeight();
 		double apartmentImgHSize = yksioImg.getWidth();
 
-		double yLoc = 0;
+		double yLoc = 5;
 
 		for (ApartmentType type: apartmentCounts.keySet()) {
-			double xLoc = 0;
+			double xLoc = 20;
 
 			switch (type) {
 				case YKSIO:
-					for (int i = 0; i < apartmentCounts.get(ApartmentType.YKSIO); i++) {
-						gc.drawImage(yksioImg, xLoc, yLoc);
-						xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
-					}
+					gc.drawImage(yksioImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
 					break;
 				case KAKSIO:
-					for (int i = 0; i < apartmentCounts.get(ApartmentType.KAKSIO); i++) {
-						gc.drawImage(kaksioImg, xLoc, yLoc);
-						xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
-					}
+					gc.drawImage(kaksioImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
 					break;
 				case KOLMIO:
-					for (int i = 0; i < apartmentCounts.get(ApartmentType.KOLMIO); i++) {
-						gc.drawImage(kolmioImg, xLoc, yLoc);
-						xLoc += apartmentImgHSize + 5; // increment x loc by image width plus padding
-					}
+					gc.drawImage(kolmioImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
 					break;
 				case NELIO:
-					for (int i = 0; i < apartmentCounts.get(ApartmentType.NELIO); i++) {
-						gc.drawImage(nelioImg, xLoc, yLoc);
-						xLoc =+ apartmentImgHSize + 5; // increment x loc by image width plus padding
-					}
+					gc.drawImage(nelioImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
 					break;
 
 			}
 			yLoc += apartmentImgVSize + 5; // increment y loc by image height plus padding
 		}
+	}
 
-		gc.drawImage(bioImg, 0, 0);
+	private void constructGarbageCanList() {
+		double garbageImgVSize = mixedImg.getHeight();
+		double garbageImgHSize = mixedImg.getWidth();
+
+		double yLoc = 50;
+
+		for (GarbageCanType type: trashCanCounts.keySet()) {
+			double xLoc = this.getWidth() - garbageImgHSize - 30;
+
+			switch (type) {
+				case MIXED:
+					gc.drawImage(mixedImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
+					break;
+				case BIO:
+					gc.drawImage(bioImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
+					break;
+				case CARDBOARD:
+					gc.drawImage(cardboardImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
+					break;
+				case PLASTIC:
+					gc.drawImage(plasticImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
+					break;
+				case GLASS:
+					gc.drawImage(glasswasteImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
+					break;
+				case METAL:
+					gc.drawImage(metalImg, xLoc, yLoc);
+					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
+					break;
+
+			}
+			yLoc += garbageImgVSize + 5; // increment y loc by image height plus padding
+		}
+	}
+
+	@Override
+	public Canvas updateVisuals() {
+		constructAptList();
+		constructGarbageCanList();
 		return this;
 	}
 
