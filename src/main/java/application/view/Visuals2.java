@@ -16,7 +16,7 @@ public class Visuals2 extends Canvas implements IVisuals {
 	public Visuals2(int w, int h) {
 		super(w, h);
 		gc = this.getGraphicsContext2D();
-		tyhjennaNaytto();
+		emptyScreen();
 	}
 
 
@@ -35,7 +35,7 @@ public class Visuals2 extends Canvas implements IVisuals {
 		return this;
 	}
 
-	public void tyhjennaNaytto() {
+	public void emptyScreen() {
 		gc.setFill(Color.DARKGREY);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}

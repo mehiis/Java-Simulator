@@ -13,7 +13,7 @@ public interface IVisuals {
 
 	public Canvas updateVisuals();
 
-	public void tyhjennaNaytto();
+	public void emptyScreen();
 	
 	public void uusiAsiakas();
 		

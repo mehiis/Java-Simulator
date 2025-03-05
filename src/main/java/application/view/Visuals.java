@@ -2,15 +2,20 @@ package application.view;
 
 import application.assets.model.ApartmentType;
 import application.assets.model.GarbageCanType;
+import javafx.animation.*;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Visuals extends Canvas implements IVisuals {
@@ -40,7 +45,7 @@ public class Visuals extends Canvas implements IVisuals {
 	public Visuals(int w, int h) {
 		super(w, h);
 		gc = this.getGraphicsContext2D();
-		tyhjennaNaytto();
+		emptyScreen();
 
 		// get counts to display from controller and gui
 		trashCanCounts.put(GarbageCanType.MIXED, 1);
@@ -57,7 +62,6 @@ public class Visuals extends Canvas implements IVisuals {
 
 		// Set text properties
 		gc.setFont(new Font("Dubai", 24)); // Set font and size
-		gc.setFill(Color.BLUE); // Set text color
 
 		// size of apartment images
 		int houseImgSizeX =  (int) (289*0.28);
@@ -77,6 +81,7 @@ public class Visuals extends Canvas implements IVisuals {
 		personImg = loadImage("src/main/resources/person.png", trashImgSize, trashImgSize);
 		plasticImg = loadImage("src/main/resources/plasticwaste.png", trashImgSize, trashImgSize);
 		yksioImg = loadImage("src/main/resources/yksio.png", houseImgSizeX, houseImgSizeY);
+
 	}
 
 	// image load with draw size args
@@ -112,6 +117,8 @@ public class Visuals extends Canvas implements IVisuals {
 	}
 
 	private void constructAptList() {
+		gc.setFill(Color.BLUE); // Set text color to get rid of yellow fill in emptyScreen()
+
 		double apartmentImgVSize = yksioImg.getHeight();
 		double apartmentImgHSize = yksioImg.getWidth();
 
@@ -144,6 +151,8 @@ public class Visuals extends Canvas implements IVisuals {
 	}
 
 	private void constructGarbageCanList() {
+		gc.setFill(Color.BLUE); // Set text color to get rid of yellow fill in emptyScreen()
+
 		double garbageImgVSize = mixedImg.getHeight();
 		double garbageImgHSize = mixedImg.getWidth();
 
@@ -185,23 +194,44 @@ public class Visuals extends Canvas implements IVisuals {
 
 	@Override
 	public Canvas updateVisuals() {
+		emptyScreen();
 		constructAptList();
 		constructGarbageCanList();
+		uusiAsiakas();
 		return this;
 	}
 
 	@Override
-	public void tyhjennaNaytto() {
+	public void emptyScreen() {
 		gc.setFill(Color.YELLOW);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}
 
 	public void uusiAsiakas() {
-		gc.setFill(Color.RED);
-		gc.fillOval(i,j,10,10);
-		
-		i = (i + 10) % this.getWidth();
-		//j = (j + 12) % this.getHeight();
-		if (i==0) j+=10;			
+		DoubleProperty x  = new SimpleDoubleProperty();
+		DoubleProperty y  = new SimpleDoubleProperty();
+
+		Timeline timeline = new Timeline(
+				new KeyFrame(Duration.seconds(0),
+						new KeyValue(x, 0),
+						new KeyValue(y, 0)
+				),
+				new KeyFrame(Duration.seconds(3),
+						new KeyValue(x, this.getWidth() - personImg.getWidth()),
+						new KeyValue(y, this.getHeight() - personImg.getHeight())
+				)
+		);
+
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+
+		AnimationTimer timer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				gc.drawImage(personImg, x.doubleValue(), y.doubleValue());
+			}
+		};
+		timer.start();
+		timeline.play();
 	}
 }
