@@ -5,18 +5,19 @@ import application.assets.model.GarbageCanType;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Visuals extends Canvas implements IVisuals {
 
@@ -41,11 +42,12 @@ public class Visuals extends Canvas implements IVisuals {
 
 	private Image personImg;
 
+	private ArrayList<Resident> residentRenderList;
 	
 	public Visuals(int w, int h) {
 		super(w, h);
 		gc = this.getGraphicsContext2D();
-		emptyScreen();
+		clearDrawArea();
 
 		// get counts to display from controller and gui
 		trashCanCounts.put(GarbageCanType.MIXED, 1);
@@ -81,6 +83,23 @@ public class Visuals extends Canvas implements IVisuals {
 		personImg = loadImage("src/main/resources/person.png", trashImgSize, trashImgSize);
 		plasticImg = loadImage("src/main/resources/plasticwaste.png", trashImgSize, trashImgSize);
 		yksioImg = loadImage("src/main/resources/yksio.png", houseImgSizeX, houseImgSizeY);
+
+		// init resident render list
+		residentRenderList = new ArrayList<>();
+
+		// Discrete time steps using timer / ANIMATION RENDERING LOOP
+		AnimationTimer timer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				// clearing screen for animation frames is done here!
+				clearDrawArea();
+				for (Resident resident: residentRenderList) {
+					System.out.println(resident.getyLoc());
+					gc.drawImage(personImg, resident.getxLoc(), resident.getyLoc());
+				}
+			}
+		};
+		timer.start();
 
 	}
 
@@ -194,44 +213,23 @@ public class Visuals extends Canvas implements IVisuals {
 
 	@Override
 	public Canvas updateVisuals() {
-		emptyScreen();
 		constructAptList();
 		constructGarbageCanList();
-		uusiAsiakas();
+		newResident(0.0);
+		newResident(100.0);
+		newResident(200.0);
+
 		return this;
 	}
 
 	@Override
-	public void emptyScreen() {
-		gc.setFill(Color.YELLOW);
-		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
+	public void clearDrawArea() {
+		gc.setFill(Color.WHITESMOKE);
+		gc.fillRect(135, 0, this.getWidth() - 135*2, this.getHeight());
 	}
 
-	public void uusiAsiakas() {
-		DoubleProperty x  = new SimpleDoubleProperty();
-		DoubleProperty y  = new SimpleDoubleProperty();
-
-		Timeline timeline = new Timeline(
-				new KeyFrame(Duration.seconds(0),
-						new KeyValue(x, 0),
-						new KeyValue(y, 0)
-				),
-				new KeyFrame(Duration.seconds(3),
-						new KeyValue(x, this.getWidth() - personImg.getWidth()),
-						new KeyValue(y, this.getHeight() - personImg.getHeight())
-				)
-		);
-
-		timeline.setAutoReverse(true);
-		timeline.setCycleCount(Timeline.INDEFINITE);
-
-		AnimationTimer timer = new AnimationTimer() {
-			@Override
-			public void handle(long now) {
-				gc.drawImage(personImg, x.doubleValue(), y.doubleValue());
-			}
-		};
-		timer.start();
-		timeline.play();
+	public void newResident(double startYPos) {
+		// y loc should be get from apartment type somehow
+		residentRenderList.add(new Resident(startYPos));
 	}
 }

@@ -3,6 +3,7 @@ package application.view;
 
 import application.assets.model.ApartmentType;
 import application.assets.model.GarbageCanType;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
 
 public interface IVisuals {
@@ -13,9 +14,9 @@ public interface IVisuals {
 
 	public Canvas updateVisuals();
 
-	public void emptyScreen();
+	public void clearDrawArea();
 	
-	public void uusiAsiakas();
+	public void newResident(double startYPos);
 		
 }
 
