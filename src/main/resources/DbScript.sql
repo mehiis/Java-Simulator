@@ -19,5 +19,5 @@ CREATE TABLE inputs (
     metal_amount INT NOT NULL
 );
 
-CREATE USER 'simulatoruser'@'localhost' IDENTIFIED BY 'password'; -- Change user and password
-GRANT SELECT, INSERT, UPDATE, DELETE ON inputs.* TO 'simulatoruser'@'localhost';
+CREATE USER 'simulatoruser'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT, INSERT, UPDATE, DELETE ON trash_simulator.* TO 'simulatoruser'@'localhost';

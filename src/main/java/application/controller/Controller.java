@@ -1,10 +1,14 @@
 package application.controller;
 
 import application.assets.framework.Clock;
+import dao.InputParametersDao;
+import entity.InputParameters;
 import javafx.application.Platform;
 import application.assets.framework.IEngine;
 import application.assets.model.OwnEngine;
 import application.view.ISimulatorGUI;
+
+import java.time.LocalDate;
 
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
@@ -19,7 +23,8 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void startSimulation() {
 
 		System.out.println("Start simulation.");
-		double daysToMinutes = (ui.getSimulationTimeValue() * 1440);
+		saveInputsToDb();
+		int daysToMinutes = (ui.getSimulationTimeValue() * 1440);
 		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
 		engine.setSimulationTime(daysToMinutes);
 
@@ -211,5 +216,29 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 				ui.getVisualisointi().updateVisuals();
 			}
 		});
+	}
+
+	public void saveInputsToDb() {
+		try {
+			InputParametersDao inputParameterDao = new InputParametersDao();
+			inputParameterDao.persist(new InputParameters(
+					LocalDate.now(),
+					ui.getSimulationTimeValue(),
+					ui.getMeanTrashAmtPerThrow(),
+					ui.getSingleAptAmt(),
+					ui.getDoubleAptAmt(),
+					ui.getTripleAptAmt(),
+					ui.getQuadAptAmt(),
+					ui.getGarbageTruckArrivalInterval(),
+					ui.getMixedCanAmountValue(),
+					ui.getBioCanAmountValue(),
+					ui.getPaperCanAmountValue(),
+					ui.getGlassCanAmountValue(),
+					ui.getMetalCanAmountValue(),
+					ui.getPlasticCanAmountValue()));
+		} catch (Exception e) {
+			System.err.println("Error saving inputs to database: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }

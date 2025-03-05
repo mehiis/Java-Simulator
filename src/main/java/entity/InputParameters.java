@@ -1,71 +1,121 @@
 package entity;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
+@Entity
+@Table(name="inputs")
 public class InputParameters {
 
-    @Entity
-    @Table(name="employee")
-    public class Employee {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
 
-        @Id
-        @GeneratedValue(strategy=GenerationType.IDENTITY)
-        private int id;
-        @Column(name="first_name")
-        private String firstName;
-        @Column(name="last_name")
-        private String lastName;
-        private String email;
-        private double salary;
+    private LocalDate date;
 
-        public Employee(String firstName, String lastName, String email, double salary) {
-            super();
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.email = email;
-            this.salary = salary;
-        }
+    @Column(name="simulation_time")
+    private int simulationTime;
 
-        public Employee() {
-        }
+    @Column(name="mean_trash_per_throw")
+    private double meanTrashPerThrow;
 
-        public int getId() {
-            return id;
-        }
+    @Column(name="truck_arrival_interval")
+    private int truckArrivalInterval;
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    @Column(name="single_apt_amount")
+    private int singleAptAmount;
 
-        public String getFirstName() {
-            return firstName;
-        }
+    @Column(name="double_apt_amount")
+    private int doubleAptAmount;
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
+    @Column(name="triple_apt_amount")
+    private int tripleAptAmount;
 
-        public String getLastName() {
-            return lastName;
-        }
+    @Column(name="quad_apt_amount")
+    private int quadAptAmount;
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
+    @Column(name="mixed_amount")
+    private int mixedAmount;
 
-        public String getEmail() {
-            return email;
-        }
+    @Column(name="plastic_amount")
+    private int plasticAmount;
 
-        public void setEmail(String email) {
-            this.email = email;
-        }
+    @Column(name="bio_amount")
+    private int bioAmount;
 
-        public double getSalary() {
-            return salary;
-        }
+    @Column(name="glass_amount")
+    private int glassAmount;
 
-        public void setSalary(double salary) {
-            this.salary = salary;
-        }
+    @Column(name="paper_amount")
+    private int paperAmount;
+
+    @Column(name="metal_amount")
+    private int metalAmount;
+
+    public InputParameters(LocalDate date, int simulationTime, double meanTrashPerThrow, int truckArrivalInterval, int singleAptAmount, int doubleAptAmount, int tripleAptAmount, int quadAptAmount, int mixedAmount, int plasticAmount, int bioAmount, int glassAmount, int paperAmount, int metalAmount) {
+        super();
+        this.date                 = date;
+        this.simulationTime       = simulationTime;
+        this.meanTrashPerThrow    = meanTrashPerThrow;
+        this.truckArrivalInterval = truckArrivalInterval;
+        this.singleAptAmount      = singleAptAmount;
+        this.doubleAptAmount      = doubleAptAmount;
+        this.tripleAptAmount      = tripleAptAmount;
+        this.quadAptAmount        = quadAptAmount;
+        this.mixedAmount          = mixedAmount;
+        this.plasticAmount        = plasticAmount;
+        this.bioAmount            = bioAmount;
+        this.glassAmount          = glassAmount;
+        this.paperAmount          = paperAmount;
+        this.metalAmount          = metalAmount;
     }
+
+    public InputParameters() {
+
+    }
+
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
+
+    public int getSimulationTime() { return simulationTime; }
+    public void setSimulationTime(int simulationTime) { this.simulationTime = simulationTime; }
+
+    public double getMeanTrashPerThrow() { return meanTrashPerThrow; }
+    public void setMeanTrashPerThrow(double meanTrashPerThrow) { this.meanTrashPerThrow = meanTrashPerThrow; }
+
+    public int getTruckArrivalInterval() { return truckArrivalInterval; }
+    public void setTruckArrivalInterval(int truckArrivalInterval) { this.truckArrivalInterval = truckArrivalInterval; }
+
+    public int getSingleAptAmount() { return singleAptAmount; }
+    public void setSingleAptAmount(int singleAptAmount) { this.singleAptAmount = singleAptAmount; }
+
+    public int getDoubleAptAmount() { return doubleAptAmount; }
+    public void setDoubleAptAmount(int doubleAptAmount) { this.doubleAptAmount = doubleAptAmount; }
+
+    public int getTripleAptAmount() { return tripleAptAmount; }
+    public void setTripleAptAmount(int tripleAptAmount) { this.tripleAptAmount = tripleAptAmount; }
+
+    public int getQuadAptAmount() { return quadAptAmount; }
+    public void setQuadAptAmount(int quadAptAmount) { this.quadAptAmount = quadAptAmount; }
+
+    public int getMixedAmount() { return mixedAmount; }
+    public void setMixedAmount(int mixedAmount) { this.mixedAmount = mixedAmount; }
+
+    public int getPlasticAmount() { return plasticAmount; }
+    public void setPlasticAmount(int plasticAmount) { this.plasticAmount = plasticAmount; }
+
+    public int getBioAmount() { return bioAmount; }
+    public void setBioAmount(int bioAmount) { this.bioAmount = bioAmount; }
+
+    public int getGlassAmount() { return glassAmount; }
+    public void setGlassAmount(int glassAmount) { this.glassAmount = glassAmount; }
+
+    public int getPaperAmount() { return paperAmount; }
+    public void setPaperAmount(int paperAmount) { this.paperAmount = paperAmount; }
+
+    public int getMetalAmount() { return metalAmount; }
+    public void setMetalAmount(int metalAmount) { this.metalAmount = metalAmount; }
 }

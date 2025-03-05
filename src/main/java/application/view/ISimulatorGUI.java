@@ -3,7 +3,7 @@ package application.view;
 public interface ISimulatorGUI {
 	
 	// Kontrolleri tarvitsee syötteitä, jotka se välittää Moottorille
-	public double getSimulationTimeValue();
+	public int getSimulationTimeValue();
 
 	double getMeanTrashAmtPerThrow();
 	int getGarbageTruckArrivalInterval();

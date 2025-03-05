@@ -24,8 +24,8 @@ public class InputParametersDao {
 
     public List<InputParameters> findAll() {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-        List<InputParameters> emps = em.createQuery("select e from Employee e").getResultList();
-        return emps;
+        List<InputParameters> inputs = em.createQuery("select e from InputParameters e").getResultList();
+        return inputs;
     }
 
     public void update(InputParameters input) {
