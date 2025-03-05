@@ -6,9 +6,9 @@
     <persistence-unit name="TrashDataMariaDbUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/currency_exchange"/>
-            <property name="jakarta.persistence.jdbc.user" value="appuser"/>
-            <property name="jakarta.persistence.jdbc.password" value="12345"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/TRASH_SIMULATOR"/>
+            <property name="jakarta.persistence.jdbc.user" value="simulatoruser"/>
+            <property name="jakarta.persistence.jdbc.password" value="password"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
             <property name="jakarta.persistence.sql-dialect" value="org.hibernate.dialect.MariaDBDialect"/>
