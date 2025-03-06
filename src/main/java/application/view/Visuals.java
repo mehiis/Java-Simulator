@@ -149,6 +149,9 @@ public class Visuals extends Canvas implements IVisuals {
 	}
 
 	private void constructAptList() {
+		clearDrawArea(0, 0, 135, 600);
+		// Set text properties
+		gc.setFont(new Font("Dubai", 16)); // Set font and size
 		gc.setFill(Color.BLUE); // Set text color to get rid of yellow fill in emptyScreen()
 
 		double apartmentImgVSize = yksioImg.getHeight();
