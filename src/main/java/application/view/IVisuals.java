@@ -2,20 +2,25 @@ package application.view;
 
 
 import application.assets.model.ApartmentType;
+import application.assets.model.EventType;
 import application.assets.model.GarbageCanType;
-import javafx.scene.canvas.Canvas;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public interface IVisuals {
 
-	public void setApartmentCounts(ApartmentType type, Integer count);
+	void setApartmentCounts(ApartmentType type, Integer count);
 
-	public void setTrashCanCounts(GarbageCanType type, Integer count);
+	void setTrashCanCounts(GarbageCanType type, Integer count);
 
-	public Canvas updateVisuals();
+	// this sets up apartment/garbage can icons and amounts
+	void constructSimuElementVisuals();
 
-	public void emptyScreen();
-	
-	public void uusiAsiakas();
+	void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
+
+	void newResident(EventType eventType);
 		
 }
 

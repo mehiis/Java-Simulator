@@ -1,5 +1,11 @@
 package application.controller;
 
+import application.assets.model.EventType;
+import application.assets.model.GarbageCanType;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 public interface IControllerForModel {
 
     // Rajapinta, joka tarjotaan moottorille:
@@ -56,5 +62,5 @@ public interface IControllerForModel {
 
     void setMetalOverflow(double amt);
 
-    public void visualisoiAsiakas();
+    public void visualizeResident(EventType eventType, LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
 }

@@ -1,11 +1,17 @@
 package application.view;
 
 import application.assets.model.ApartmentType;
+import application.assets.model.EventType;
 import application.assets.model.GarbageCanType;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Visuals2 extends Canvas implements IVisuals {
 	
@@ -16,7 +22,7 @@ public class Visuals2 extends Canvas implements IVisuals {
 	public Visuals2(int w, int h) {
 		super(w, h);
 		gc = this.getGraphicsContext2D();
-		emptyScreen();
+		clearDrawArea();
 	}
 
 
@@ -31,15 +37,25 @@ public class Visuals2 extends Canvas implements IVisuals {
 	}
 
 	@Override
-	public Canvas updateVisuals() {
-		return this;
+	public void constructSimuElementVisuals() {
+
 	}
 
-	public void emptyScreen() {
+	@Override
+	public void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
+
+	}
+
+	public void clearDrawArea() {
 		gc.setFill(Color.DARKGREY);
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}
-	
+
+	@Override
+	public void newResident(EventType eventType) {
+
+	}
+
 	public void uusiAsiakas() {
 		
 		asiakasLkm++;

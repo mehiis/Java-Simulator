@@ -160,6 +160,47 @@ public class GarbageShelter {
 		isFull = false;
 	}
 
+	public LinkedHashMap<GarbageCanType, ArrayList<Double>> getGarbageCanCapacityPercentagesByType() {
+		LinkedHashMap<GarbageCanType, ArrayList<Double>> result = new LinkedHashMap<>();
+
+		ArrayList<Double> mixed = new ArrayList<>();
+		ArrayList<Double> bio = new ArrayList<>();
+		ArrayList<Double> card = new ArrayList<>();
+		ArrayList<Double> plastic = new ArrayList<>();
+		ArrayList<Double> glass = new ArrayList<>();
+		ArrayList<Double> metal = new ArrayList<>();
+
+		for (GarbageCan can: garbageCans) {
+			switch (can.getType()) {
+				case MIXED:
+					mixed.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+					break;
+				case BIO:
+					bio.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+					break;
+				case CARDBOARD:
+					card.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+					break;
+				case PLASTIC:
+					plastic.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+					break;
+				case GLASS:
+					glass.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+					break;
+				case METAL:
+					metal.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+					break;
+			}
+		}
+		result.put(GarbageCanType.MIXED, mixed);
+		result.put(GarbageCanType.BIO, bio);
+		result.put(GarbageCanType.CARDBOARD, card);
+		result.put(GarbageCanType.PLASTIC, plastic);
+		result.put(GarbageCanType.GLASS, glass);
+		result.put(GarbageCanType.METAL, metal);
+		return result;
+	}
+
 	private void calculateThrashAmountByType(GarbageCan can, double thrashAmtLitres){
 		switch (can.getType()){
 			case MIXED:

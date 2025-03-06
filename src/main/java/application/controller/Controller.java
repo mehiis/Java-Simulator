@@ -3,6 +3,9 @@ package application.controller;
 import application.assets.framework.Clock;
 import dao.InputParametersDao;
 import entity.InputParameters;
+import application.assets.model.ApartmentType;
+import application.assets.model.EventType;
+import application.assets.model.GarbageCanType;
 import javafx.application.Platform;
 import application.assets.framework.IEngine;
 import application.assets.model.OwnEngine;
@@ -13,11 +16,15 @@ import javafx.collections.ObservableList;
 import java.time.LocalDate;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
 	private ISimulatorGUI ui;
 	private InputParametersDao IPDao = new InputParametersDao();
-	
+
 	public Controller(ISimulatorGUI ui) {
 		this.ui = ui;
 	}
@@ -40,10 +47,13 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		engine.setPlasticCanAmountValue(ui.getPlasticCanAmountValue());
 
 		//engine.setDelay(ui.getViive());
-		//ui.getVisualisointi().tyhjennaNaytto();
 
-		// for now: this is here for testing, to draw things once when simulator is launched!!!
-		ui.getVisualisointi().updateVisuals();
+		// Construct visualization
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.YKSIO, ui.getSingleAptAmt());
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.KAKSIO, ui.getDoubleAptAmt());
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.KOLMIO, ui.getTripleAptAmt());
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.NELIO, ui.getQuadAptAmt());
+		ui.getVisualisointi().constructSimuElementVisuals();
 
 		((Thread)engine).start();
 	}
@@ -214,12 +224,12 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	}
 	
 	@Override
-	public void visualisoiAsiakas() {
+	public void visualizeResident(EventType eventType, LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
 		Platform.runLater(new Runnable(){
 			public void run(){
-				ui.getVisualisointi().updateVisuals();
-			}
-		});
+				ui.getVisualisointi().newResident(eventType);
+				ui.getVisualisointi().updateTrashPercentages(percentages);
+			}});
 	}
 
 	public void loadInputParameters(int id) {
