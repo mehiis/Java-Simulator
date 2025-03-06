@@ -9,6 +9,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 public class Visuals2 extends Canvas implements IVisuals {
 	
 	private GraphicsContext gc;
@@ -33,8 +37,13 @@ public class Visuals2 extends Canvas implements IVisuals {
 	}
 
 	@Override
-	public Canvas updateVisuals() {
-		return this;
+	public void constructSimuElementVisuals() {
+
+	}
+
+	@Override
+	public void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
+
 	}
 
 	public void clearDrawArea() {

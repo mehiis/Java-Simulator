@@ -160,8 +160,8 @@ public class GarbageShelter {
 		isFull = false;
 	}
 
-	public HashMap<GarbageCanType, ArrayList<Double>> getGarbageCanCapacityPercentagesByType() {
-		HashMap<GarbageCanType, ArrayList<Double>> result = new HashMap<>();
+	public LinkedHashMap<GarbageCanType, ArrayList<Double>> getGarbageCanCapacityPercentagesByType() {
+		LinkedHashMap<GarbageCanType, ArrayList<Double>> result = new LinkedHashMap<>();
 
 		ArrayList<Double> mixed = new ArrayList<>();
 		ArrayList<Double> bio = new ArrayList<>();

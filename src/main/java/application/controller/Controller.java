@@ -2,10 +2,15 @@ package application.controller;
 
 import application.assets.framework.Clock;
 import application.assets.model.EventType;
+import application.assets.model.GarbageCanType;
 import javafx.application.Platform;
 import application.assets.framework.IEngine;
 import application.assets.model.OwnEngine;
 import application.view.ISimulatorGUI;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
@@ -34,8 +39,8 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		//engine.setDelay(ui.getViive());
 		//ui.getVisualisointi().tyhjennaNaytto();
 
-		// for now: this is here for testing, to draw things once when simulator is launched!!!
-		ui.getVisualisointi().updateVisuals();
+		// Construct visualization
+		ui.getVisualisointi().constructSimuElementVisuals();
 
 		((Thread)engine).start();
 	}
@@ -206,11 +211,11 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	}
 	
 	@Override
-	public void visualizeResident(EventType eventType) {
+	public void visualizeResident(EventType eventType, LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
 		Platform.runLater(new Runnable(){
 			public void run(){
 				ui.getVisualisointi().newResident(eventType);
-			}
-		});
+				ui.getVisualisointi().updateTrashPercentages(percentages);
+			}});
 	}
 }

@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -29,6 +30,8 @@ public class Visuals extends Canvas implements IVisuals {
 	
 	double i = 0;
 	double j = 10;
+
+	private LinkedHashMap<GarbageCanType, ArrayList<Double>> trashCanPercentages;
 
 	private LinkedHashMap<GarbageCanType, Integer> trashCanCounts = new LinkedHashMap<>();
 	private Image mixedImg;
@@ -67,7 +70,7 @@ public class Visuals extends Canvas implements IVisuals {
 		apartmentCounts.put(ApartmentType.NELIO, 1);
 
 		// Set text properties
-		gc.setFont(new Font("Dubai", 24)); // Set font and size
+		gc.setFont(new Font("Dubai", 16)); // Set font and size
 
 		// size of apartment images
 		int houseImgSizeX =  (int) (289*0.28);
@@ -188,7 +191,7 @@ public class Visuals extends Canvas implements IVisuals {
 		double yLoc = 50;
 
 		for (GarbageCanType type: trashCanCounts.keySet()) {
-			double xLoc = this.getWidth() - garbageImgHSize - 30;
+			double xLoc = this.getWidth() - garbageImgHSize - 60;
 
 			switch (type) {
 				case MIXED:
@@ -222,13 +225,37 @@ public class Visuals extends Canvas implements IVisuals {
 	}
 
 	@Override
-	public Canvas updateVisuals() {
+	public void constructSimuElementVisuals() {
 		constructAptList();
 		constructGarbageCanList();
-
-		return this;
 	}
 
+	@Override
+	public void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
+		trashCanPercentages = percentages;
+
+		gc.setFont(new Font("Dubai", 8)); // Set font and size smaller
+		gc.setFill(Color.BLUE);
+
+		double garbageImgVSize = mixedImg.getHeight();
+		double garbageImgHSize = mixedImg.getWidth();
+
+		double yLoc = 50;
+
+		for (GarbageCanType type: trashCanPercentages.keySet()) {
+			double xLoc = this.getWidth() - 40;
+
+			double secondaryYoffset = 0.0;
+			for (int i = 0; i < trashCanPercentages.get(type).size(); i++) {
+				secondaryYoffset += 24;
+				gc.fillText(String.valueOf((trashCanPercentages.get(type).get(i))), xLoc, (yLoc + secondaryYoffset) - 30);
+			}
+
+			yLoc += garbageImgVSize + 5; // increment y loc by image height plus padding
+		}
+	}
+
+	// middle clear area offset: x = 135
 	@Override
 	public void clearDrawArea() {
 		gc.setFill(Color.WHITESMOKE);
