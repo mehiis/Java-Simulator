@@ -4,6 +4,8 @@ import application.assets.model.Apartment;
 import application.assets.model.ApartmentType;
 import application.assets.model.EventType;
 import application.assets.model.GarbageCanType;
+import application.controller.IControllerForModel;
+import application.controller.IControllerForView;
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -25,7 +27,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class Visuals extends Canvas implements IVisuals {
-
 	private final GraphicsContext gc;
 	
 	double i = 0;
@@ -63,9 +64,9 @@ public class Visuals extends Canvas implements IVisuals {
 		trashCanCounts.put(GarbageCanType.GLASS, 1);
 		trashCanCounts.put(GarbageCanType.METAL, 1);
 
-		apartmentCounts.put(ApartmentType.YKSIO, 8);
+		apartmentCounts.put(ApartmentType.YKSIO, 1);
 		apartmentCounts.put(ApartmentType.KAKSIO, 1);
-		apartmentCounts.put(ApartmentType.KOLMIO, 4);
+		apartmentCounts.put(ApartmentType.KOLMIO, 1);
 		apartmentCounts.put(ApartmentType.NELIO, 1);
 
 		// Set text properties

@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.assets.framework.Clock;
+import application.assets.model.ApartmentType;
 import application.assets.model.EventType;
 import application.assets.model.GarbageCanType;
 import javafx.application.Platform;
@@ -37,9 +38,12 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		engine.setPlasticCanAmountValue(ui.getPlasticCanAmountValue());
 
 		//engine.setDelay(ui.getViive());
-		//ui.getVisualisointi().tyhjennaNaytto();
 
 		// Construct visualization
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.YKSIO, ui.getSingleAptAmt());
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.KAKSIO, ui.getDoubleAptAmt());
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.KOLMIO, ui.getTripleAptAmt());
+		ui.getVisualisointi().setApartmentCounts(ApartmentType.NELIO, ui.getQuadAptAmt());
 		ui.getVisualisointi().constructSimuElementVisuals();
 
 		((Thread)engine).start();
