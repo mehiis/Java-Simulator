@@ -20,8 +20,6 @@ public interface IVisuals {
 
 	void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
 
-	void clearDrawArea();
-	
 	void newResident(EventType eventType);
 		
 }

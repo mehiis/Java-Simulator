@@ -54,7 +54,6 @@ public class Visuals extends Canvas implements IVisuals {
 	public Visuals(int w, int h) {
 		super(w, h);
 		gc = this.getGraphicsContext2D();
-		clearDrawArea();
 
 		// get counts to display from controller and gui
 		trashCanCounts.put(GarbageCanType.MIXED, 1);
@@ -99,7 +98,7 @@ public class Visuals extends Canvas implements IVisuals {
 			@Override
 			public void handle(long now) {
 				// clearing screen for animation frames is done here!
-				clearDrawArea();
+				clearDrawArea(135, 0, 600 - 135*2, 600);
 				for (Resident resident: residentRenderList) {
 					resident.getTimeline().setOnFinished(new EventHandler<ActionEvent>() {
 						@Override
@@ -196,27 +195,21 @@ public class Visuals extends Canvas implements IVisuals {
 			switch (type) {
 				case MIXED:
 					gc.drawImage(mixedImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
 					break;
 				case BIO:
 					gc.drawImage(bioImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
 					break;
 				case CARDBOARD:
 					gc.drawImage(cardboardImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
 					break;
 				case PLASTIC:
 					gc.drawImage(plasticImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
 					break;
 				case GLASS:
 					gc.drawImage(glasswasteImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
 					break;
 				case METAL:
 					gc.drawImage(metalImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((trashCanCounts.get(type))), xLoc + garbageImgHSize + 5, yLoc + garbageImgVSize);
 					break;
 
 			}
@@ -235,20 +228,24 @@ public class Visuals extends Canvas implements IVisuals {
 		trashCanPercentages = percentages;
 
 		gc.setFont(new Font("Dubai", 8)); // Set font and size smaller
-		gc.setFill(Color.BLUE);
 
 		double garbageImgVSize = mixedImg.getHeight();
 		double garbageImgHSize = mixedImg.getWidth();
 
-		double yLoc = 50;
+		double yLoc = 100;
+		double xLoc = this.getWidth() - 40;
 
 		for (GarbageCanType type: trashCanPercentages.keySet()) {
-			double xLoc = this.getWidth() - 40;
-
 			double secondaryYoffset = 0.0;
+
+			clearDrawArea((int) xLoc, (int) (yLoc - 50), 50, 80);
+			gc.setFill(Color.BLUE); // have to set fill color after clearing again
+
 			for (int i = 0; i < trashCanPercentages.get(type).size(); i++) {
-				secondaryYoffset += 24;
-				gc.fillText(String.valueOf((trashCanPercentages.get(type).get(i))), xLoc, (yLoc + secondaryYoffset) - 30);
+
+				secondaryYoffset += 9;
+
+				gc.fillText("#"+(i+1)+": "+String.format( "%.2f", trashCanPercentages.get(type).get(i))+"%", xLoc, (yLoc + secondaryYoffset) - 30);
 			}
 
 			yLoc += garbageImgVSize + 5; // increment y loc by image height plus padding
@@ -256,10 +253,9 @@ public class Visuals extends Canvas implements IVisuals {
 	}
 
 	// middle clear area offset: x = 135
-	@Override
-	public void clearDrawArea() {
+	public void clearDrawArea(int posX, int posY, int width, int height) {
 		gc.setFill(Color.WHITESMOKE);
-		gc.fillRect(135, 0, this.getWidth() - 135*2, this.getHeight());
+		gc.fillRect(posX, posY, width, height);
 	}
 
 	public void newResident(EventType eventType) {
