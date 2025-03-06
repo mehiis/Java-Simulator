@@ -3,6 +3,15 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+/**
+ * Entity class representing an entry in the "inputs" table.
+ * This class maps the simulation input parameters stored in the database.
+ * @Column annotations are used to map the fields to the corresponding columns in the database.
+ * @Entity annotation is used to mark this class as an entity class.
+ * @Table annotation is used to specify the name of the table in the database.
+ * @Id annotation is used to mark the id field as the primary key.
+ * @GeneratedValue annotation is used to specify the generation strategy for the primary key.
+ */
 @Entity
 @Table(name="inputs")
 public class InputParameters {
@@ -70,6 +79,9 @@ public class InputParameters {
         this.metalAmount          = metalAmount;
     }
 
+    /**
+     * Default constructor for hibernate to instantiate empty objects.
+     */
     public InputParameters() {
 
     }

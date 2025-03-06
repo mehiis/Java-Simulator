@@ -99,8 +99,6 @@ public class OwnEngine extends Engine {
 
 	@Override
 	protected void results() {
-		controller.setStartSimulationButtonAvailable();
-
 		controller.naytaLoppuaika(Clock.getInstance().getTime());
 
 		controller.setTrashThrownTimes(garbageShelter.getHowManyTimeThrashThrown());

@@ -83,5 +83,4 @@ public interface ISimulatorGUI {
 
 	void refreshHistoryList();
 
-	void setStartSimulationButtonAvailable();
 }

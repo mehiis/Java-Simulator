@@ -2,11 +2,18 @@ package datasource;
 
 import jakarta.persistence.*;
 
+/**
+ * Class for creating a connection to the MariaDB database using JPA
+ */
 public class MariaDbJpaConnection {
 
     private static EntityManagerFactory emf = null;
     private static EntityManager em = null;
 
+    /**
+     * Method for getting the EntityManager object
+     * @return EntityManager object
+     */
     public static EntityManager getInstance() {
         // you need to add synchronization if you run in a multi-threaded environment
 

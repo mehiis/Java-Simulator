@@ -22,6 +22,9 @@ import javafx.stage.WindowEvent;
 
 import java.text.DecimalFormat;
 
+/**
+ * User interface for the simulator
+ */
 public class SimulatorGUI extends Application implements ISimulatorGUI {
     //Kontrollerin esittely (tarvitaan käyttöliittymässä)
     private IControllerForView controller;
@@ -106,6 +109,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private Visuals canvas;
 
+    /**
+     * Init method for the application
+     */
     @Override
     public void init() {
 
@@ -114,6 +120,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         controller = new Controller(this);
     }
 
+    /**
+     * Start method for the application.
+     * Calls createScene method to create the scene for the window.
+     * @param stage Window for the application.
+     */
     @Override
     public void start(Stage stage) {
         // Käyttöliittymän rakentaminen
@@ -136,6 +147,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         }
     }
 
+    /**
+     * Visualizes the simulation time.
+     * @param day Current day passed from the model.
+     */
     public void setDay(int day) {
         dayLabel.setText("Day: " + day);
     }
@@ -235,10 +250,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 return 4;
             }
         }
-    }
-
-    public void setStartSimulationButtonAvailable() {
-        startButton.setDisable(false);
     }
 
     @Override
@@ -507,14 +518,24 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return Long.parseLong(delay.getText());
     }
 
+    /**
+     * Method to set simulation time to the results window.
+     * Also enables the start button after the simulation has ended.
+     * @param aika time from the model.
+     */
     @Override
     public void setLoppuaika(double aika) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
         this.endTime.setText("Simulation end time: "+formatter.format(aika)+" minutes, "+formatter.format(aika / 1440)+" days.");
-        //startButton.setDisable(false); // enabloi käynnistä-nappula uudelleen
-        Clock.getInstance().setTime(0.0); // reset time
+        startButton.setDisable(false);
+        Clock.getInstance().setTime(0.0);
     }
 
+    /**
+     * Method called from the Start() to create the scene for the window.
+     * It sets up the layout and configuration of the various UI components in the scene.
+     * @return The created Scene object.
+     */
     private Scene createScene(){
         SplitPane horSplitPane = new SplitPane();
         SplitPane verSplitPane = new SplitPane();
@@ -572,6 +593,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return canvas;
     }
 
+    /**
+     * Method called from the createScene() to create middle section of the window.
+     * @return The VBox object containing the middle section of the window.
+     */
     private VBox center(){
 
         // INITIALIZING VISUALS HERE!!!
@@ -590,6 +615,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return midControl;
     }
 
+    /**
+     * Method to toggle between the history and results windows.
+     */
     public void toggleRightPanel() {
         if (resultWindowOpen) {
             resultsWindow.setVisible(false);
@@ -606,12 +634,19 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         }
     }
 
+    /**
+     * Method for fetching fresh data for the history list from the database.
+     */
     public void refreshHistoryList() {
         if (historyWindow != null) {
             historyWindow.setItems(controller.getInputHistory());
         }
     }
 
+    /**
+     * Method called from the createScene() to create the history window.
+     * @return The ListView object containing the history window.
+     */
     private ListView historyWindow() {
         historyWindow = new ListView<>();
         refreshHistoryList();
@@ -626,6 +661,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return historyWindow;
     }
 
+    /**
+     * Method called from the createScene() to create the result section of the window.
+     * @return The ScrollPane object containing the result window.
+     */
     private ScrollPane right(){
         final int TEXT_FIELD_WIDTH = 50;
         final Font FONT = new Font("Dubai Medium", 15);
@@ -664,6 +703,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return resultsWindow;
     }
 
+    /**
+     * Method called from the createScene() to create input section of the window.
+     * @return The VBox object containing the input section of the window.
+     */
     private VBox left(){
         final int TEXT_FIELD_WIDTH = 50;
         final Font FONT = new Font("Dubai Medium", 15);
@@ -789,6 +832,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return leftControl;
     }
 
+    /**
+     * Method called from the createScene() to create the bottom section of the window.
+     * @return The Region object containing the bottom section of the window.
+     */
     private Region bottom(){
         startButton = new Button();
         startButton.setText("Start Simulation");
@@ -831,7 +878,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         bottomControl.setAlignment(Pos.CENTER);
         bottomControl.setSpacing(10);
 
-        //MIKÄ TÄÄ ON OISKO JOKU VBOW VAI MITÄ EHMETTIÄ?!?!?!?
         return bottomControl;
     }
 }

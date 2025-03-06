@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+/**
+ * This class is responsible for the communication between the model and the view.
+ */
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
 	private ISimulatorGUI ui;
@@ -27,8 +30,13 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public Controller(ISimulatorGUI ui) {
 		this.ui = ui;
 	}
-	
-	// Moottorin ohjausta:
+
+	/**
+	 * This method is called when the Start Simulation button is pressed.
+	 * It starts the simulation and sets the input parameters to the engine.
+	 * User inputs are saved to the database.
+	 * The simulation time is converted from days to minutes.
+	 */
 	@Override
 	public void startSimulation() {
 
@@ -56,6 +64,10 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 		((Thread)engine).start();
 	}
+
+	/**
+	 * Passes the current day from the engine to the UI.
+	 */
 	public void setDay() {
 		int day;
 		if (Math.floor((Clock.getInstance().getTime()/1440)) == 0) { // Just for the first day
@@ -67,105 +79,173 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		Platform.runLater(() -> ui.setDay(day));
 	}
 
+	/**
+	 * Slows down the engine.
+	 * Called from the UI when the Slow Down button is pressed.
+	 */
 	@Override
 	public void slowDown() { // hidastetaan moottorisäiettä
 		engine.setDelay((long)(engine.getDelay()*1.10));
 	}
 
+	/**
+	 * Speeds up the engine.
+	 * Called from the UI when the Speed Up button is pressed.
+	 */
 	@Override
 	public void speedUp() { // nopeutetaan moottorisäiettä
 		engine.setDelay((long)(engine.getDelay()*0.9));
 	}
-	
 
-	// Simulointitulosten välittämistä käyttöliittymään.
-	// Koska FX-ui:n päivitykset tulevat moottorisäikeestä, ne pitää ohjata JavaFX-säikeeseen:
-
-
+	/**
+	 * Passes the truck arrival interval from the UI to the engine.
+	 * @return the truck arrival interval in minutes
+	 */
 	public int getGarbageTruckArrivalInterval () {
 		return ui.getGarbageTruckArrivalInterval() * 1440;
 	}
 
+	/**
+	 * Passes the mean trash amount per throw from the UI to the engine.
+	 * @return the mean trash amount per throw.
+	 */
 	@Override
 	public double getMeanTrashPerThrowAmt() {
 		return ui.getMeanTrashAmtPerThrow();
 	}
 
+	/**
+	 * Passes the amount of single apartments from the UI to the engine.
+	 * @return the amount of single apartments.
+	 */
 	@Override
 	public int getSingleAptAmt() {
 		return ui.getSingleAptAmt();
 	}
 
+	/**
+	 * Passes the amount of double apartments from the UI to the engine.
+	 * @return the amount of double apartments.
+	 */
 	@Override
 	public int getDoubleAptAmt() {
 		return ui.getDoubleAptAmt();
 	}
 
+	/**
+	 * Passes the amount of triple apartments from the UI to the engine.
+	 * @return the amount of triple apartments.
+	 */
 	@Override
 	public int getTripleAptAmt() {
 		return ui.getTripleAptAmt();
 	}
 
+	/**
+	 * Passes the amount of quadruple apartments from the UI to the engine.
+	 * @return the amount of quadruple apartments.
+	 */
 	@Override
 	public int getQuadAptAmt() {
 		return ui.getQuadAptAmt();
 	}
 
+	/**
+	 * Passes the end simulation time to the UI.
+	 * @param aika Time from the engine.
+	 */
 	@Override
 	public void naytaLoppuaika(double aika) {
 		Platform.runLater(()->ui.setLoppuaika(aika)); 
 	}
 
+	/**
+	 * Passes the amount of trash thrown during the simulation to the UI.
+	 * @param amt Amount of times trash was thrown.
+	 */
 	@Override
 	public void setTrashThrownTimes(int amt) {
 		Platform.runLater(() -> ui.setTrashThrowTimes(amt));
 	}
 
+	/**
+	 * Passes the amount of times garbage shelter was emptied to the UI.
+	 * @param amt Amount of times shelter was emptied.
+	 */
 	@Override
 	public void setShelterClearedTimes(int amt) {
 		Platform.runLater(() -> ui.setShelterClearedTimes(amt));
 	}
 
+	/**
+	 * Passes the total amount of trash thrown during the simulation to the UI.
+	 * @param liters Amount of trash thrown in liters.
+	 * @param kg Amount of trash thrown in kilograms.
+	 */
 	@Override
 	public void setTrashThrownTotal(double liters, double kg) {
 		Platform.runLater(() -> ui.setTrashThrownTotalLiters(liters));
 		Platform.runLater(() -> ui.setTrashThrownTotalKilos(kg));
 	}
 
-	public void setStartSimulationButtonAvailable() {
-		Platform.runLater(() -> ui.setStartSimulationButtonAvailable());
-	}
-
+	/**
+	 * Passes the total amount of mixed trash to the UI.
+	 * @param amt Amount of mixed trash generated during the simulation.
+	 */
 	@Override
 	public void setMixedTotal(double amt) {
 		Platform.runLater(() -> ui.setMixedTotal(amt));
 	}
 
+	/**
+	 * Passes the total amount of bio trash to the UI.
+	 * @param amt Amount of bio trash generated during the simulation.
+	 */
 	@Override
 	public void setBioTotal(double amt) {
 		Platform.runLater(() -> ui.setBioTotal(amt));
 	}
 
+	/**
+	 * Passes the total amount of cardboard trash to the UI.
+	 * @param amt Amount of cardboard trash generated during the simulation.
+	 */
 	@Override
 	public void setCardboardTotal(double amt) {
 		Platform.runLater(() -> ui.setCardboardTotal(amt));
 	}
 
+	/**
+	 * Passes the total amount of plastic trash to the UI.
+	 * @param amt Amount of plastic trash generated during the simulation.
+	 */
 	@Override
 	public void setPlasticTotal(double amt) {
 		Platform.runLater(() -> ui.setPlasticTotal(amt));
 	}
 
+	/**
+	 * Passes the total amount of glass trash to the UI.
+	 * @param amt Amount of glass trash generated during the simulation.
+	 */
 	@Override
 	public void setGlassTotal(double amt) {
 		Platform.runLater(() -> ui.setGlassTotal(amt));
 	}
 
+	/**
+	 * Passes the total amount of metal trash to the UI.
+	 * @param amt Amount of metal trash generated during the simulation.
+	 */
 	@Override
 	public void setMetalTotal(double amt) {
 		Platform.runLater(() -> ui.setMetalTotal(amt));
 	}
 
+	/**
+	 * Passes the percentage use of mixed trash cans to the UI.
+	 * @param amt Percentage of mixed trash can usage.
+	 */
 	@Override
 	public void setMixedUsage(double amt) {
 		Platform.runLater(() -> ui.setMixedUsage(amt));
@@ -235,6 +315,11 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 			}});
 	}
 
+	/**
+	 * Gets the input parameters from the database.
+	 * Called when a date is selected from the history list.
+	 * @param id The id of the input parameters to be loaded.
+	 */
 	public void loadInputParameters(int id) {
 		try {
 			InputParametersDao IPDao = new InputParametersDao();
@@ -258,6 +343,10 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		}
 	}
 
+	/**
+	 * Gets the input history from the database.
+	 * @return ObservableList of the InputParameters objects.
+	 */
 	public ObservableList<String> getInputHistory() {
 		try {
 			InputParametersDao IPDao = new InputParametersDao();
@@ -274,6 +363,10 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		return null;
 	}
 
+	/**
+	 * Gets the inputs from the UI and passes them to the dao to be saved to the database.
+	 * Called when the Start Simulation button is pressed.
+	 */
 	public void saveInputsToDb() {
 		try {
 			InputParametersDao IPDao = new InputParametersDao();
@@ -299,6 +392,10 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		ui.refreshHistoryList();
 	}
 
+	/**
+	 * Calls the dao to delete all input parameters from the database.
+	 * Called when the Clear History button is pressed.
+	 */
 	public void clearHistory() {
 		try {
 			InputParametersDao IPDao = new InputParametersDao();
