@@ -165,19 +165,19 @@ public class Visuals extends Canvas implements IVisuals {
 			switch (type) {
 				case YKSIO:
 					gc.drawImage(yksioImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + (apartmentImgVSize/2));
 					break;
 				case KAKSIO:
 					gc.drawImage(kaksioImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + (apartmentImgVSize/2));
 					break;
 				case KOLMIO:
 					gc.drawImage(kolmioImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + (apartmentImgVSize/2));
 					break;
 				case NELIO:
 					gc.drawImage(nelioImg, xLoc, yLoc);
-					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + apartmentImgVSize);
+					gc.fillText(String.valueOf((apartmentCounts.get(type))), xLoc + apartmentImgHSize + 5, yLoc + (apartmentImgVSize/2));
 					break;
 
 			}
