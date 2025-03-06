@@ -61,6 +61,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     // Bottom Control
     private Button historyButton;
+    private Button clearHistoryButton;
 
     private TextField delay;
     private Label endTime = new Label("");
@@ -234,6 +235,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 return 4;
             }
         }
+    }
+
+    public void setStartSimulationButtonAvailable() {
+        startButton.setDisable(false);
     }
 
     @Override
@@ -589,11 +594,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         if (resultWindowOpen) {
             resultsWindow.setVisible(false);
             historyWindow.setVisible(true);
+            clearHistoryButton.setVisible(true);
             historyButton.setText("Results");
             resultWindowOpen = false;
         } else {
             resultsWindow.setVisible(true);
             historyWindow.setVisible(false);
+            clearHistoryButton.setVisible(false);
             historyButton.setText("History");
             resultWindowOpen = true;
         }
@@ -784,29 +791,43 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private Region bottom(){
         startButton = new Button();
-        startButton.setText("Käynnistä simulointi");
+        startButton.setText("Start Simulation");
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 dayLabel.setVisible(true);
                 controller.startSimulation();
-                //startButton.setDisable(true); //SHOULD DISABLE SIMU BUTTON AND ENABLE IT AFTER
+                startButton.setDisable(true);
             }
         });
 
         slowButton = new Button();
-        slowButton.setText("Hidasta");
+        slowButton.setText("Slow Down");
         slowButton.setOnAction(e -> controller.slowDown());
 
         fastButton = new Button();
-        fastButton.setText("Nopeuta");
+        fastButton.setText("Speed Up");
         fastButton.setOnAction(e -> controller.speedUp());
 
         historyButton = new Button();
         historyButton.setText("History");
         historyButton.setOnAction(e -> toggleRightPanel());
 
-        HBox bottomControl = new HBox(slowButton, startButton, fastButton, historyButton);
+        clearHistoryButton = new Button();
+        clearHistoryButton.setText("Clear History");
+        clearHistoryButton.setVisible(false);
+        clearHistoryButton.setOnAction(e -> {
+                if (!historyWindow.getItems().isEmpty()) {
+                    controller.clearHistory();
+                }
+                else {
+                    System.out.println("History is already empty");
+                }
+        });
+
+
+
+        HBox bottomControl = new HBox(slowButton, startButton, fastButton, historyButton, clearHistoryButton);
         bottomControl.setAlignment(Pos.CENTER);
         bottomControl.setSpacing(10);
 

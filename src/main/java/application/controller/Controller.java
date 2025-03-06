@@ -23,7 +23,6 @@ import java.util.LinkedHashMap;
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
 	private ISimulatorGUI ui;
-	private InputParametersDao IPDao = new InputParametersDao();
 
 	public Controller(ISimulatorGUI ui) {
 		this.ui = ui;
@@ -133,6 +132,10 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		Platform.runLater(() -> ui.setTrashThrownTotalKilos(kg));
 	}
 
+	public void setStartSimulationButtonAvailable() {
+		Platform.runLater(() -> ui.setStartSimulationButtonAvailable());
+	}
+
 	@Override
 	public void setMixedTotal(double amt) {
 		Platform.runLater(() -> ui.setMixedTotal(amt));
@@ -234,6 +237,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 	public void loadInputParameters(int id) {
 		try {
+			InputParametersDao IPDao = new InputParametersDao();
 			InputParameters input = IPDao.find(id);
 			ui.setSimulationTimeValue(input.getSimulationTime());
 			ui.setMeanTrashAmtPerThrow(input.getMeanTrashPerThrow());
@@ -256,6 +260,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 	public ObservableList<String> getInputHistory() {
 		try {
+			InputParametersDao IPDao = new InputParametersDao();
 			List<InputParameters> inputs = IPDao.findAll();
 			ObservableList<String> dates = FXCollections.observableArrayList();
 			for (InputParameters input : inputs) {
@@ -271,6 +276,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 	public void saveInputsToDb() {
 		try {
+			InputParametersDao IPDao = new InputParametersDao();
 			IPDao.persist(new InputParameters(
 					LocalDate.now(),
 					ui.getSimulationTimeValue(),
@@ -291,5 +297,16 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 			e.printStackTrace();
 		}
 		ui.refreshHistoryList();
+	}
+
+	public void clearHistory() {
+		try {
+			InputParametersDao IPDao = new InputParametersDao();
+			IPDao.deleteAll();
+			Platform.runLater(() -> ui.refreshHistoryList());
+		} catch (Exception e) {
+			System.err.println("Error clearing history: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }

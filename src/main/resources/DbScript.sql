@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS TRASH_SIMULATOR;
 CREATE DATABASE TRASH_SIMULATOR;
 USE TRASH_SIMULATOR;
 
@@ -19,5 +20,6 @@ CREATE TABLE inputs (
     metal_amount INT NOT NULL
 );
 
+DROP USER IF EXISTS 'simulatoruser'@'localhost';
 CREATE USER 'simulatoruser'@'localhost' IDENTIFIED BY 'password';
-GRANT SELECT, INSERT, UPDATE, DELETE ON trash_simulator.* TO 'simulatoruser'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE, ALTER, INDEX ON trash_simulator.* TO 'simulatoruser'@'localhost';

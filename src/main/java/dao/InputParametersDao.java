@@ -41,4 +41,22 @@ public class InputParametersDao {
         em.remove(input);
         em.getTransaction().commit();
     }
+
+    public void deleteAll() {
+        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM InputParameters").executeUpdate();
+            em.createNativeQuery("ALTER TABLE inputs AUTO_INCREMENT = 1").executeUpdate();
+            em.clear();
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.err.println("Error deleting all inputs: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

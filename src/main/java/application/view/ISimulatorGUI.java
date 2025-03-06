@@ -82,4 +82,6 @@ public interface ISimulatorGUI {
 	void setPlasticCanAmountValue(int plasticAmount);
 
 	void refreshHistoryList();
+
+	void setStartSimulationButtonAvailable();
 }

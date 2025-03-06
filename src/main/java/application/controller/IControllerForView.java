@@ -12,4 +12,6 @@ public interface IControllerForView {
     public ObservableList<String> getInputHistory();
 
     void loadInputParameters(int selectedId);
+
+    void clearHistory();
 }
