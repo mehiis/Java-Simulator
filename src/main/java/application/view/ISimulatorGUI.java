@@ -54,4 +54,32 @@ public interface ISimulatorGUI {
 	public IVisuals getVisualisointi();
 
 	void setDay(int day);
+
+	void setSimulationTimeValue(int simulationTime);
+
+	void setMeanTrashAmtPerThrow(double meanTrashPerThrow);
+
+	void setSingleAptAmt(int singleAptAmount);
+
+	void setDoubleAptAmt(int doubleAptAmount);
+
+	void setTripleAptAmt(int tripleAptAmount);
+
+	void setQuadAptAmt(int quadAptAmount);
+
+	void setGarbageTruckArrivalInterval(int truckArrivalInterval);
+
+	void setMixedCanAmountValue(int mixedAmount);
+
+	void setBioCanAmountValue(int bioAmount);
+
+	void setPaperCanAmountValue(int paperAmount);
+
+	void setGlassCanAmountValue(int glassAmount);
+
+	void setMetalCanAmountValue(int metalAmount);
+
+	void setPlasticCanAmountValue(int plasticAmount);
+
+	void refreshHistoryList();
 }

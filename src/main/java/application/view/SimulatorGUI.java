@@ -30,7 +30,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     //ASPECT RATIO 16:9. Possible sizes are: 800x450, 1280x720, 1600x900, 1920x1080
     private int width   = 1280;
     private int height  = 720;
-    private final int defaultSimulationTime = 14400 / 1440; // 10 days
+    private final int defaultSimulationTime = 14400 / 1440;// 10 days
 
     // Käyttöliittymäkomponentit:
     // Left Box values
@@ -54,7 +54,14 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     // Middle Control
     private Label dayLabel = new Label("Day: 1");
 
-    //
+    // Right box
+    private boolean resultWindowOpen = true;
+    private ListView<String> historyWindow;
+    private ScrollPane resultsWindow;
+
+    // Bottom Control
+    private Button historyButton;
+
     private TextField delay;
     private Label endTime = new Label("");
     private Label timeLabel;
@@ -437,6 +444,59 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         }
     }
 
+    public void setSimulationTimeValue (int time) {
+        simulationTimeValue.setText(Integer.toString(time));
+
+    }
+
+    public void setMeanTrashAmtPerThrow (double amount) {
+        meanThrashAmountPerThrowValue.setText(Double.toString(amount));
+    }
+
+    public void setGarbageTruckArrivalInterval (int interval) {
+        garbageTruckArrivalValue.setText(Integer.toString(interval));
+    }
+
+    public void setSingleAptAmt (int amount) {
+        singleAptAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setDoubleAptAmt (int amount) {
+        doubleAptAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setTripleAptAmt (int amount) {
+        tripleAptAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setQuadAptAmt (int amount) {
+        quadAptAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setMixedCanAmountValue (int amount) {
+        mixedCanAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setPlasticCanAmountValue (int amount) {
+        plasticCanAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setGlassCanAmountValue (int amount) {
+        glassCanAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setPaperCanAmountValue (int amount) {
+        paperCanAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setBioCanAmountValue (int amount) {
+        bioCanAmountValue.setText(Integer.toString(amount));
+    }
+
+    public void setMetalCanAmountValue (int amount) {
+        metalCanAmountValue.setText(Integer.toString(amount));
+    }
+
     @Override
     public long getDelay() {
         return Long.parseLong(delay.getText());
@@ -462,8 +522,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         VBox leftVBox   = left();
         leftVBox.setId("leftVBox");
 
-        ScrollPane rightPanel  = right();
-        rightPanel.setId("rightPanel");
+        ScrollPane resultsWindow  = right();
+        ListView historyWindow = historyWindow();
+
+        StackPane rightPanel = new StackPane(resultsWindow, historyWindow);
+        historyWindow.setVisible(false);
 
         horSplitPane.getItems().addAll(leftVBox, center(), rightPanel);
 
@@ -522,6 +585,40 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         return midControl;
     }
 
+    public void toggleRightPanel() {
+        if (resultWindowOpen) {
+            resultsWindow.setVisible(false);
+            historyWindow.setVisible(true);
+            historyButton.setText("Results");
+            resultWindowOpen = false;
+        } else {
+            resultsWindow.setVisible(true);
+            historyWindow.setVisible(false);
+            historyButton.setText("History");
+            resultWindowOpen = true;
+        }
+    }
+
+    public void refreshHistoryList() {
+        if (historyWindow != null) {
+            historyWindow.setItems(controller.getInputHistory());
+        }
+    }
+
+    private ListView historyWindow() {
+        historyWindow = new ListView<>();
+        refreshHistoryList();
+        historyWindow.setOnMouseClicked(event -> {
+            String selectedItem = historyWindow.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                int selectedId = Integer.parseInt(selectedItem.split(" \\| ")[0].trim());
+                controller.loadInputParameters(selectedId);
+            }
+        });
+
+        return historyWindow;
+    }
+
     private ScrollPane right(){
         final int TEXT_FIELD_WIDTH = 50;
         final Font FONT = new Font("Dubai Medium", 15);
@@ -555,9 +652,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         }
         rightControl.setSpacing(6.0);
 
-        ScrollPane scrollPane = new ScrollPane(rightControl);
+        resultsWindow = new ScrollPane(rightControl);
 
-        return scrollPane;
+        return resultsWindow;
     }
 
     private VBox left(){
@@ -705,7 +802,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         fastButton.setText("Nopeuta");
         fastButton.setOnAction(e -> controller.speedUp());
 
-        HBox bottomControl = new HBox(slowButton, startButton, fastButton);
+        historyButton = new Button();
+        historyButton.setText("History");
+        historyButton.setOnAction(e -> toggleRightPanel());
+
+        HBox bottomControl = new HBox(slowButton, startButton, fastButton, historyButton);
         bottomControl.setAlignment(Pos.CENTER);
         bottomControl.setSpacing(10);
 

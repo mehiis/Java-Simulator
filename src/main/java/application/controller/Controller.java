@@ -7,12 +7,16 @@ import javafx.application.Platform;
 import application.assets.framework.IEngine;
 import application.assets.model.OwnEngine;
 import application.view.ISimulatorGUI;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
 	private ISimulatorGUI ui;
+	private InputParametersDao IPDao = new InputParametersDao();
 	
 	public Controller(ISimulatorGUI ui) {
 		this.ui = ui;
@@ -218,10 +222,46 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		});
 	}
 
+	public void loadInputParameters(int id) {
+		try {
+			InputParameters input = IPDao.find(id);
+			ui.setSimulationTimeValue(input.getSimulationTime());
+			ui.setMeanTrashAmtPerThrow(input.getMeanTrashPerThrow());
+			ui.setSingleAptAmt(input.getSingleAptAmount());
+			ui.setDoubleAptAmt(input.getDoubleAptAmount());
+			ui.setTripleAptAmt(input.getTripleAptAmount());
+			ui.setQuadAptAmt(input.getQuadAptAmount());
+			ui.setGarbageTruckArrivalInterval(input.getTruckArrivalInterval());
+			ui.setMixedCanAmountValue(input.getMixedAmount());
+			ui.setBioCanAmountValue(input.getBioAmount());
+			ui.setPaperCanAmountValue(input.getPaperAmount());
+			ui.setGlassCanAmountValue(input.getGlassAmount());
+			ui.setMetalCanAmountValue(input.getMetalAmount());
+			ui.setPlasticCanAmountValue(input.getPlasticAmount());
+		} catch (Exception e) {
+			System.out.println("LISTVIEW: Error loading input parameters: ");
+			e.printStackTrace();
+		}
+	}
+
+	public ObservableList<String> getInputHistory() {
+		try {
+			List<InputParameters> inputs = IPDao.findAll();
+			ObservableList<String> dates = FXCollections.observableArrayList();
+			for (InputParameters input : inputs) {
+				dates.add(input.getId() + "  |  " + input.getDate().toString());
+			}
+			return dates;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public void saveInputsToDb() {
 		try {
-			InputParametersDao inputParameterDao = new InputParametersDao();
-			inputParameterDao.persist(new InputParameters(
+			IPDao.persist(new InputParameters(
 					LocalDate.now(),
 					ui.getSimulationTimeValue(),
 					ui.getMeanTrashAmtPerThrow(),
@@ -240,5 +280,6 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 			System.err.println("Error saving inputs to database: " + e.getMessage());
 			e.printStackTrace();
 		}
+		ui.refreshHistoryList();
 	}
 }
