@@ -61,22 +61,22 @@ public class OwnEngine extends Engine {
 			case YKSIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					yksioArrivalProcess.generateNext();
-					controller.visualizeResident(EventType.YKSIO_ARRIVE_TO_SHELTER, garbageShelter.getGarbageCanCapacityPercentagesByType());
+					controller.visualizeResident(EventType.YKSIO_ARRIVE_TO_SHELTER, garbageShelter.data.getGarbageCanCapacityPercentagesByType());
 					break;
 			case KAKSIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					kaksioArrivalProcess.generateNext();
-					controller.visualizeResident(EventType.KAKSIO_ARRIVE_TO_SHELTER, garbageShelter.getGarbageCanCapacityPercentagesByType());
+					controller.visualizeResident(EventType.KAKSIO_ARRIVE_TO_SHELTER, garbageShelter.data.getGarbageCanCapacityPercentagesByType());
 					break;
 			case KOLMIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					kolmioArrivalProcess.generateNext();
-					controller.visualizeResident(EventType.KOLMIO_ARRIVE_TO_SHELTER, garbageShelter.getGarbageCanCapacityPercentagesByType());
+					controller.visualizeResident(EventType.KOLMIO_ARRIVE_TO_SHELTER, garbageShelter.data.getGarbageCanCapacityPercentagesByType());
 					break;
 			case NELIO_ARRIVE_TO_SHELTER:
 					garbageShelter.addToQueue(new Apartment());
 					nelioArrivalProcess.generateNext();
-					controller.visualizeResident(EventType.NELIO_ARRIVE_TO_SHELTER, garbageShelter.getGarbageCanCapacityPercentagesByType());
+					controller.visualizeResident(EventType.NELIO_ARRIVE_TO_SHELTER, garbageShelter.data.getGarbageCanCapacityPercentagesByType());
 					break;
 			case EXIT:
 					garbageShelter.getFromQueue();//TRASH HAS BEEN THROWN! :)
@@ -101,24 +101,24 @@ public class OwnEngine extends Engine {
 	protected void results() {
 		controller.naytaLoppuaika(Clock.getInstance().getTime());
 
-		controller.setTrashThrownTimes(garbageShelter.getHowManyTimeThrashThrown());
-		controller.setShelterClearedTimes(garbageShelter.getGarbageCarArriveTimes());
+		controller.setTrashThrownTimes(garbageShelter.data.getHowManyTimeThrashThrown());
+		controller.setShelterClearedTimes(garbageShelter.data.getGarbageCarArriveTimes());
 
-		controller.setTrashThrownTotal(garbageShelter.getThrashTotalInKg(), garbageShelter.getThrashTotalInLitres());
+		controller.setTrashThrownTotal(garbageShelter.data.getThrashTotalInKg(), garbageShelter.data.getThrashTotalInLitres());
 
-		controller.setMixedTotal(garbageShelter.getThrashAmountByType(GarbageCanType.MIXED)[0]);
-		controller.setBioTotal(garbageShelter.getThrashAmountByType(GarbageCanType.BIO)[0] );
-		controller.setCardboardTotal(garbageShelter.getThrashAmountByType(GarbageCanType.CARDBOARD)[0]);
-		controller.setPlasticTotal(garbageShelter.getThrashAmountByType(GarbageCanType.PLASTIC)[0]);
-		controller.setGlassTotal(garbageShelter.getThrashAmountByType(GarbageCanType.GLASS)[0] );
-		controller.setMetalTotal(garbageShelter.getThrashAmountByType(GarbageCanType.METAL)[0]);
+		controller.setMixedTotal(garbageShelter.data.getThrashAmountByType(GarbageCanType.MIXED)[0]);
+		controller.setBioTotal(garbageShelter.data.getThrashAmountByType(GarbageCanType.BIO)[0] );
+		controller.setCardboardTotal(garbageShelter.data.getThrashAmountByType(GarbageCanType.CARDBOARD)[0]);
+		controller.setPlasticTotal(garbageShelter.data.getThrashAmountByType(GarbageCanType.PLASTIC)[0]);
+		controller.setGlassTotal(garbageShelter.data.getThrashAmountByType(GarbageCanType.GLASS)[0] );
+		controller.setMetalTotal(garbageShelter.data.getThrashAmountByType(GarbageCanType.METAL)[0]);
 
-		controller.setMixedUsage(garbageShelter.getAverageRateOfType(GarbageCanType.MIXED) );
-		controller.setBioUsage(garbageShelter.getAverageRateOfType(GarbageCanType.BIO) );
-		controller.setCardboardUsage(garbageShelter.getAverageRateOfType(GarbageCanType.CARDBOARD));
-		controller.setPlasticUsage(garbageShelter.getAverageRateOfType(GarbageCanType.PLASTIC));
-		controller.setGlassUsage(garbageShelter.getAverageRateOfType(GarbageCanType.GLASS));
-		controller.setMetalUsage(garbageShelter.getAverageRateOfType(GarbageCanType.METAL));
+		controller.setMixedUsage(garbageShelter.data.getAverageRateOfType(GarbageCanType.MIXED) );
+		controller.setBioUsage(garbageShelter.data.getAverageRateOfType(GarbageCanType.BIO) );
+		controller.setCardboardUsage(garbageShelter.data.getAverageRateOfType(GarbageCanType.CARDBOARD));
+		controller.setPlasticUsage(garbageShelter.data.getAverageRateOfType(GarbageCanType.PLASTIC));
+		controller.setGlassUsage(garbageShelter.data.getAverageRateOfType(GarbageCanType.GLASS));
+		controller.setMetalUsage(garbageShelter.data.getAverageRateOfType(GarbageCanType.METAL));
 
 		controller.setMixedOverflow(garbageShelter.getOverflowTrash(GarbageCanType.MIXED));
 		controller.setBioOverflow(garbageShelter.getOverflowTrash(GarbageCanType.BIO));
@@ -130,24 +130,24 @@ public class OwnEngine extends Engine {
 		System.out.println("\n\n### SIMULATION ENDED###\nSimulation lasted for " + (double)(Math.round(Clock.getInstance().getTime()*100)/100) + " minutes.");
 		System.out.println(
 						"\nCOLLECTED DATA PRINT:\n" +
-						"Thrash thrown " + garbageShelter.getHowManyTimeThrashThrown() + " times.\n" +
-						"Garbage truck arrived " + garbageShelter.getGarbageCarArriveTimes() + " times.\n\n" +
+						"Thrash thrown " + garbageShelter.data.getHowManyTimeThrashThrown() + " times.\n" +
+						"Garbage truck arrived " + garbageShelter.data.getGarbageCarArriveTimes() + " times.\n\n" +
 
-						"Thrash thrown in total: " + garbageShelter.getThrashTotalInLitres() + " litres/" + garbageShelter.getThrashTotalInKg() +" kg. \n" +
-								"MIXED: " 		+ garbageShelter.getThrashAmountByType(GarbageCanType.MIXED)[0] 	+ "l/" + garbageShelter.getThrashAmountByType(GarbageCanType.MIXED)[1] 		+ "kg.\n" +
-								"BIO: " 		+ garbageShelter.getThrashAmountByType(GarbageCanType.BIO)[0] 		+ "l/" + garbageShelter.getThrashAmountByType(GarbageCanType.BIO)[1] 		+ "kg.\n" +
-								"CARDBOARD: " 	+ garbageShelter.getThrashAmountByType(GarbageCanType.CARDBOARD)[0] + "l/" + garbageShelter.getThrashAmountByType(GarbageCanType.CARDBOARD)[1] 	+ "kg.\n" +
-								"PLASTIC: " 	+ garbageShelter.getThrashAmountByType(GarbageCanType.PLASTIC)[0] 	+ "l/" + garbageShelter.getThrashAmountByType(GarbageCanType.PLASTIC)[1] 	+ "kg.\n" +
-								"GLASS: " 		+ garbageShelter.getThrashAmountByType(GarbageCanType.GLASS)[0] 	+ "l/" + garbageShelter.getThrashAmountByType(GarbageCanType.GLASS)[1] 		+ "kg.\n" +
-								"METAL: " 		+ garbageShelter.getThrashAmountByType(GarbageCanType.METAL)[0] 	+ "l/" + garbageShelter.getThrashAmountByType(GarbageCanType.METAL)[1] 		+ "kg.\n\n" +
+						"Thrash thrown in total: " + garbageShelter.data.getThrashTotalInLitres() + " litres/" + garbageShelter.data.getThrashTotalInKg() +" kg. \n" +
+								"MIXED: " 		+ garbageShelter.data.getThrashAmountByType(GarbageCanType.MIXED)[0] 	+ "l/" + garbageShelter.data.getThrashAmountByType(GarbageCanType.MIXED)[1] 		+ "kg.\n" +
+								"BIO: " 		+ garbageShelter.data.getThrashAmountByType(GarbageCanType.BIO)[0] 		+ "l/" + garbageShelter.data.getThrashAmountByType(GarbageCanType.BIO)[1] 		+ "kg.\n" +
+								"CARDBOARD: " 	+ garbageShelter.data.getThrashAmountByType(GarbageCanType.CARDBOARD)[0] + "l/" + garbageShelter.data.getThrashAmountByType(GarbageCanType.CARDBOARD)[1] 	+ "kg.\n" +
+								"PLASTIC: " 	+ garbageShelter.data.getThrashAmountByType(GarbageCanType.PLASTIC)[0] 	+ "l/" + garbageShelter.data.getThrashAmountByType(GarbageCanType.PLASTIC)[1] 	+ "kg.\n" +
+								"GLASS: " 		+ garbageShelter.data.getThrashAmountByType(GarbageCanType.GLASS)[0] 	+ "l/" + garbageShelter.data.getThrashAmountByType(GarbageCanType.GLASS)[1] 		+ "kg.\n" +
+								"METAL: " 		+ garbageShelter.data.getThrashAmountByType(GarbageCanType.METAL)[0] 	+ "l/" + garbageShelter.data.getThrashAmountByType(GarbageCanType.METAL)[1] 		+ "kg.\n\n" +
 
-						"Shelter usage rate: " + garbageShelter.getAverageUsageRateTotal() + "%.\n" +
-								"MIXED: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.MIXED) 	+ "%.\n" +
-								"BIO: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.BIO) 	+ "%.\n" +
-								"CARDBOARD: " 	+ garbageShelter.getAverageRateOfType(GarbageCanType.CARDBOARD) 	+ "%.\n" +
-								"PLASTIC: " 	+ garbageShelter.getAverageRateOfType(GarbageCanType.PLASTIC) 	+ "%.\n" +
-								"GLASS: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.GLASS) 	+ "%.\n" +
-								"METAL: " 		+ garbageShelter.getAverageRateOfType(GarbageCanType.METAL) 	+ "%.\n\n" +
+						"Shelter usage rate: " + garbageShelter.data.getAverageUsageRateTotal() + "%.\n" +
+								"MIXED: " 		+ garbageShelter.data.getAverageRateOfType(GarbageCanType.MIXED) 	+ "%.\n" +
+								"BIO: " 		+ garbageShelter.data.getAverageRateOfType(GarbageCanType.BIO) 	+ "%.\n" +
+								"CARDBOARD: " 	+ garbageShelter.data.getAverageRateOfType(GarbageCanType.CARDBOARD) 	+ "%.\n" +
+								"PLASTIC: " 	+ garbageShelter.data.getAverageRateOfType(GarbageCanType.PLASTIC) 	+ "%.\n" +
+								"GLASS: " 		+ garbageShelter.data.getAverageRateOfType(GarbageCanType.GLASS) 	+ "%.\n" +
+								"METAL: " 		+ garbageShelter.data.getAverageRateOfType(GarbageCanType.METAL) 	+ "%.\n\n" +
 
 						"Trash overflows: \n" +
 								" MIXED: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.MIXED)) + " l\n" +
