@@ -1,9 +1,11 @@
 /**
  * @version 1.0
  * @since 8.March.2025
- * This object is created inside {@link #GarbageShelter}, and is in charge of storing all collected data which is obtained from executed simulation.
+ * This object is created inside {@link GarbageShelter}, and is in charge of storing all collected data which is obtained from executed simulation.
  */
 package application.assets.model;
+
+import application.assets.framework.Clock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +16,6 @@ public class CollectedData {
     private final ArrayList<GarbageCan> garbageCans;
     private final double[] thrashTotalInLitres 			    = new double[GarbageCanType.values().length];;
     private final double[] thrashThrownInKg                 = new double[GarbageCanType.values().length];
-    //private final double[] thrashAccessibilityRateByType 	= new double[GarbageCanType.values().length];
     private final HashMap<GarbageCanType, LinkedList<Double>> shelterUsageRate = new HashMap<>() {
         {
             put(GarbageCanType.MIXED,       new LinkedList<>());
@@ -28,6 +29,17 @@ public class CollectedData {
 
     private int howManyTimeThrashThrown 			= 0;
     private int howManyTimesCarArrived				= 0;
+
+    private final HashMap<GarbageCanType, FullnessCalculator> howManyMinutesWasFull = new HashMap<>() {
+        {
+            put(GarbageCanType.MIXED,       new FullnessCalculator());
+            put(GarbageCanType.BIO,         new FullnessCalculator());
+            put(GarbageCanType.CARDBOARD,   new FullnessCalculator());
+            put(GarbageCanType.PLASTIC,     new FullnessCalculator());
+            put(GarbageCanType.GLASS,       new FullnessCalculator());
+            put(GarbageCanType.METAL,       new FullnessCalculator());
+        }
+    };
 
     public CollectedData(ArrayList<GarbageCan> garbageCans){
         this.garbageCans = garbageCans;
@@ -222,4 +234,58 @@ public class CollectedData {
 
         return data;
     }
+
+    /**
+     * @param type Enum type of {@link GarbageCanType}, which indicates which garbage type is referenced.
+     * This method sets start time of the calculation for garbage type being full. It is invoked when {@link GarbageShelter} notices garbage shelter being full.
+     * * Data is being stored in {@link FullnessCalculator} object.
+     */
+    public void startCalculatingGarbageFullTime(GarbageCanType type){
+        FullnessCalculator calculator = howManyMinutesWasFull.get(type);
+
+        if(!calculator.isFull){
+            System.out.println(type + " is full starting calculations!");
+            calculator.startTime = (int)Clock.getInstance().getTime();
+            calculator.isFull = true;
+        }
+    }
+
+    /**
+     * @param type Enum type of {@link GarbageCanType}, which indicates which garbage type is referenced.
+     * This method sets end time of the calculation for garbage type being full. It is invoked when {@link GarbageShelter} clears all garbage cans i.e. Garbage truck comes and empties garbage cans.<br>
+     * Data is being stored in {@link FullnessCalculator} object.
+     */
+    public void stopCalculatingGarbageFullTime(GarbageCanType type){
+        FullnessCalculator calculator = howManyMinutesWasFull.get(type);
+
+        if(calculator.isFull){
+            System.out.println(type + " was full... Calculating the time!");
+            calculator.endTime = (int)Clock.getInstance().getTime();
+            int time = calculator.endTime - calculator.startTime;
+
+            calculator.timeBeingFull = time;
+        }
+
+        //Reset values.
+        calculator.isFull = false;
+    }
+
+    /**
+     * @param type Enum type of {@link GarbageCanType}, which indicates which garbage type is referenced.
+     * This method retrieves data by referencing correct {@link GarbageCanType} enum. <br>
+     * Data is accessed from {@link FullnessCalculator} object, which is stored by using methods {@link #startCalculatingGarbageFullTime(GarbageCanType)} and {@link #getGarbageCanCapacityPercentagesByType()}
+     */
+    public double getFullTimeCalculations(GarbageCanType type){
+        double days = howManyMinutesWasFull.get(type).timeBeingFull * 0.0006944;
+        return Math.round(days * 100) / 100; //round to one decimal.
+    }
+}
+
+class FullnessCalculator{
+    boolean isFull = false;
+
+    int startTime;
+    int endTime;
+
+    int timeBeingFull;
 }

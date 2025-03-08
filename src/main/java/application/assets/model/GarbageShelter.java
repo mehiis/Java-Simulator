@@ -3,7 +3,6 @@ package application.assets.model;
 import application.assets.framework.Clock;
 import application.assets.framework.Event;
 import application.assets.framework.EventList;
-import application.assets.framework.*;
 import application.eduni.distributions.ContinuousGenerator;
 import application.eduni.distributions.Negexp;
 
@@ -76,6 +75,8 @@ public class GarbageShelter {
 
 			System.out.println("OVERFLOW IN " + type + " CAN! Added " + trashAmt + " to overflow" );
 
+			//calculate how long is the type of cans full.
+			data.startCalculatingGarbageFullTime(can.getType());
 		}
 	}
 
@@ -143,6 +144,9 @@ public class GarbageShelter {
 
 		for(GarbageCan can: garbageCans) {
 			data.calculateUsageRate(can);
+			data.stopCalculatingGarbageFullTime(can.getType());
+			data.addGarbageCarUtilRate(can);
+
 			can.empty();
 		}
 

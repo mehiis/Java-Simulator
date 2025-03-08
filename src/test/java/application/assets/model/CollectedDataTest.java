@@ -1,8 +1,7 @@
 package application.assets.model;
 
-import org.hibernate.annotations.Parameter;
+import application.assets.framework.Clock;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -99,5 +98,24 @@ class CollectedDataTest {
         d.calculateUsageRate(mixed3);
 
         assertEquals(33.0, d.getAverageRateOfType(GarbageCanType.MIXED));
+    }
+
+    @Test
+    void getFullTimeCalculations(){
+        int minutesInADay = 1440;
+
+        //Test 1: Declare that mixed waste is full and forward time by 1440 minute(1 day) and "collect the thrash".
+        d.startCalculatingGarbageFullTime(GarbageCanType.MIXED);
+        Clock.getInstance().setTime(minutesInADay);
+        d.stopCalculatingGarbageFullTime(GarbageCanType.MIXED);
+
+        assertEquals(1.0, d.getFullTimeCalculations(GarbageCanType.MIXED), 0.0001); //Mixed waste should be full for one day.
+
+        //Test 2: Declare that bio waste is full and forward time by additional 2*1440 minute(2 day) and "collect the thrash".
+        d.startCalculatingGarbageFullTime(GarbageCanType.BIO);
+        Clock.getInstance().setTime(Clock.getInstance().getTime() + (2 * minutesInADay));
+        d.stopCalculatingGarbageFullTime(GarbageCanType.BIO);
+
+        assertEquals(2.0, d.getFullTimeCalculations(GarbageCanType.BIO), 0.0001); //Bio waste should be full for two days.
     }
 }

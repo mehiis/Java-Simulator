@@ -4,7 +4,6 @@ import application.assets.framework.ArrivalProcess;
 import application.assets.framework.Clock;
 import application.assets.framework.Engine;
 import application.assets.framework.Event;
-import application.assets.framework.*;
 import application.controller.Controller;
 import application.eduni.distributions.Negexp;
 import application.eduni.distributions.Normal;
@@ -154,6 +153,15 @@ public class OwnEngine extends Engine {
 								" GLASS: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.GLASS)) + " l\n" +
 								" METAL: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.METAL)) + " l\n"
 		);
+
+		System.out.println("Mixed cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.MIXED) + " days.");
+		System.out.println("Bio cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.BIO) + " days.");
+		System.out.println("Cardboard cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.CARDBOARD) + " days.");
+		System.out.println("Plastic cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.PLASTIC) + " days.");
+		System.out.println("Glass cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS) + " days.");
+		System.out.println("Metal cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL) + " days.");
+
+		System.out.println("Garbage car usage rate: " + garbageShelter.getData().getGarbageCarUtilRate() + "reference: " + garbageShelter.getData().getAverageUsageRateTotal());
 	}
 
 	@Override
