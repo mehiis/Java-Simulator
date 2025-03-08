@@ -145,7 +145,6 @@ public class GarbageShelter {
 		for(GarbageCan can: garbageCans) {
 			data.calculateUsageRate(can);
 			data.stopCalculatingGarbageFullTime(can.getType());
-			data.addGarbageCarUtilRate(can);
 
 			can.empty();
 		}

@@ -161,7 +161,6 @@ public class OwnEngine extends Engine {
 		System.out.println("Glass cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS) + " days.");
 		System.out.println("Metal cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL) + " days.");
 
-		System.out.println("Garbage car usage rate: " + garbageShelter.getData().getGarbageCarUtilRate() + "reference: " + garbageShelter.getData().getAverageUsageRateTotal());
 	}
 
 	@Override
