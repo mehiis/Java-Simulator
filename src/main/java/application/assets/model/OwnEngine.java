@@ -24,18 +24,15 @@ public class OwnEngine extends Engine {
 	public OwnEngine(Controller controller){
 		this.controller = controller;
 
-		// added starting specs here for now! these should come from GUI simulation parameters panel in the end.
-		Specs startingSpecs = new Specs();
-
 		meanTrashThrowAmt = controller.getMeanTrashPerThrowAmt();
 
 		garbageShelter = new GarbageShelter(eventList, EventType.EXIT, meanTrashThrowAmt);
 		// GUI should be read; which arrival processes to create and use. GUI should also decide apt amt.
 		// people amt is basically a multiplier for the base amount of trash a specific type of apt generates.
-		yksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(1, controller.getSingleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
-		kaksioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(2, controller.getDoubleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KAKSIO_ARRIVE_TO_SHELTER);
-		kolmioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(3, controller.getTripleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
-		nelioArrivalProcess = new ArrivalProcess(new Negexp(startingSpecs.getMeanArrivalRate(4, controller.getQuadAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
+		yksioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(1, controller.getSingleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
+		kaksioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(2, controller.getDoubleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KAKSIO_ARRIVE_TO_SHELTER);
+		kolmioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(3, controller.getTripleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
+		nelioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(4, controller.getQuadAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
 
 		clearProcess 		= new ArrivalProcess(new Normal(controller.getGarbageTruckArrivalInterval(),1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}

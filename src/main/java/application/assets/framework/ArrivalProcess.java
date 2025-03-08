@@ -19,4 +19,6 @@ public class ArrivalProcess {
 		tapahtumalista.add(t);
 	}
 
+
+
 }
