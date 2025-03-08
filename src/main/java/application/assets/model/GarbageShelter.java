@@ -26,11 +26,13 @@ public class GarbageShelter {
 
 	//data variables
 	private HashMap<GarbageCanType, Double> overflowTrash = new HashMap<>();
-	public CollectedData data = new CollectedData(garbageCans);
+	private CollectedData data;
 
 
 	// Constructor with custom amount of garbage cans
 	public GarbageShelter(EventList eventList, EventType type, double meanTrashThrowAmt){
+		data = new CollectedData(garbageCans);
+
 		this.eventList 				= eventList;
 		this.scheduledEventType 	= type;
 		// trash throw amt is passed from GUI -> controller -> engine -> here -> throwTrash()/trash distribution
@@ -150,4 +152,6 @@ public class GarbageShelter {
 	public double getOverflowTrash(GarbageCanType type) {
 		return overflowTrash.getOrDefault(type, 0.0); // return default if no overflow occurred in the can
 	}
+
+	public CollectedData getData(){ return this.data; }
 }
