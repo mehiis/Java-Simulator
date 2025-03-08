@@ -1,55 +1,103 @@
 package application.assets.model;
 
+import org.hibernate.annotations.Parameter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
+
 class CollectedDataTest {
+    private ArrayList<GarbageCan> garbageCans;
+    private CollectedData d;
 
-    @Test
-    void addThrownThrash() {
-    }
-
-    @Test
-    void addGarbageCarArrival() {
-    }
-
-    @Test
-    void getGarbageCanCapacityPercentagesByType() {
-    }
-
-    @Test
-    void calculateThrashAmountByType() {
-    }
-
-    @Test
-    void calculateUsageRate() {
+    @BeforeEach
+    void setUp() {
+        garbageCans = new ArrayList<>(); //Setup clear list before every test.
+        d           = new CollectedData(garbageCans);
     }
 
     @Test
     void getAverageUsageRateTotal() {
+        //step 1: test empty
+        assertEquals(0, d.getAverageUsageRateTotal());
+
+        //step 2: add one full mixed waste garbage can
+        GarbageCan mixed = new GarbageCan(true, GarbageCanType.MIXED);
+        mixed.addGarbage(mixed.getCapacity());
+        garbageCans.add(mixed);
+        d.calculateUsageRate(mixed);
+        assertEquals(100, d.getAverageUsageRateTotal());
+
+        //step 3: add one empty bio waste garbage can
+        GarbageCan bio = new GarbageCan(false, GarbageCanType.BIO);
+        garbageCans.add(bio);
+        d.calculateUsageRate(bio);
+        assertEquals(50, d.getAverageUsageRateTotal());
+
+        //step 4: add one empty metal waste garbage can
+        GarbageCan metal = new GarbageCan(false, GarbageCanType.METAL);
+        garbageCans.add(metal);
+        d.calculateUsageRate(metal);
+        assertEquals(33.0, d.getAverageUsageRateTotal());
+
+        //step 5: add one empty plastic waste garbage can
+        GarbageCan plastic = new GarbageCan(true, GarbageCanType.PLASTIC);
+        garbageCans.add(plastic);
+        d.calculateUsageRate(plastic);
+        assertEquals(25.0, d.getAverageUsageRateTotal());
+
+        //step 6: add one full glass waste garbage can
+        GarbageCan glass = new GarbageCan(false, GarbageCanType.GLASS);
+        glass.addGarbage(glass.getCapacity());
+        garbageCans.add(glass);
+        d.calculateUsageRate(glass);
+        assertEquals(40, d.getAverageUsageRateTotal()); //100 * (2/5) -> 2 full & 3 empty = 40% used capacity
+
+        //step 7: add one more full mixed waste can
+        GarbageCan mixed2 = new GarbageCan(true, GarbageCanType.MIXED);
+        mixed2.addGarbage(mixed2.getCapacity());
+        garbageCans.add(mixed2);
+        d.calculateUsageRate(mixed2);
+        assertEquals(50, d.getAverageUsageRateTotal()); //100 * (3/6) -> 3 full & 3 empty = 50% used capacity
     }
 
     @Test
     void getAverageRateOfType() {
-    }
+        //TEST 1: test empty
+        assertEquals(0, d.getAverageRateOfType(GarbageCanType.MIXED));
 
-    @Test
-    void getHowManyTimeThrashThrown() {
-    }
+        //TEST 2: fill mixed 100%
+        GarbageCan mixed = new GarbageCan(true, GarbageCanType.MIXED);
+        mixed.addGarbage(mixed.getCapacity());
+        garbageCans.add(mixed);
+        d.calculateUsageRate(mixed);
 
-    @Test
-    void getGarbageCarArriveTimes() {
-    }
+        assertEquals(100.0, d.getAverageRateOfType(GarbageCanType.MIXED));
 
-    @Test
-    void getThrashTotalInLitres() {
-    }
+        //TEST 3: fill plastic container 50%
+        GarbageCan plastic = new GarbageCan(true, GarbageCanType.PLASTIC);
+        plastic.addGarbage(plastic.getCapacity()/2);
+        garbageCans.add(plastic);
+        d.calculateUsageRate(plastic);
 
-    @Test
-    void getThrashTotalInKg() {
-    }
+        assertEquals(50.0, d.getAverageRateOfType(GarbageCanType.PLASTIC));
 
-    @Test
-    void getThrashAmountByType() {
+        //TEST 4: add second mixed waste can and let it be empty, now we have one empty and one full garbage can type MIXED
+        GarbageCan mixed2 = new GarbageCan(true, GarbageCanType.MIXED);
+        mixed2.addGarbage(0);
+        garbageCans.add(mixed2);
+        d.calculateUsageRate(mixed2);
+
+        assertEquals(50.0, d.getAverageRateOfType(GarbageCanType.MIXED));
+
+        //TEST 4.2: add third mixed waste can and let it be empty, now we have two empty and one full garbage can type MIXED
+        GarbageCan mixed3 = new GarbageCan(true, GarbageCanType.MIXED);
+        mixed3.addGarbage(0);
+        garbageCans.add(mixed3);
+        d.calculateUsageRate(mixed3);
+
+        assertEquals(33.0, d.getAverageRateOfType(GarbageCanType.MIXED));
     }
 }

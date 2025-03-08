@@ -1,3 +1,7 @@
+/**
+ * @version 1.0
+ * @since 8.March.2025
+ */
 package application.assets.model;
 
 import java.util.ArrayList;
@@ -14,14 +18,15 @@ public class CollectedData {
     private int howManyTimeThrashThrown 			= 0;
     private int howManyTimesCarArrived				= 0;
     private double[] thrashAccessibilityRateByType 	= new double[GarbageCanType.values().length];
-    private HashMap<GarbageCanType, LinkedList<Double>> shelterUsageRate = new HashMap<>() {
+
+    private final HashMap<GarbageCanType, LinkedList<Double>> shelterUsageRate = new HashMap<>() {
         {
-            put(GarbageCanType.MIXED, new LinkedList<>());
-            put(GarbageCanType.BIO, new LinkedList<>());
-            put(GarbageCanType.CARDBOARD, new LinkedList<>());
-            put(GarbageCanType.PLASTIC, new LinkedList<>());
-            put(GarbageCanType.GLASS, new LinkedList<>());
-            put(GarbageCanType.METAL, new LinkedList<>());
+            put(GarbageCanType.MIXED,       new LinkedList<>());
+            put(GarbageCanType.BIO,         new LinkedList<>());
+            put(GarbageCanType.CARDBOARD,   new LinkedList<>());
+            put(GarbageCanType.PLASTIC,     new LinkedList<>());
+            put(GarbageCanType.GLASS,       new LinkedList<>());
+            put(GarbageCanType.METAL,       new LinkedList<>());
         }
     };
 
@@ -40,12 +45,12 @@ public class CollectedData {
     public LinkedHashMap<GarbageCanType, ArrayList<Double>> getGarbageCanCapacityPercentagesByType() {
         LinkedHashMap<GarbageCanType, ArrayList<Double>> result = new LinkedHashMap<>();
 
-        ArrayList<Double> mixed = new ArrayList<>();
-        ArrayList<Double> bio = new ArrayList<>();
-        ArrayList<Double> card = new ArrayList<>();
-        ArrayList<Double> plastic = new ArrayList<>();
-        ArrayList<Double> glass = new ArrayList<>();
-        ArrayList<Double> metal = new ArrayList<>();
+        ArrayList<Double> mixed     = new ArrayList<>();
+        ArrayList<Double> bio       = new ArrayList<>();
+        ArrayList<Double> card      = new ArrayList<>();
+        ArrayList<Double> plastic   = new ArrayList<>();
+        ArrayList<Double> glass     = new ArrayList<>();
+        ArrayList<Double> metal     = new ArrayList<>();
 
         for (GarbageCan can: garbageCans) {
             switch (can.getType()) {
@@ -108,9 +113,9 @@ public class CollectedData {
     }
 
     public void calculateUsageRate(GarbageCan can){
-        double usageRate = (double) Math.round((can.getCurrentCapacity() / can.getCapacity()) * 100) / 100;
+        double usageRate = (double) Math.round((can.getCurrentCapacity() / can.getCapacity()) * 100) / 100; //calculation gives normalized number between 0-1.
 
-        System.out.println("Usage rate of " + can.getType() + " can: " + usageRate + "%." + " Current capacity: " + can.getCurrentCapacity() + " l divided by " + can.getCapacity() + " l.");
+        System.out.println("Usage rate of " + can.getType() + " can: " + usageRate*100 + "%." + " Current capacity: " + can.getCurrentCapacity() + " l divided by " + can.getCapacity() + " l.");
 
         shelterUsageRate.get(can.getType()).add(usageRate);
     }
@@ -118,11 +123,11 @@ public class CollectedData {
     public double getAverageUsageRateTotal(){
         double totalUsageRate = 0;
 
-        for (GarbageCanType type: GarbageCanType.values()){
-            totalUsageRate += getAverageRateOfType(type);
+        for(GarbageCan can: garbageCans){
+            totalUsageRate += getAverageRateOfType(can.getType());
         }
 
-        return (double) Math.round((totalUsageRate / GarbageCanType.values().length) * 100);
+        return (double) Math.round(totalUsageRate / garbageCans.size());
     }
 
     public double getAverageRateOfType(GarbageCanType type){
