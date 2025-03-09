@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
@@ -48,7 +47,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 
 		engine.setMixedCanAmountValue(ui.getMixedCanAmountValue());
 		engine.setBioCanAmountValue(ui.getBioCanAmountValue());
-		engine.setPaperCanAmountValue(ui.getPaperCanAmountValue());
+		engine.setPaperCanAmountValue(ui.getCardboardCanAmountValue());
 		engine.setGlassCanAmountValue(ui.getGlassCanAmountValue());
 		engine.setMetalCanAmountValue(ui.getMetalCanAmountValue());
 		engine.setPlasticCanAmountValue(ui.getPlasticCanAmountValue());
@@ -305,7 +304,37 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void setMetalOverflow(double amt) {
 		Platform.runLater(() -> ui.setMetalOverflow(amt));
 	}
-	
+
+	@Override
+	public void setMixedAccessTime(double amt) {
+		Platform.runLater(() -> ui.setMixedAcessTime(amt));
+	}
+
+	@Override
+	public void setBioAccessTime(double amt) {
+		Platform.runLater(() -> ui.setBioAcessTime(amt));
+	}
+
+	@Override
+	public void setCardboardAccessTime(double amt) {
+		Platform.runLater(() -> ui.setCardboardAcessTime(amt));
+	}
+
+	@Override
+	public void setPlasticAccessTime(double amt) {
+		Platform.runLater(() -> ui.setPlasticAcessTime(amt));
+	}
+
+	@Override
+	public void setGlassAccessTime(double amt) {
+		Platform.runLater(() -> ui.setGlassAcessTime(amt));
+	}
+
+	@Override
+	public void setMetalAccessTime(double amt) {
+		Platform.runLater(() -> ui.setMetalAcessTime(amt));
+	}
+
 	@Override
 	public void visualizeResident(EventType eventType, LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
 		Platform.runLater(new Runnable(){
@@ -333,7 +362,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 			ui.setGarbageTruckArrivalInterval(input.getTruckArrivalInterval());
 			ui.setMixedCanAmountValue(input.getMixedAmount());
 			ui.setBioCanAmountValue(input.getBioAmount());
-			ui.setPaperCanAmountValue(input.getPaperAmount());
+			ui.setCardBoardCanAmountValue(input.getPaperAmount());
 			ui.setGlassCanAmountValue(input.getGlassAmount());
 			ui.setMetalCanAmountValue(input.getMetalAmount());
 			ui.setPlasticCanAmountValue(input.getPlasticAmount());
@@ -381,7 +410,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 					ui.getGarbageTruckArrivalInterval(),
 					ui.getMixedCanAmountValue(),
 					ui.getBioCanAmountValue(),
-					ui.getPaperCanAmountValue(),
+					ui.getCardboardCanAmountValue(),
 					ui.getGlassCanAmountValue(),
 					ui.getMetalCanAmountValue(),
 					ui.getPlasticCanAmountValue()));

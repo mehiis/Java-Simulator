@@ -16,7 +16,7 @@ public interface ISimulatorGUI {
 	public int getMixedCanAmountValue();
 	public int getPlasticCanAmountValue();
 	public int getGlassCanAmountValue();
-	public int getPaperCanAmountValue();
+	public int getCardboardCanAmountValue();
 	public int getBioCanAmountValue();
 	public int getMetalCanAmountValue();
 
@@ -49,6 +49,13 @@ public interface ISimulatorGUI {
 	void setPlasticOverflow(double value);
 	void setGlassOverflow(double value);
 	void setMetalOverflow(double value);
+
+	void setMixedAcessTime(double value);
+	void setBioAcessTime(double value);
+	void setCardboardAcessTime(double value);
+	void setPlasticAcessTime(double value);
+	void setGlassAcessTime(double value);
+	void setMetalAcessTime(double value);
 	
 	// Kontrolleri tarvitsee  
 	public IVisuals getVisualisointi();
@@ -73,7 +80,7 @@ public interface ISimulatorGUI {
 
 	void setBioCanAmountValue(int bioAmount);
 
-	void setPaperCanAmountValue(int paperAmount);
+	void setCardBoardCanAmountValue(int paperAmount);
 
 	void setGlassCanAmountValue(int glassAmount);
 

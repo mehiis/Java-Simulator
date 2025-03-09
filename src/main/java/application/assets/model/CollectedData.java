@@ -276,8 +276,8 @@ public class CollectedData {
      * Data is accessed from {@link FullnessCalculator} object, which is stored by using methods {@link #startCalculatingGarbageFullTime(GarbageCanType)} and {@link #getGarbageCanCapacityPercentagesByType()}
      */
     public double getFullTimeCalculations(GarbageCanType type){
-        double days = howManyMinutesWasFull.get(type).timeBeingFull * 0.0006944;
-        return Math.round(days * 100) / 100; //round to one decimal.
+        double days = howManyMinutesWasFull.get(type).timeBeingFull * 0.0166666667;
+        return (double)Math.round(days * 100) / 100; //round to one decimal.
     }
 }
 

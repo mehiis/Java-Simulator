@@ -123,6 +123,13 @@ public class OwnEngine extends Engine {
 		controller.setGlassOverflow(garbageShelter.getOverflowTrash(GarbageCanType.GLASS));
 		controller.setMetalOverflow(garbageShelter.getOverflowTrash(GarbageCanType.METAL));
 
+		controller.setMixedAccessTime(		garbageShelter.getData().getFullTimeCalculations(GarbageCanType.MIXED		));
+		controller.setBioAccessTime(		garbageShelter.getData().getFullTimeCalculations(GarbageCanType.BIO			));
+		controller.setCardboardAccessTime(	garbageShelter.getData().getFullTimeCalculations(GarbageCanType.CARDBOARD	));
+		controller.setPlasticAccessTime(	garbageShelter.getData().getFullTimeCalculations(GarbageCanType.PLASTIC		));
+		controller.setGlassAccessTime(		garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS		));
+		controller.setMetalAccessTime(		garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL		));
+
 		System.out.println("\n\n### SIMULATION ENDED###\nSimulation lasted for " + (double)(Math.round(Clock.getInstance().getTime()*100)/100) + " minutes.");
 		System.out.println(
 						"\nCOLLECTED DATA PRINT:\n" +
@@ -154,12 +161,12 @@ public class OwnEngine extends Engine {
 								" METAL: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.METAL)) + " l\n"
 		);
 
-		System.out.println("Mixed cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.MIXED) + " days.");
-		System.out.println("Bio cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.BIO) + " days.");
-		System.out.println("Cardboard cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.CARDBOARD) + " days.");
-		System.out.println("Plastic cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.PLASTIC) + " days.");
-		System.out.println("Glass cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS) + " days.");
-		System.out.println("Metal cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL) + " days.");
+		System.out.println("Mixed cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.MIXED) + " hours.");
+		System.out.println("Bio cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.BIO) + " hours.");
+		System.out.println("Cardboard cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.CARDBOARD) + " hours.");
+		System.out.println("Plastic cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.PLASTIC) + " hours.");
+		System.out.println("Glass cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS) + " hours.");
+		System.out.println("Metal cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL) + " hours.");
 
 	}
 

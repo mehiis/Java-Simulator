@@ -1,6 +1,4 @@
 package application.view;
-
-
 import application.assets.framework.Clock;
 import application.assets.framework.Trace;
 import application.controller.IControllerForView;
@@ -16,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -31,31 +30,35 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     // settings
     //ASPECT RATIO 16:9. Possible sizes are: 800x450, 1280x720, 1600x900, 1920x1080
-    private int width   = 1280;
-    private int height  = 720;
+    private  int width   = 1280;
+    private  int height  = 720;
     private final int defaultSimulationTime = 14400 / 1440;// 10 days
 
     // Käyttöliittymäkomponentit:
     // Left Box values
-    private TextField simulationTimeValue = new TextField();
+    private final TextField simulationTimeValue = new TextField();
 
-    private TextField meanThrashAmountPerThrowValue = new TextField();
+    private final TextField meanThrashAmountPerThrowValue = new TextField();
 
-    private TextField garbageTruckArrivalValue = new TextField();
+    private final TextField garbageTruckArrivalValue = new TextField();
 
-    private TextField singleAptAmountValue = new TextField();
-    private TextField doubleAptAmountValue = new TextField();
-    private TextField tripleAptAmountValue = new TextField();
-    private TextField quadAptAmountValue = new TextField();
+    private final TextField singleAptAmountValue = new TextField();
+    private final TextField doubleAptAmountValue = new TextField();
+    private final TextField tripleAptAmountValue = new TextField();
+    private final TextField quadAptAmountValue = new TextField();
 
-    private TextField mixedCanAmountValue = new TextField();
-    private TextField plasticCanAmountValue = new TextField();
-    private TextField glassCanAmountValue = new TextField();
-    private TextField paperCanAmountValue = new TextField();
-    private TextField bioCanAmountValue = new TextField();
-    private TextField metalCanAmountValue = new TextField();
+    private final TextField mixedCanAmountValue = new TextField();
+    private final TextField plasticCanAmountValue = new TextField();
+    private final TextField glassCanAmountValue = new TextField();
+    private final TextField cardBoardCanAmountValue = new TextField();
+    private final TextField bioCanAmountValue = new TextField();
+    private final TextField metalCanAmountValue = new TextField();
+
+    private final Color blackColor  = Color.BLACK;
+    private final Color redColor    = Color.RED;
+
     // Middle Control
-    private Label dayLabel = new Label("Day: 1");
+    private final Label dayLabel = new Label("Day: 1");
 
     // Right box
     private boolean resultWindowOpen = true;
@@ -73,33 +76,39 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Label resultLabel;
 
     // Performance variables
+    private final Label trashThrownTimes = new Label("");
+    private final Label trashClearedTimes = new Label("");
 
-    private Label trashThrownTimes = new Label("");
-    private Label trashClearedTimes = new Label("");
+    private final Label trashThrownTotalKilos = new Label("");
+    private final Label trashThrownTotalLiters = new Label("");
 
-    private Label trashThrownTotalKilos = new Label("");
-    private Label trashThrownTotalLiters = new Label("");
+    private final Label mixedTotal = new Label("");
+    private final Label bioTotal = new Label("");
+    private final Label cardboardTotal = new Label("");
+    private final Label plasticTotal = new Label("");
+    private final Label glassTotal = new Label("");
+    private final Label metalTotal = new Label("");
 
-    private Label mixedTotal = new Label("");
-    private Label bioTotal = new Label("");
-    private Label cardboardTotal = new Label("");
-    private Label plasticTotal = new Label("");
-    private Label glassTotal = new Label("");
-    private Label metalTotal = new Label("");
+    private final Label mixedUsage = new Label("");
+    private final Label bioUsage = new Label("");
+    private final Label cardboardUsage = new Label("");
+    private final Label plasticUsage = new Label("");
+    private final Label glassUsage = new Label("");
+    private final Label metalUsage = new Label("");
 
-    private Label mixedUsage = new Label("");
-    private Label bioUsage = new Label("");
-    private Label cardboardUsage = new Label("");
-    private Label plasticUsage = new Label("");
-    private Label glassUsage = new Label("");
-    private Label metalUsage = new Label("");
+    private final Label mixedOverflow = new Label("");
+    private final Label bioOverflow = new Label("");
+    private final Label cardboardOverflow = new Label("");
+    private final Label plasticOverflow = new Label("");
+    private final Label glassOverflow = new Label("");
+    private final Label metalOverflow = new Label("");
 
-    private Label mixedOverflow = new Label("");
-    private Label bioOverflow = new Label("");
-    private Label cardboardOverflow = new Label("");
-    private Label plasticOverflow = new Label("");
-    private Label glassOverflow = new Label("");
-    private  Label metalOverflow = new Label("");
+    private final Label mixedAccessTime     = new Label("");
+    private final Label bioAccessTime       = new Label("");
+    private final Label cardboardAccessTime = new Label("");
+    private final Label plasticAccessTime   = new Label("");
+    private final Label glassAccessTime     = new Label("");
+    private final Label metalAccessTime     = new Label("");
 
     private Button startButton;
     private Button slowButton;
@@ -361,6 +370,72 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     }
 
     @Override
+    public void setMixedAcessTime(double value) {
+        mixedAccessTime.setTextFill(blackColor);
+
+        DecimalFormat df = new DecimalFormat("#0.0");
+        mixedAccessTime.setText("Mixed waste for " + df.format(value) + " days");
+
+        if(value > 24)
+            mixedAccessTime.setTextFill(redColor);
+    }
+
+    @Override
+    public void setBioAcessTime(double value) {
+        bioAccessTime.setTextFill(blackColor);
+
+        DecimalFormat df = new DecimalFormat("#0.0");
+        bioAccessTime.setText("Bio waste: " + df.format(value) + " hours");
+
+        if(value > 24)
+            bioAccessTime.setTextFill(redColor);
+    }
+
+    @Override
+    public void setCardboardAcessTime(double value) {
+        cardboardAccessTime.setTextFill(blackColor);
+
+        DecimalFormat df = new DecimalFormat("#0.0");
+        cardboardAccessTime.setText("Cardboard waste: " + df.format(value) + " hours");
+
+        if(value > 24)
+            cardboardAccessTime.setTextFill(redColor);
+    }
+
+    @Override
+    public void setPlasticAcessTime(double value) {
+        plasticAccessTime.setTextFill(blackColor);
+
+        DecimalFormat df = new DecimalFormat("#0.0");
+        plasticAccessTime.setText("Plastic waste: " + df.format(value) + " hours");
+
+        if(value > 24)
+            plasticAccessTime.setTextFill(redColor);
+    }
+
+    @Override
+    public void setGlassAcessTime(double value) {
+        glassAccessTime.setTextFill(blackColor);
+
+        DecimalFormat df = new DecimalFormat("#0.0");
+        glassAccessTime.setText("Glass waste: " + df.format(value) + " hours");
+
+        if(value > 24)
+            glassAccessTime.setTextFill(redColor);
+    }
+
+    @Override
+    public void setMetalAcessTime(double value) {
+        metalAccessTime.setTextFill(blackColor);
+
+        DecimalFormat df = new DecimalFormat("#0.0");
+        metalAccessTime.setText("Metal waste: " + df.format(value) + " hours");
+
+        if(value > 24)
+            metalAccessTime.setTextFill(redColor);
+    }
+
+    @Override
     public void setTrashThrowTimes(int amt) {
         trashThrownTimes.setText("Trash was thrown "+amt+" times");
     }
@@ -421,13 +496,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         }
     }
 
-    public int getPaperCanAmountValue() {
-        if (paperCanAmountValue.getText().isEmpty()) {
+    public int getCardboardCanAmountValue() {
+        if (cardBoardCanAmountValue.getText().isEmpty()) {
             return 1;
         }
         else {
             try {
-                return Integer.parseInt(paperCanAmountValue.getText());
+                return Integer.parseInt(cardBoardCanAmountValue.getText());
             } catch (NumberFormatException e) {
                 return 1;
             }
@@ -501,8 +576,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         glassCanAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setPaperCanAmountValue (int amount) {
-        paperCanAmountValue.setText(Integer.toString(amount));
+    public void setCardBoardCanAmountValue(int amount) {
+        cardBoardCanAmountValue.setText(Integer.toString(amount));
     }
 
     public void setBioCanAmountValue (int amount) {
@@ -526,7 +601,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     @Override
     public void setLoppuaika(double aika) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
-        this.endTime.setText("Simulation end time: "+formatter.format(aika)+" minutes, "+formatter.format(aika / 1440)+" days.");
+        this.endTime.setText("Simulation time: " + formatter.format(aika / 1440)+" days.");
         startButton.setDisable(false);
         Clock.getInstance().setTime(0.0);
     }
@@ -681,12 +756,17 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         Label trashOverflows = new Label("Trash overflow: ");
         trashOverflows.setFont(FONT);
 
+        Label accessTime = new Label("Time unavailable: ");
+        accessTime.setFont(FONT);
+
         VBox rightControl  = new VBox(
                 collectedDataTitle,
-                trashThrownTimes, trashClearedTimes,
+                endTime, trashThrownTimes, trashClearedTimes,
                 trashThrownTotals, trashThrownTotalKilos, trashThrownTotalLiters, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal,
                 shelterUsageRates, mixedUsage, bioUsage, cardboardUsage, plasticUsage, glassUsage, metalUsage,
-                trashOverflows, mixedOverflow, bioOverflow, cardboardOverflow, plasticOverflow, glassOverflow, metalOverflow, endTime
+                trashOverflows, mixedOverflow, bioOverflow, cardboardOverflow, plasticOverflow, glassOverflow, metalOverflow,
+                accessTime, mixedAccessTime, bioAccessTime, cardboardAccessTime, plasticAccessTime, glassAccessTime, metalAccessTime
+
         );
 
         // set padding to all Labels in rightControl
@@ -809,14 +889,14 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         glassCanAmount.setLeft(glassCanAmountLabel);
         glassCanAmount.setRight(glassCanAmountValue);
 
-        // Paper can amount
-        BorderPane paperCanAmount = new BorderPane();
-        paperCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
-        paperCanAmountValue.setPromptText("1");
-        Label paperCanAmountLabel = new Label("Paper");
-        paperCanAmountLabel.setFont(FONT);
-        paperCanAmount.setLeft(paperCanAmountLabel);
-        paperCanAmount.setRight(paperCanAmountValue);
+        // CardBOARD can amount
+        BorderPane cardBoardCanAmount = new BorderPane();
+        cardBoardCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
+        cardBoardCanAmountValue.setPromptText("1");
+        Label cardBoardCanAmountLabel = new Label("Cardboard");
+        cardBoardCanAmountLabel.setFont(FONT);
+        cardBoardCanAmount.setLeft(cardBoardCanAmountLabel);
+        cardBoardCanAmount.setRight(cardBoardCanAmountValue);
 
         // Metal can amount
         BorderPane metalCanAmount = new BorderPane();
@@ -827,7 +907,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
-        VBox leftControl  = new VBox(simulationTime, meanThrashAmountPerThrow, garbageTruckTime,  singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, paperCanAmount, metalCanAmount);
+        VBox leftControl  = new VBox(simulationTime, meanThrashAmountPerThrow, garbageTruckTime,  singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, cardBoardCanAmount, metalCanAmount);
         leftControl.setSpacing(10); // Spacing for each component
         return leftControl;
     }

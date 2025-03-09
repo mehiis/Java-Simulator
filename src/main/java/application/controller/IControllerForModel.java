@@ -62,5 +62,17 @@ public interface IControllerForModel {
 
     void setMetalOverflow(double amt);
 
+    void setMixedAccessTime(double amt);
+
+    void setBioAccessTime(double amt);
+
+    void setCardboardAccessTime(double amt);
+
+    void setPlasticAccessTime(double amt);
+
+    void setGlassAccessTime(double amt);
+
+    void setMetalAccessTime(double amt);
+
     public void visualizeResident(EventType eventType, LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
 }
