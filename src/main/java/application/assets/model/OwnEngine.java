@@ -99,6 +99,7 @@ public class OwnEngine extends Engine {
 
 		controller.setTrashThrownTimes(garbageShelter.getData().getHowManyTimeThrashThrown());
 		controller.setShelterClearedTimes(garbageShelter.getData().getGarbageCarArriveTimes());
+		controller.setShelterUsagePercent(garbageShelter.getData().getAverageUsageRateTotal());
 
 		controller.setTrashThrownTotal(garbageShelter.getData().getThrashTotalInKg(), garbageShelter.getData().getThrashTotalInLitres());
 

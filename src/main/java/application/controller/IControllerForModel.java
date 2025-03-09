@@ -23,6 +23,8 @@ public interface IControllerForModel {
 
     void setShelterClearedTimes(int amt);
 
+    void setShelterUsagePercent(double amt);
+
     void setTrashThrownTotal(double liters, double kg);
 
     // pass performance data to controller from engine

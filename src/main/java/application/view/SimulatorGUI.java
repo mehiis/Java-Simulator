@@ -76,8 +76,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Label resultLabel;
 
     // Performance variables
-    private final Label trashThrownTimes = new Label("");
-    private final Label trashClearedTimes = new Label("");
+    private final Label trashThrownTimes    = new Label("");
+    private final Label trashClearedTimes   = new Label("");
+    private final Label shelterUsagePercent = new Label("");
 
     private final Label trashThrownTotalKilos = new Label("");
     private final Label trashThrownTotalLiters = new Label("");
@@ -439,6 +440,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public void setTrashThrowTimes(int amt) {
         trashThrownTimes.setText("Trash was thrown "+amt+" times");
     }
+    public void setShelterUsagePercent(double amt) {
+        shelterUsagePercent.setTextFill(blackColor);
+        shelterUsagePercent.setText("Average shelter usage rate: "+amt+" %");
+
+        if(amt < 15)
+            shelterUsagePercent.setTextFill(redColor);
+    }
 
     @Override
     public void setShelterClearedTimes(int amt) {
@@ -744,7 +752,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         final int TEXT_FIELD_WIDTH = 50;
         final Font FONT = new Font("Dubai Medium", 15);
 
-        Label collectedDataTitle = new Label("COLLECTED DATA: ");
+        Label collectedDataTitle = new Label("General data: ");
         collectedDataTitle.setFont(FONT);
 
         Label trashThrownTotals = new Label("Trash thrown: ");
@@ -761,7 +769,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         VBox rightControl  = new VBox(
                 collectedDataTitle,
-                endTime, trashThrownTimes, trashClearedTimes,
+                endTime, trashThrownTimes, trashClearedTimes, shelterUsagePercent,
                 trashThrownTotals, trashThrownTotalKilos, trashThrownTotalLiters, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal,
                 shelterUsageRates, mixedUsage, bioUsage, cardboardUsage, plasticUsage, glassUsage, metalUsage,
                 trashOverflows, mixedOverflow, bioOverflow, cardboardOverflow, plasticOverflow, glassOverflow, metalOverflow,
@@ -951,8 +959,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                     System.out.println("History is already empty");
                 }
         });
-
-
 
         HBox bottomControl = new HBox(slowButton, startButton, fastButton, historyButton, clearHistoryButton);
         bottomControl.setAlignment(Pos.CENTER);

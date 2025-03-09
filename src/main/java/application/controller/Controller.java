@@ -176,6 +176,11 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		Platform.runLater(() -> ui.setShelterClearedTimes(amt));
 	}
 
+	@Override
+	public void setShelterUsagePercent(double amt) {
+		Platform.runLater(() -> ui.setShelterUsagePercent(amt));
+	}
+
 	/**
 	 * Passes the total amount of trash thrown during the simulation to the UI.
 	 * @param liters Amount of trash thrown in liters.
