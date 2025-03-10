@@ -1,19 +1,15 @@
 package application.assets.model;
 
-import application.assets.framework.EventList;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-public class ThrowTrashTest {
-    private GarbageShelter garbageShelter;
+public class GenerateTrashTest {
     private TrashDistribution trashGenerator;
     @BeforeEach
     void setUp() {
-        garbageShelter = new GarbageShelter(new EventList(), EventType.EXIT, 6.0);
         trashGenerator = new TrashDistribution();
     }
 
@@ -37,10 +33,16 @@ public class ThrowTrashTest {
             totalTrashWeight += generatedTrash.get(type);
         }
 
-        // get trash amout of type, divide it by total weight of generated trash, multiply it by a hundred to get percentages, now check it against distribution percentages with a delta
+        // get trash amout of type, divide it by total weight of generated trash, multiply it by a hundred to get percentages, now check it against distribution percentages (cumulative percentage - last cumulative percentage) with a delta
         int loopCounter = 0;
         for (GarbageCanType type: types) {
-            Assertions.assertEquals((generatedTrash.get(type) / totalTrashWeight) * 100, cumulativePercentages[loopCounter], 5);
+            double amountOfTrashOfType = generatedTrash.get(type);
+            if (loopCounter >= 1) {
+                Assertions.assertEquals((amountOfTrashOfType / totalTrashWeight) * 100, cumulativePercentages[loopCounter] - cumulativePercentages[loopCounter -1], 1);
+            } else {
+                // do the first trash type without cumulative percentages subtraction
+                Assertions.assertEquals(((amountOfTrashOfType / totalTrashWeight) * 100), cumulativePercentages[loopCounter], 5);
+            }
             loopCounter ++;
         }
     }
