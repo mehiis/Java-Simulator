@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+/**
+ * NOT IN USE, VERY BROKEN.
+ */
 public class Visuals2 extends Canvas implements IVisuals {
 	
 	private GraphicsContext gc;
@@ -28,11 +31,6 @@ public class Visuals2 extends Canvas implements IVisuals {
 
 	@Override
 	public void setApartmentCounts(ApartmentType type, Integer count) {
-
-	}
-
-	@Override
-	public void setTrashCanCounts(GarbageCanType type, Integer count) {
 
 	}
 

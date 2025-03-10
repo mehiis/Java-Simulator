@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * This class is responsible for the visual representation of the simulation.
+ */
 public class Visuals extends Canvas implements IVisuals {
 	private final GraphicsContext gc;
 	
@@ -143,11 +146,9 @@ public class Visuals extends Canvas implements IVisuals {
 		apartmentCounts.put(type, count);
 	}
 
-	@Override
-	public void setTrashCanCounts(GarbageCanType type, Integer count) {
-		trashCanCounts.put(type, count);
-	}
-
+	/**
+	 * Apartment listing visuals are constructed here.
+	 */
 	private void constructAptList() {
 		clearDrawArea(0, 0, 135, 600);
 		// Set text properties
@@ -185,6 +186,9 @@ public class Visuals extends Canvas implements IVisuals {
 		}
 	}
 
+	/**
+	 * Garbage can listing visuals are constructed here.
+	 */
 	private void constructGarbageCanList() {
 		gc.setFill(Color.BLUE); // Set text color to get rid of yellow fill in emptyScreen()
 
@@ -221,12 +225,19 @@ public class Visuals extends Canvas implements IVisuals {
 		}
 	}
 
+	/**
+	 * This method constructs main elements of visuals, called from controller/startSimulation().
+	 */
 	@Override
 	public void constructSimuElementVisuals() {
 		constructAptList();
 		constructGarbageCanList();
 	}
 
+	/**
+	 * This method is used to update the trash percentages next to garbage bins.
+	 * @param percentages
+	 */
 	@Override
 	public void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
 		trashCanPercentages = percentages;
@@ -257,11 +268,24 @@ public class Visuals extends Canvas implements IVisuals {
 	}
 
 	// middle clear area offset: x = 135
+
+	/**
+	 * This method is used to clear the drawing area at wanted pixel pos of specific size.
+	 * @param posX
+	 * @param posY
+	 * @param width
+	 * @param height
+	 */
 	public void clearDrawArea(int posX, int posY, int width, int height) {
 		gc.setFill(Color.WHITESMOKE);
 		gc.fillRect(posX, posY, width, height);
 	}
 
+	/**
+	 * This method is called when a new resident arrives to the shelter.
+	 * Visualizes resident as a person image moving across the screen.
+	 * @param eventType
+	 */
 	public void newResident(EventType eventType) {
 		// y loc should be get from apartment type somehow
 		double apartmentImgVSize = yksioImg.getHeight();
