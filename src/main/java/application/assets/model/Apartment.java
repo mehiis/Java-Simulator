@@ -6,6 +6,10 @@ import application.assets.framework.*;
 
 // TODO:
 // Asiakas koodataan simulointimallin edellyttämällä tavalla (data!)
+/**
+ * Class for the apartment. The apartment is used to store the arrival and exit time of the customer.
+ * Apartments queue at the garbage shelter.
+ */
 public class Apartment {
 	private double arrivalTime;
 	private double exitTime;
