@@ -8,7 +8,9 @@ import application.controller.Controller;
 import application.eduni.distributions.Negexp;
 import application.eduni.distributions.Normal;
 import application.run.Specs;
-
+/**
+ * Child of Engine-class, contains the customized main working logic of the simulator.
+ */
 public class OwnEngine extends Engine {
 	private ArrivalProcess yksioArrivalProcess;
 	private ArrivalProcess kaksioArrivalProcess;
@@ -44,7 +46,10 @@ public class OwnEngine extends Engine {
 		clearProcess 		= new ArrivalProcess(new Normal(controller.getGarbageTruckArrivalInterval(),1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
 
-
+	/**
+	 * Initializes engine by generating the necessary first B-type events.
+	 * Starts the loop of wanted resident type-arrivals and garbage truck arrival.
+	 */
 	@Override
 	protected void init() {
 		// start needed arrival processes as defined in GUI as params
@@ -56,6 +61,11 @@ public class OwnEngine extends Engine {
 		garbageShelter.printThrashCans();// !for testing purposes! //
 	}
 
+	/**
+	 * Booked B-stage of the simulation model. Arrival of residents to garbage shelter,
+	 * generation of new arrival events and visualization of residents.
+	 * @param t
+	 */
 	@Override
 	protected void executeEvent(Event t){// B-vaiheen tapahtumat
 
@@ -91,7 +101,9 @@ public class OwnEngine extends Engine {
 					break;
 		}
 	}
-
+	/**
+	 * Conditional C-stage of the simulation model. Tries all C-type events (can trash be thrown?).
+	 */
 	@Override
 	protected void tryCtypeEvents(){
 			if (!garbageShelter.isReserved() && garbageShelter.isQueued() && !garbageShelter.isFull()){
@@ -101,6 +113,9 @@ public class OwnEngine extends Engine {
 			garbageShelter.garbageCanStates();
 	}
 
+	/**
+	 * Display simulation results. Passes data gathered from model to controller to GUI for displaying.
+	 */
 	@Override
 	protected void results() {
 		controller.naytaLoppuaika(Clock.getInstance().getTime());
