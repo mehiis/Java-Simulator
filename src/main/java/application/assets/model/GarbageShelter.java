@@ -10,6 +10,11 @@ import java.util.*;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
+
+/**
+ * This class represents a service point. The garbage shelter where residents bring their trash.
+ * The shelter has a queue for residents and garbage cans for different types of trash.
+ */
 public class GarbageShelter {
 	private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
 	private ArrayList<GarbageCan> garbageCans = new ArrayList<>();
@@ -27,7 +32,12 @@ public class GarbageShelter {
 	private HashMap<GarbageCanType, Double> overflowTrash = new HashMap<>();
 	private CollectedData data;
 
-
+	/**
+	 * Constructor for the garbage shelter.
+	 * @param eventList simulator event list
+	 * @param type exit event type
+	 * @param meanTrashThrowAmt mean amount of trash thrown at once by residents
+	 */
 	// Constructor with custom amount of garbage cans
 	public GarbageShelter(EventList eventList, EventType type, double meanTrashThrowAmt){
 		data = new CollectedData(garbageCans);
@@ -41,7 +51,10 @@ public class GarbageShelter {
 	public void addToQueue(Apartment a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
 	}
-
+	/**
+	 * Adds a garbage can to the shelter
+	 * @param type the type of the garbage can
+	 */
 	public void addGarbageCan(GarbageCanType type, int amount){
 		for (int i = 0; i < amount; i++) {
 			garbageCans.add(new GarbageCan(true , type));
@@ -55,6 +68,12 @@ public class GarbageShelter {
 
 	// SORRY ABOUT THE MESS
 	// final trash placement into respective cans, separated this out to prevent nested ifs
+	/**
+	 * Final placement of trash into respective garbage can. This is separated from the main throwTrash() method to prevent nested ifs.
+	 * @param can the garbage can
+	 * @param trashAmt the amount of trash
+	 * @param generatedTrash the trash
+	 */
 	public void putTrash(GarbageCan can, double trashAmt, HashMap<GarbageCanType, Double> generatedTrash) {
 		can.addGarbageForData(trashAmt);
 
@@ -81,7 +100,9 @@ public class GarbageShelter {
 			data.startCalculatingGarbageFullTime(can.getType());
 		}
 	}
-
+	/**
+	 * Throws trash to shelter according to its parameters.
+	 */
 	public void throwTrash(){
 		//Data collection, do this here because it needs to be incremented only once
 		data.addThrownThrash();
@@ -125,10 +146,18 @@ public class GarbageShelter {
 		}
 	}
 
+	/**
+	 * Checks if the shelter is reserved.
+	 * @return
+	 */
 	public boolean isReserved(){
 		return reserved;
 	}
 
+	/**
+	 * Checks if the shelter has a queue.
+	 * @return
+	 */
 	public boolean isQueued(){
 		return queue.size() != 0;
 	}
@@ -139,7 +168,9 @@ public class GarbageShelter {
 		for(GarbageCan can: garbageCans)
 			System.out.println(can.getType() + ": " + can.getCurrentCapacity() + "/"  + can.getCapacity() + ". Is full?: " + !can.checkCapacity(can.getCurrentCapacity()));
 	}
-
+	/**
+	 * Empties the garbage cans in the shelter. Called by the garbage truck arrival process.
+	 */
 	public void clearGarbageCans(){
 		System.out.println("GARBAGE TRUCK IS HERE TO EMPTY THE GARBAGE CANS!");
 		data.addGarbageCarArrival();
@@ -154,9 +185,18 @@ public class GarbageShelter {
 		isFull = false;
 	}
 
+	/**
+	 * Returns the amount of overflow trash in a garbage can type.
+	 * @param type
+	 * @return
+	 */
 	public double getOverflowTrash(GarbageCanType type) {
 		return overflowTrash.getOrDefault(type, 0.0); // return default if no overflow occurred in the can
 	}
 
+	/**
+	 * Returns the data object.
+	 * @return
+	 */
 	public CollectedData getData(){ return this.data; }
 }
