@@ -13,10 +13,11 @@ public class SpecsGetMeanArrivalRateTest {
     }
     @Test
     void checkArrivalRateRangeNotNegative() {
-    for (int i = 0; i < 100; i++) {
-        double arrivalRate = Specs.getMeanArrivalRate(i, i, i);
-        assertTrue(arrivalRate > 0);
-        }
+        // Making sure no negative arrival rates are calculated.
+        for (int i = -10000; i < 10000; i++) {
+            double arrivalRate = Specs.getMeanArrivalRate(i, i, i);
+            assertTrue(arrivalRate > 0);
+            }
 
     }
 }
