@@ -1,5 +1,8 @@
 package application.assets.model;
 
+/**
+ * Class for garbage cans. The garbage cans are used to store trash in the garbage shelter.
+ */
 public class GarbageCan {
     private double currentCapacity;
     private double totalCapacity;
@@ -14,6 +17,11 @@ public class GarbageCan {
         this.type = type;
     }
 
+    /**
+     * Adds garbage to the garbage can.
+     * @param amount
+     * @return
+     */
     public boolean addGarbage(double amount){
         double temp = this.currentCapacity + amount;
 
@@ -24,6 +32,10 @@ public class GarbageCan {
         return true;
     }
 
+    /**
+     * Garbage data collection.
+     * @param amount
+     */
     public void addGarbageForData(double amount){
         this.dataCapcity += amount;
     }
@@ -36,6 +48,10 @@ public class GarbageCan {
         return (currentCapacity + thrashAmount) <= totalCapacity;
     }
 
+    /**
+     * Returns the weight of trash of given bin type, multiplied by a trash volume multiplier.
+     * @return
+     */
     public double getWeight(){
         switch (this.type){
             case MIXED:
@@ -69,5 +85,8 @@ public class GarbageCan {
 
     public GarbageCanType getType(){return this.type;}
 
+    /**
+     * Empties the garbage can.
+     */
     public void empty(){this.currentCapacity = 0;}
 }
