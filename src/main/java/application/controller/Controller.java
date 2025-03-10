@@ -87,6 +87,11 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		engine.setDelay((long)(engine.getDelay()*1.10));
 	}
 
+	@Override
+	public void pause() {
+		engine.pressPauseButton();
+	}
+
 	/**
 	 * Speeds up the engine.
 	 * Called from the UI when the Speed Up button is pressed.

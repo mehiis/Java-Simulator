@@ -8,6 +8,7 @@ public abstract class Engine extends Thread implements IEngine{
 	private Clock clock;
 	
 	protected EventList eventList;
+	protected boolean paused = false;
 
 	public Engine(){
 
@@ -34,23 +35,25 @@ public abstract class Engine extends Thread implements IEngine{
 	
 	public void run(){
 		init(); // luodaan mm. ensimmäinen tapahtuma
-		while (simulation()){
+		while (simulation()) {
 
-			delay();
-			
-			Trace.out(Trace.Level.INFO, "\nA-Stage: simulation time is " + currentTime() + " minutes.");
-			clock.setTime(currentTime());
-			
-			Trace.out(Trace.Level.INFO, "\nB-Stage:" );
-			executeBtypeEvents();
-			
-			Trace.out(Trace.Level.INFO, "\nC-Stage:" );
-			tryCtypeEvents();
+			if (!paused) {
+				delay();
 
+				Trace.out(Trace.Level.INFO, "\nA-Stage: simulation time is " + currentTime() + " minutes.");
+				clock.setTime(currentTime());
+
+				Trace.out(Trace.Level.INFO, "\nB-Stage:");
+				executeBtypeEvents();
+
+				Trace.out(Trace.Level.INFO, "\nC-Stage:");
+				tryCtypeEvents();
+
+			} else {
+				Trace.out(Trace.Level.INFO, "\nPaused.");
+			}
 		}
 		results();
-
-		
 	}
 	
 	private void executeBtypeEvents(){
@@ -73,6 +76,8 @@ public abstract class Engine extends Thread implements IEngine{
 	protected abstract void init(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	protected abstract void results();// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+	public abstract void pressPauseButton(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
 
 	private void delay() { // UUSI
 		Trace.out(Trace.Level.INFO, "delay " + delayTime + " ms.");

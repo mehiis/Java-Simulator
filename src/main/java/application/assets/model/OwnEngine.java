@@ -172,6 +172,9 @@ public class OwnEngine extends Engine {
 	}
 
 	@Override
+	public void pressPauseButton() { this.paused = !this.paused; }
+
+	@Override
 	public void setMixedCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.MIXED, amount);}
 
 	@Override
