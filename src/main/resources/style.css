@@ -1,15 +1,54 @@
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 16;
+}
 #rightPanel {
-    -fx-background-color: magenta;
-    -fx-border-color: yellow;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
-    -fx-padding: 10;
+    -fx-background-color: #C8DDA4;
 }
 
-#leftVBox {
-    -fx-background-color: green;
-    -fx-border-color: yellow;
-    -fx-border-width: 1;
-    -fx-border-radius: 5;
+#bottomBox {
+    -fx-background-color: #C8DDA4;
+
+}
+
+.list-view .list-cell:even {
+    -fx-background-color: #C8DDA4;
+}
+.list-view .list-cell:odd {
+    -fx-background-color: #cadcbf;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: #C8DDA4;
+}
+
+
+.button {
+    -fx-background-color: WHITESMOKE;
+}
+
+#historyWindow {
+    -fx-background-color: #C8DDA4;
+}
+
+#resultsWindow {
+    -fx-background-color: #C8DDA4;
+}
+
+#centerStats {
+    -fx-background-color: #cadcbf;
+
+}
+
+#centerBox {
+    -fx-background-color: #cadcbf;
+}
+
+#leftBox {
+    -fx-background-color: #C8DDA4;
     -fx-padding: 10;
 }

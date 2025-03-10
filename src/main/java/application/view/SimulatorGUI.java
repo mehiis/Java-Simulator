@@ -134,7 +134,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
      */
     @Override
     public void init() {
-
         Trace.setTraceLevel(Trace.Level.INFO);
 
         controller = new Controller(this);
@@ -703,50 +702,36 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         SplitPane horSplitPane = new SplitPane();
         SplitPane verSplitPane = new SplitPane();
 
-        double horizontalFirstPosition = 0.2;
-        double horizontalMiddlePosition = 0.8;
-        double horizontalLastPosition = 0.8;
         double verticalPosition = 0.90;
 
         VBox leftVBox   = left();
-        leftVBox.setId("leftVBox");
+        leftVBox.setId("leftBox");
 
         ScrollPane resultsWindow  = right();
+        resultsWindow.setId("resultsWindow");
+
         ListView historyWindow = historyWindow();
+        historyWindow.setId("historyWindow");
 
         StackPane rightPanel = new StackPane(resultsWindow, historyWindow);
+        rightPanel.setId("rightBox");
         historyWindow.setVisible(false);
 
         horSplitPane.getItems().addAll(leftVBox, center(), rightPanel);
 
         //SET DEFAULT SIZE OF TOP PANELS HORIZONTALLY
-        horSplitPane.getDividers().getFirst().setPosition(horizontalFirstPosition);
-        horSplitPane.getDividers().getLast().setPosition(horizontalMiddlePosition);
-        horSplitPane.getDividers().get(1).setPosition(horizontalLastPosition);
+        horSplitPane.setDividerPositions(0.25, 0.75);
         //END SETTING DEFAULT SIZES
 
-        verSplitPane.getItems().addAll(horSplitPane, bottom());
+        Region bottomBox = bottom();
+        bottomBox.setId("bottomBox");
+        verSplitPane.getItems().addAll(horSplitPane, bottomBox);
         verSplitPane.orientationProperty().setValue(Orientation.VERTICAL);
         verSplitPane.getDividers().getFirst().setPosition(verticalPosition); //SET DEFAULT SIZE OF TOP PANEL VERTICALLY. (0.75 = 75% of the screen).
 
 
         Scene scene = new Scene(verSplitPane, width, height);
         scene.getStylesheets().add("style.css");
-
-        // Key event listeners
-        scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case SPACE:
-                    horSplitPane.getDividers().getFirst().setPosition(horizontalFirstPosition);
-                    horSplitPane.getDividers().getLast().setPosition(horizontalLastPosition);
-                    horSplitPane.getDividers().get(1).setPosition(horizontalMiddlePosition);
-                    verSplitPane.getDividers().getFirst().setPosition(verticalPosition);
-                    break;
-                // Add more keys if needed
-                default:
-                    break;
-            }
-        });
 
         return scene;
     }
@@ -767,16 +752,20 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         canvas = new Visuals(600, 600);
 
         BorderPane rootPane = new BorderPane();
+        rootPane.setId("centerBox");
 
         rootPane.setCenter(canvas);
-        dayLabel.setFont(new Font("Dubai Medium", 20));
         dayLabel.setVisible(false);
 
-        speedLabel.setFont(new Font("Dubai Medium", 20));
         speedLabel.setVisible(false);
 
-        VBox midControl   = new VBox(dayLabel, rootPane);
-        midControl.getChildren().add(speedLabel);
+        VBox midControl   = new VBox();
+        midControl.setId("centerStats");
+        //midControl.getChildren().add(speedLabel);
+        midControl.setSpacing(0); // Remove gaps between elements
+        midControl.setPadding(new Insets(0)); // Remove extra padding
+        midControl.setAlignment(Pos.TOP_CENTER); // Align items to the top-center
+        midControl.getChildren().addAll(dayLabel, speedLabel, rootPane);
 
 
         return midControl;
@@ -789,13 +778,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         if (resultWindowOpen) {
             resultsWindow.setVisible(false);
             historyWindow.setVisible(true);
-            clearHistoryButton.setVisible(true);
+            //clearHistoryButton.setVisible(true);
             historyButton.setText("Results");
             resultWindowOpen = false;
         } else {
             resultsWindow.setVisible(true);
             historyWindow.setVisible(false);
-            clearHistoryButton.setVisible(false);
+            //clearHistoryButton.setVisible(false);
             historyButton.setText("History");
             resultWindowOpen = true;
         }
@@ -848,22 +837,16 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
      */
     private ScrollPane right(){
         final int TEXT_FIELD_WIDTH = 50;
-        final Font FONT = new Font("Dubai Medium", 15);
 
         Label collectedDataTitle = new Label("General data: ");
-        collectedDataTitle.setFont(FONT);
 
         Label trashThrownTotals = new Label("Trash thrown: ");
-        trashThrownTotals.setFont(FONT);
 
         Label shelterUsageRates = new Label("Shelter usage rates: ");
-        shelterUsageRates.setFont(FONT);
 
         Label trashOverflows = new Label("Trash overflow: ");
-        trashOverflows.setFont(FONT);
 
         Label accessTime = new Label("Time unavailable: ");
-        accessTime.setFont(FONT);
 
         VBox rightControl  = new VBox(
                 collectedDataTitle,
@@ -895,14 +878,12 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
      */
     private VBox left(){
         final int TEXT_FIELD_WIDTH = 50;
-        final Font FONT = new Font("Dubai Medium", 15);
 
         // Simulation time
         BorderPane simulationTime = new BorderPane();
         simulationTimeValue.setPrefWidth(TEXT_FIELD_WIDTH);
         simulationTimeValue.setPromptText("10");
         Label simulationTimeLabel = new Label("Simulation Time (Days)");
-        simulationTimeLabel.setFont(FONT);
         simulationTime.setLeft(simulationTimeLabel);
         simulationTime.setRight(simulationTimeValue);
 
@@ -911,7 +892,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         BorderPane meanThrashAmountPerThrow = new BorderPane();
         meanThrashAmountPerThrowValue.setPrefWidth(TEXT_FIELD_WIDTH);
         Label meanTrashAmountPerThrowLabel = new Label("Mean Trash Amount per Throw");
-        meanTrashAmountPerThrowLabel.setFont(FONT);
         meanThrashAmountPerThrow.setLeft(meanTrashAmountPerThrowLabel);
         meanThrashAmountPerThrow.setRight(meanThrashAmountPerThrowValue);
 
@@ -920,7 +900,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         garbageTruckArrivalValue.setPrefWidth(TEXT_FIELD_WIDTH);
         garbageTruckArrivalValue.setPromptText("7");
         Label garbageTruckTimeLabel = new Label("Garbage Truck Arrival Interval (Days)");
-        garbageTruckTimeLabel.setFont(FONT);
         garbageTruckTime.setLeft(garbageTruckTimeLabel);
         garbageTruckTime.setRight(garbageTruckArrivalValue);
 
@@ -933,28 +912,24 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         singleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         singleAptAmountValue.setPromptText("10");
         Label singleAptAmountLabel = new Label("Single Apartment Amount");
-        singleAptAmountLabel.setFont(FONT);
         singleAptAmount.setLeft(singleAptAmountLabel);
         singleAptAmount.setRight(singleAptAmountValue);
 
         doubleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         doubleAptAmountValue.setPromptText("8");
         Label doubleAptAmountLabel = new Label("Double Apartment Amount");
-        doubleAptAmountLabel.setFont(FONT);
         doubleAptAmount.setLeft(doubleAptAmountLabel);
         doubleAptAmount.setRight(doubleAptAmountValue);
 
         tripleAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         tripleAptAmountValue.setPromptText("6");
         Label tripleAptAmountLabel = new Label("Triple Apartment Amount");
-        tripleAptAmountLabel.setFont(FONT);
         tripleAptAmount.setLeft(tripleAptAmountLabel);
         tripleAptAmount.setRight(tripleAptAmountValue);
 
         quadAptAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         quadAptAmountValue.setPromptText("4");
         Label quadAptAmountLabel = new Label("Quad Apartment Amount");
-        quadAptAmountLabel.setFont(FONT);
         quadAptAmount.setLeft(quadAptAmountLabel);
         quadAptAmount.setRight(quadAptAmountValue);
 
@@ -963,7 +938,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         mixedCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         mixedCanAmountValue.setPromptText("1");
         Label mixedCanAmountLabel = new Label("Mixed");
-        mixedCanAmountLabel.setFont(FONT);
         mixedCanAmount.setLeft(mixedCanAmountLabel);
         mixedCanAmount.setRight(mixedCanAmountValue);
 
@@ -972,7 +946,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         plasticCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         plasticCanAmountValue.setPromptText("1");
         Label plasticCanAmountLabel = new Label("Plastic");
-        plasticCanAmountLabel.setFont(FONT);
         plasticCanAmount.setLeft(plasticCanAmountLabel);
         plasticCanAmount.setRight(plasticCanAmountValue);
 
@@ -981,8 +954,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         bioCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         bioCanAmountValue.setPromptText("1");
         Label bioCanAmountLabel = new Label("Bio");
-        bioCanAmountLabel.setFont(FONT);
-        bioCanAmountLabel.setFont(FONT);
         bioCanAmount.setLeft(bioCanAmountLabel);
         bioCanAmount.setRight(bioCanAmountValue);
 
@@ -991,7 +962,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         glassCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         glassCanAmountValue.setPromptText("1");
         Label glassCanAmountLabel = new Label("Glass");
-        glassCanAmountLabel.setFont(FONT);
         glassCanAmount.setLeft(glassCanAmountLabel);
         glassCanAmount.setRight(glassCanAmountValue);
 
@@ -1000,7 +970,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         cardBoardCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         cardBoardCanAmountValue.setPromptText("1");
         Label cardBoardCanAmountLabel = new Label("Cardboard");
-        cardBoardCanAmountLabel.setFont(FONT);
         cardBoardCanAmount.setLeft(cardBoardCanAmountLabel);
         cardBoardCanAmount.setRight(cardBoardCanAmountValue);
 
@@ -1009,7 +978,6 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalCanAmountValue.setPrefWidth(TEXT_FIELD_WIDTH);
         metalCanAmountValue.setPromptText("1");
         Label metalCanAmountLabel = new Label("Metal");
-        metalCanAmountLabel.setFont(FONT);
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
@@ -1024,6 +992,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
      */
     private Region bottom(){
         startButton = new Button();
+        startButton.setPrefWidth(150);
         startButton.setText("Start Simulation");
         startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -1043,6 +1012,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         });
 
         pauseButton = new Button();
+        pauseButton.setPrefWidth(150);
         pauseButton.setDisable(true);
         pauseButton.setText("Pause");
         pauseButton.setOnAction(e -> {
@@ -1054,22 +1024,26 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         });
 
         slowButton = new Button();
+        slowButton.setPrefWidth(150);
         slowButton.setText("Slow Down");
         slowButton.setDisable(true);
         slowButton.setOnAction(e -> controller.slowDown());
 
         fastButton = new Button();
+        fastButton.setPrefWidth(150);
         fastButton.setText("Speed Up");
         fastButton.setDisable(true);
         fastButton.setOnAction(e -> controller.speedUp());
 
         historyButton = new Button();
+        historyButton.setPrefWidth(150);
         historyButton.setText("History");
         historyButton.setOnAction(e -> toggleRightPanel());
 
         clearHistoryButton = new Button();
+        clearHistoryButton.setPrefWidth(150);
         clearHistoryButton.setText("Clear History");
-        clearHistoryButton.setVisible(false);
+        //clearHistoryButton.setVisible(false);
         clearHistoryButton.setOnAction(e -> {
             try {
                 if (!historyWindow.getItems().isEmpty()) {

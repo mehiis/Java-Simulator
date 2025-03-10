@@ -281,7 +281,7 @@ public class Visuals extends Canvas implements IVisuals {
 	 * @param height
 	 */
 	public void clearDrawArea(int posX, int posY, int width, int height) {
-		gc.setFill(Color.WHITESMOKE);
+		gc.setFill(Color.web("#cadcbf"));
 		gc.fillRect(posX, posY, width, height);
 	}
 
