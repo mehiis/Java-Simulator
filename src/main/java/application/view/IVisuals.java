@@ -19,6 +19,8 @@ public interface IVisuals {
 	void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
 
 	void newResident(EventType eventType);
-		
+
+	void newGarbageTruck();
+
 }
 

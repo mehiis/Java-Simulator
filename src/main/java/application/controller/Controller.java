@@ -368,6 +368,15 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 			}});
 	}
 
+	@Override
+	public void visualizeGarbageTruck(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages) {
+		Platform.runLater(new Runnable(){
+			public void run(){
+				ui.getVisualisointi().newGarbageTruck();
+				ui.getVisualisointi().updateTrashPercentages(percentages);
+			}});
+	}
+
 	/**
 	 * Gets the input parameters from the database.
 	 * Called when a date is selected from the history list.

@@ -1,30 +1,21 @@
 package application.view;
 
-import application.assets.model.Apartment;
 import application.assets.model.ApartmentType;
 import application.assets.model.EventType;
 import application.assets.model.GarbageCanType;
-import application.controller.IControllerForModel;
-import application.controller.IControllerForView;
 import javafx.animation.*;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 /**
  * This class is responsible for the visual representation of the simulation.
@@ -52,8 +43,9 @@ public class Visuals extends Canvas implements IVisuals {
 	private Image nelioImg;
 
 	private Image personImg;
+	private Image garbageTruckImg;
 
-	private ArrayList<Resident> residentRenderList;
+	private ArrayList<AnimatedIcon> animatedIconRenderList;
 	
 	public Visuals(int w, int h) {
 		super(w, h);
@@ -94,9 +86,10 @@ public class Visuals extends Canvas implements IVisuals {
 		personImg = loadImage("src/main/resources/person.png", trashImgSize, trashImgSize);
 		plasticImg = loadImage("src/main/resources/plasticwaste.png", trashImgSize, trashImgSize);
 		yksioImg = loadImage("src/main/resources/yksio.png", houseImgSizeX, houseImgSizeY);
+		garbageTruckImg = loadImage("src/main/resources/garbage-truck.png", 100, 100);
 
 		// init resident render list
-		residentRenderList = new ArrayList<>();
+		animatedIconRenderList = new ArrayList<>();
 
 		// Discrete time steps using timer / ANIMATION RENDERING LOOP
 		AnimationTimer timer = new AnimationTimer() {
@@ -104,15 +97,15 @@ public class Visuals extends Canvas implements IVisuals {
 			public void handle(long now) {
 				// clearing screen for animation frames is done here!
 				clearDrawArea(135, 0, 600 - 135*2, 600);
-				for (Resident resident: residentRenderList) {
-					resident.getTimeline().setOnFinished(new EventHandler<ActionEvent>() {
+				for (AnimatedIcon animicon: animatedIconRenderList) {
+					animicon.getTimeline().setOnFinished(new EventHandler<ActionEvent>() {
 						@Override
 						public void handle(ActionEvent actionEvent) {
-							residentRenderList.remove(resident);
+							animatedIconRenderList.remove(animicon);
 						}
 					});
-					System.out.println(resident.getyLoc());
-					gc.drawImage(personImg, resident.getxLoc(), resident.getyLoc());
+					System.out.println(animicon.getyLoc());
+					gc.drawImage(animicon.getImg(), animicon.getxLoc(), animicon.getyLoc());
 				}
 			}
 		};
@@ -309,6 +302,10 @@ public class Visuals extends Canvas implements IVisuals {
 				startYPos = apartmentImgVSize * 3 + offset;
 				break;
 		}
-		residentRenderList.add(new Resident(startYPos));
+		animatedIconRenderList.add(new AnimatedIcon(personImg, startYPos));
+	}
+
+	public void newGarbageTruck() {
+		animatedIconRenderList.add(new AnimatedIcon(garbageTruckImg, 327.0, 700.0, 327.0, -100, 0.5));
 	}
 }
