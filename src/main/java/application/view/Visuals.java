@@ -60,6 +60,7 @@ public class Visuals extends Canvas implements IVisuals {
 		gc = this.getGraphicsContext2D();
 
 		// get counts to display from controller and gui
+		// TRASHCANCOUNTS ARE NOT IN PROPER USE ANYMORE, trash can percentages double as counts to display
 		trashCanCounts.put(GarbageCanType.MIXED, 1);
 		trashCanCounts.put(GarbageCanType.BIO, 1);
 		trashCanCounts.put(GarbageCanType.CARDBOARD, 1);
@@ -188,6 +189,7 @@ public class Visuals extends Canvas implements IVisuals {
 
 	/**
 	 * Garbage can listing visuals are constructed here.
+	 * Trash can counts are set in the controller.
 	 */
 	private void constructGarbageCanList() {
 		gc.setFill(Color.BLUE); // Set text color to get rid of yellow fill in emptyScreen()
@@ -236,6 +238,8 @@ public class Visuals extends Canvas implements IVisuals {
 
 	/**
 	 * This method is used to update the trash percentages next to garbage bins.
+	 * This also doubles as a method to display count of given garbage bin.
+	 * Data is fetched from controller and from model.
 	 * @param percentages
 	 */
 	@Override
