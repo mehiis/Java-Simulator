@@ -6,10 +6,9 @@ import java.util.HashMap;
 
 public class TrashDistribution {
 
-    public HashMap<GarbageCanType, Double> getTrash(double trashAmtMean) {
-        final int TRASHITERATIONS = 1000;
+    public HashMap<GarbageCanType, Double> getTrash(double trashAmtMean, int iterations) {
         // generate randomness to trash amount with normal distribution
-        final double dividedTrash = new Normal(trashAmtMean, 0.2).sample() / TRASHITERATIONS;
+        final double dividedTrash = new Normal(trashAmtMean, 0.2).sample() / iterations;
 
         // parallel arrays with matched indices: cumulative percentages and trash types
         double[] cumulativePercentages = {61.01, 76.11, 90.66, 93.51, 97.28, 100.0};
@@ -30,7 +29,7 @@ public class TrashDistribution {
         }
 
         // generate trash according to the distribution
-        for (int i = 1; i <= TRASHITERATIONS; i++) {
+        for (int i = 1; i <= iterations; i++) {
             double x = Math.min(100.0, Math.max(1.0, Math.round(Math.random() * 100) + 1));
             for (int j = 0; j < cumulativePercentages.length; j++) {
                 if (x <= cumulativePercentages[j]) {
