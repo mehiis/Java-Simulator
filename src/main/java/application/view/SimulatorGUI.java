@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 /**
  * User interface for the simulator
@@ -114,6 +115,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private Button startButton;
     private Button slowButton;
     private Button fastButton;
+    private Button pauseButton;
 
     private IVisuals view;
 
@@ -611,6 +613,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat formatter = new DecimalFormat("#0.00");
         this.endTime.setText("Simulation time: " + formatter.format(aika / 1440)+" days.");
         startButton.setDisable(false);
+        pauseButton.setDisable(true);
+        slowButton.setDisable(true);
+        fastButton.setDisable(true);
         Clock.getInstance().setTime(0.0);
     }
 
@@ -933,15 +938,31 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 dayLabel.setVisible(true);
                 controller.startSimulation();
                 startButton.setDisable(true);
+                pauseButton.setDisable(false);
+                slowButton.setDisable(false);
+                fastButton.setDisable(false);
             }
+        });
+
+        pauseButton = new Button();
+        pauseButton.setDisable(true);
+        pauseButton.setText("Pause");
+        pauseButton.setOnAction(e -> {
+            controller.pause();
+            if(Objects.equals(pauseButton.getText(), "Pause"))
+                pauseButton.setText("Resume");
+            else
+                pauseButton.setText("Pause");
         });
 
         slowButton = new Button();
         slowButton.setText("Slow Down");
+        slowButton.setDisable(true);
         slowButton.setOnAction(e -> controller.slowDown());
 
         fastButton = new Button();
         fastButton.setText("Speed Up");
+        fastButton.setDisable(true);
         fastButton.setOnAction(e -> controller.speedUp());
 
         historyButton = new Button();
@@ -960,7 +981,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 }
         });
 
-        HBox bottomControl = new HBox(slowButton, startButton, fastButton, historyButton, clearHistoryButton);
+        HBox bottomControl = new HBox(slowButton, startButton, fastButton, pauseButton, historyButton, clearHistoryButton);
         bottomControl.setAlignment(Pos.CENTER);
         bottomControl.setSpacing(10);
 
