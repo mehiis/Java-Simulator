@@ -28,10 +28,18 @@ public class OwnEngine extends Engine {
 		garbageShelter = new GarbageShelter(eventList, EventType.EXIT, meanTrashThrowAmt);
 		// GUI should be read; which arrival processes to create and use. GUI should also decide apt amt.
 		// people amt is basically a multiplier for the base amount of trash a specific type of apt generates.
-		yksioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(1, controller.getSingleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
-		kaksioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(2, controller.getDoubleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KAKSIO_ARRIVE_TO_SHELTER);
-		kolmioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(3, controller.getTripleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
-		nelioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(4, controller.getQuadAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
+		if (controller.getSingleAptAmt() > 0) {
+			yksioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(1, controller.getSingleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.YKSIO_ARRIVE_TO_SHELTER);
+		}
+		if (controller.getDoubleAptAmt() > 0) {
+			kaksioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(2, controller.getDoubleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KAKSIO_ARRIVE_TO_SHELTER);
+		}
+		if (controller.getTripleAptAmt() > 0) {
+			kolmioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(3, controller.getTripleAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.KOLMIO_ARRIVE_TO_SHELTER);
+		}
+		if (controller.getQuadAptAmt() > 0) {
+			nelioArrivalProcess = new ArrivalProcess(new Negexp(Specs.getMeanArrivalRate(4, controller.getQuadAptAmt(), meanTrashThrowAmt),(int)(Math.random() * 10000)), eventList, EventType.NELIO_ARRIVE_TO_SHELTER);
+		}
 
 		clearProcess 		= new ArrivalProcess(new Normal(controller.getGarbageTruckArrivalInterval(),1), eventList, EventType.CLEAR_GARBAGE_FROM_SHELTER);
 	}
@@ -40,10 +48,10 @@ public class OwnEngine extends Engine {
 	@Override
 	protected void init() {
 		// start needed arrival processes as defined in GUI as params
-		yksioArrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
-		kaksioArrivalProcess.generateNext();
-		kolmioArrivalProcess.generateNext();
-		nelioArrivalProcess.generateNext();
+		if (yksioArrivalProcess != null) { yksioArrivalProcess.generateNext();}
+		if (kaksioArrivalProcess != null) {kaksioArrivalProcess.generateNext();}
+		if (kolmioArrivalProcess != null) {kolmioArrivalProcess.generateNext();}
+		if (nelioArrivalProcess != null) {nelioArrivalProcess.generateNext();}
 		clearProcess.generateNext();
 		garbageShelter.printThrashCans();// !for testing purposes! //
 	}
