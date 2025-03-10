@@ -27,6 +27,17 @@ public class CollectedData {
         }
     };
 
+    private final HashMap<GarbageCanType, Integer> failedAttempts = new HashMap<>() {
+        {
+            put(GarbageCanType.MIXED,       0);
+            put(GarbageCanType.BIO,         0);
+            put(GarbageCanType.CARDBOARD,   0);
+            put(GarbageCanType.PLASTIC,     0);
+            put(GarbageCanType.GLASS,       0);
+            put(GarbageCanType.METAL,       0);
+        }
+    };
+
     private int howManyTimeThrashThrown 			= 0;
     private int howManyTimesCarArrived				= 0;
 
@@ -278,6 +289,14 @@ public class CollectedData {
     public double getFullTimeCalculations(GarbageCanType type){
         double days = howManyMinutesWasFull.get(type).timeBeingFull * 0.0166666667;
         return (double)Math.round(days * 100) / 100; //round to one decimal.
+    }
+
+    public void addFailedAttempt(GarbageCanType type){
+        failedAttempts.put(type, failedAttempts.get(type) + 1);
+    }
+
+    public int getFailedAttempts(GarbageCanType type){
+        return failedAttempts.get(type);
     }
 }
 

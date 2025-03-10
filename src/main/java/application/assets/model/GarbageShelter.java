@@ -65,6 +65,8 @@ public class GarbageShelter {
 			//Data collection
 			data.calculateThrashAmountByType(can, trashAmt);
 		}  else {
+			getData().addFailedAttempt(can.getType());
+
 			// get type
 			GarbageCanType type = can.getType();
 			// Init entry if absent

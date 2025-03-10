@@ -177,6 +177,12 @@ public class OwnEngine extends Engine {
 		System.out.println("Glass cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS) + " hours.");
 		System.out.println("Metal cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL) + " hours.");
 
+		System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.MIXED));
+		System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.BIO));
+		System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.CARDBOARD));
+		System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.PLASTIC));
+		System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.GLASS));
+		System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.METAL));
 	}
 
 	@Override

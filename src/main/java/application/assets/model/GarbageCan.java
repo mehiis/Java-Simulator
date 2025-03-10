@@ -1,7 +1,5 @@
 package application.assets.model;
 
-;
-
 public class GarbageCan {
     private double currentCapacity;
     private double totalCapacity;
