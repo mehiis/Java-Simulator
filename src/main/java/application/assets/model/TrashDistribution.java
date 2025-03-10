@@ -4,6 +4,9 @@ import application.eduni.distributions.Normal;
 
 import java.util.HashMap;
 
+/**
+ * This class generates trash by types, with controlled random variance, according to distribution data gathered from tilastokeskus.
+ */
 public class TrashDistribution {
 
     public HashMap<GarbageCanType, Double> getTrash(double trashAmtMean, int iterations) {
