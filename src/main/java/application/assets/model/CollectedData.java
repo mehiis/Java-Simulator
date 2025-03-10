@@ -71,22 +71,22 @@ public class CollectedData {
         for (GarbageCan can: garbageCans) {
             switch (can.getType()) {
                 case MIXED:
-                    mixed.add((can.getDataCapacity() / can.getCapacity()) * 100);
+                    mixed.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
                     break;
                 case BIO:
-                    bio.add((can.getDataCapacity() / can.getCapacity()) * 100);
+                    bio.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
                     break;
                 case CARDBOARD:
-                    card.add((can.getDataCapacity() / can.getCapacity()) * 100);
+                    card.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
                     break;
                 case PLASTIC:
-                    plastic.add((can.getDataCapacity() / can.getCapacity()) * 100);
+                    plastic.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
                     break;
                 case GLASS:
-                    glass.add((can.getDataCapacity() / can.getCapacity()) * 100);
+                    glass.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
                     break;
                 case METAL:
-                    metal.add((can.getDataCapacity() / can.getCapacity()) * 100);
+                    metal.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
                     break;
             }
         }
