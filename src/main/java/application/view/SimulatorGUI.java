@@ -407,7 +407,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         mixedAccessTime.setTextFill(blackColor);
 
         DecimalFormat df = new DecimalFormat("#0.0");
-        mixedAccessTime.setText("Mixed waste for " + df.format(value) + " days");
+        mixedAccessTime.setText("Mixed waste for " + df.format(value) + " hours");
+
+        if(value > 24)
+            mixedAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
 
         if(value > 24)
             mixedAccessTime.setTextFill(redColor);
@@ -421,6 +424,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         bioAccessTime.setText("Bio waste: " + df.format(value) + " hours");
 
         if(value > 24)
+            bioAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+
+        if(value > 24)
             bioAccessTime.setTextFill(redColor);
     }
 
@@ -430,6 +436,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         DecimalFormat df = new DecimalFormat("#0.0");
         cardboardAccessTime.setText("Cardboard waste: " + df.format(value) + " hours");
+
+        if(value > 24)
+            cardboardAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
 
         if(value > 24)
             cardboardAccessTime.setTextFill(redColor);
@@ -443,6 +452,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         plasticAccessTime.setText("Plastic waste: " + df.format(value) + " hours");
 
         if(value > 24)
+            plasticAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+
+        if(value > 24)
             plasticAccessTime.setTextFill(redColor);
     }
 
@@ -454,6 +466,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         glassAccessTime.setText("Glass waste: " + df.format(value) + " hours");
 
         if(value > 24)
+            glassAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+
+        if(value > 24)
             glassAccessTime.setTextFill(redColor);
     }
 
@@ -463,6 +478,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         DecimalFormat df = new DecimalFormat("#0.0");
         metalAccessTime.setText("Metal waste: " + df.format(value) + " hours");
+
+        if(value > 24)
+            metalAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
 
         if(value > 24)
             metalAccessTime.setTextFill(redColor);
