@@ -13,8 +13,6 @@ public interface IVisuals {
 
 	void setApartmentCounts(ApartmentType type, Integer count);
 
-	void setTrashCanCounts(GarbageCanType type, Integer count);
-
 	// this sets up apartment/garbage can icons and amounts
 	void constructSimuElementVisuals();
 
