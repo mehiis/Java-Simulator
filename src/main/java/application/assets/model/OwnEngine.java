@@ -98,6 +98,7 @@ public class OwnEngine extends Engine {
 			case CLEAR_GARBAGE_FROM_SHELTER:
 					garbageShelter.clearGarbageCans();
 					clearProcess.generateNext();
+					controller.visualizeGarbageTruck(garbageShelter.getData().getGarbageCanCapacityPercentagesByType());
 					break;
 		}
 	}

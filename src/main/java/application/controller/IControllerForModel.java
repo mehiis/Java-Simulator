@@ -76,5 +76,7 @@ public interface IControllerForModel {
 
     void setMetalAccessTime(double amt);
 
-    public void visualizeResident(EventType eventType, LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
+    void visualizeResident(EventType eventType, LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
+
+    void visualizeGarbageTruck(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
 }
