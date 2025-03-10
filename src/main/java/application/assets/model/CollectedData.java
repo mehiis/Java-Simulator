@@ -140,15 +140,17 @@ public class CollectedData {
     }
 
     /**
-     * This method is called each time when garbage shelter is cleared. It adds normalized value to hashmap variable {@link #shelterUsageRate}, which is later used to calculate the average usage of thrash can or total.
+     * This method is called each time when garbage shelter is cleared. It adds value to hashmap variable {@link #shelterUsageRate}, which is later used to calculate the average usage of thrash can or total.
      * @param can GarbageCan object, method calculates 'how full is the garbage can'. (CURRENT_CAPACITY / MAX_CAPACITY)
      */
     public void calculateUsageRate(GarbageCan can){
-        double usageRate = (double) Math.round((can.getDataCapacity() / can.getCapacity()) * 100) / 100; //calculation gives normalized number between 0-1.
+        double usageRate = (can.getDataCapacity() / can.getCapacity()) * 100;
 
-        System.out.println("Usage rate of " + can.getType() + " can: " + usageRate*100 + "%." + " Current capacity: " + can.getDataCapacity() + " l divided by " + can.getCapacity() + " l.");
+        System.out.println("Usage rate of " + can.getType() + " can: " + usageRate + "%." + " Current capacity: " + can.getDataCapacity() + " l divided by " + can.getCapacity() + " l.");
 
         shelterUsageRate.get(can.getType()).add(usageRate);
+
+        System.out.println("UR" + shelterUsageRate.get(can.getType()));
     }
 
     /**
@@ -165,7 +167,7 @@ public class CollectedData {
             totalUsageRate += rate;
         }
 
-        return (double) Math.round((totalUsageRate / shelterUsageRate.get(type).size()) * 100);
+        return (double) Math.round((totalUsageRate / shelterUsageRate.get(type).size()));
     }
 
     /**

@@ -88,5 +88,5 @@ public class GarbageCan {
     /**
      * Empties the garbage can.
      */
-    public void empty(){this.currentCapacity = 0;}
+    public void empty(){this.currentCapacity = 0; this.dataCapcity = 0;}
 }
