@@ -8,6 +8,9 @@ public class GarbageCan {
     private double weightMultiplier;
     private GarbageCanType type;
 
+    //DATA COLLECTION ONLY
+    private double dataCapcity;
+
     public GarbageCan(boolean isBig, GarbageCanType type){
         if(isBig) totalCapacity = 660; else totalCapacity = 240;
         this.type = type;
@@ -21,6 +24,10 @@ public class GarbageCan {
 
         this.currentCapacity = temp;
         return true;
+    }
+
+    public void addGarbageForData(double amount){
+        this.dataCapcity += amount;
     }
 
     public double getCapacity(){
@@ -59,6 +66,8 @@ public class GarbageCan {
     }
 
     public double getCurrentCapacity(){return this.currentCapacity;}
+
+    public double getDataCapacity(){return this.dataCapcity;}
 
     public GarbageCanType getType(){return this.type;}
 

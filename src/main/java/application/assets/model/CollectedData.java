@@ -71,22 +71,22 @@ public class CollectedData {
         for (GarbageCan can: garbageCans) {
             switch (can.getType()) {
                 case MIXED:
-                    mixed.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+                    mixed.add((can.getDataCapacity() / can.getCapacity()) * 100);
                     break;
                 case BIO:
-                    bio.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+                    bio.add((can.getDataCapacity() / can.getCapacity()) * 100);
                     break;
                 case CARDBOARD:
-                    card.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+                    card.add((can.getDataCapacity() / can.getCapacity()) * 100);
                     break;
                 case PLASTIC:
-                    plastic.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+                    plastic.add((can.getDataCapacity() / can.getCapacity()) * 100);
                     break;
                 case GLASS:
-                    glass.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+                    glass.add((can.getDataCapacity() / can.getCapacity()) * 100);
                     break;
                 case METAL:
-                    metal.add((can.getCurrentCapacity() / can.getCapacity()) * 100);
+                    metal.add((can.getDataCapacity() / can.getCapacity()) * 100);
                     break;
             }
         }
@@ -129,13 +129,13 @@ public class CollectedData {
     }
 
     /**
-     * This method is called each time when garbage shelter is cleared. It adds normalized value 0-1 to hashmap variable {@link #shelterUsageRate}, which is later used to calculate the average usage of thrash can or total.
+     * This method is called each time when garbage shelter is cleared. It adds normalized value to hashmap variable {@link #shelterUsageRate}, which is later used to calculate the average usage of thrash can or total.
      * @param can GarbageCan object, method calculates 'how full is the garbage can'. (CURRENT_CAPACITY / MAX_CAPACITY)
      */
     public void calculateUsageRate(GarbageCan can){
-        double usageRate = (double) Math.round((can.getCurrentCapacity() / can.getCapacity()) * 100) / 100; //calculation gives normalized number between 0-1.
+        double usageRate = (double) Math.round((can.getDataCapacity() / can.getCapacity()) * 100) / 100; //calculation gives normalized number between 0-1.
 
-        System.out.println("Usage rate of " + can.getType() + " can: " + usageRate*100 + "%." + " Current capacity: " + can.getCurrentCapacity() + " l divided by " + can.getCapacity() + " l.");
+        System.out.println("Usage rate of " + can.getType() + " can: " + usageRate*100 + "%." + " Current capacity: " + can.getDataCapacity() + " l divided by " + can.getCapacity() + " l.");
 
         shelterUsageRate.get(can.getType()).add(usageRate);
     }

@@ -56,6 +56,8 @@ public class GarbageShelter {
 	// SORRY ABOUT THE MESS
 	// final trash placement into respective cans, separated this out to prevent nested ifs
 	public void putTrash(GarbageCan can, double trashAmt, HashMap<GarbageCanType, Double> generatedTrash) {
+		can.addGarbageForData(trashAmt);
+
 		if (can.checkCapacity(trashAmt)){
 			can.addGarbage(trashAmt);
 			generatedTrash.put(can.getType(), 0.0); // zero out trash in hashmap after getting it once, effectively simulating trash has been thrown to one of the cans only

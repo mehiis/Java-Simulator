@@ -24,7 +24,7 @@ class CollectedDataTest {
 
         //step 2: add one full mixed waste garbage can
         GarbageCan mixed = new GarbageCan(true, GarbageCanType.MIXED);
-        mixed.addGarbage(mixed.getCapacity());
+        mixed.addGarbageForData(mixed.getCapacity());
         garbageCans.add(mixed);
         d.calculateUsageRate(mixed);
         assertEquals(100, d.getAverageUsageRateTotal());
@@ -49,14 +49,14 @@ class CollectedDataTest {
 
         //step 6: add one full glass waste garbage can
         GarbageCan glass = new GarbageCan(false, GarbageCanType.GLASS);
-        glass.addGarbage(glass.getCapacity());
+        glass.addGarbageForData(glass.getCapacity());
         garbageCans.add(glass);
         d.calculateUsageRate(glass);
         assertEquals(40, d.getAverageUsageRateTotal()); //100 * (2/5) -> 2 full & 3 empty = 40% used capacity
 
         //step 7: add one more full mixed waste can
         GarbageCan mixed2 = new GarbageCan(true, GarbageCanType.MIXED);
-        mixed2.addGarbage(mixed2.getCapacity());
+        mixed2.addGarbageForData(mixed2.getCapacity());
         garbageCans.add(mixed2);
         d.calculateUsageRate(mixed2);
         assertEquals(50, d.getAverageUsageRateTotal()); //100 * (3/6) -> 3 full & 3 empty = 50% used capacity
@@ -69,7 +69,7 @@ class CollectedDataTest {
 
         //TEST 2: fill mixed 100%
         GarbageCan mixed = new GarbageCan(true, GarbageCanType.MIXED);
-        mixed.addGarbage(mixed.getCapacity());
+        mixed.addGarbageForData(mixed.getCapacity());
         garbageCans.add(mixed);
         d.calculateUsageRate(mixed);
 
@@ -77,7 +77,7 @@ class CollectedDataTest {
 
         //TEST 3: fill plastic container 50%
         GarbageCan plastic = new GarbageCan(true, GarbageCanType.PLASTIC);
-        plastic.addGarbage(plastic.getCapacity()/2);
+        plastic.addGarbageForData(plastic.getCapacity()/2);
         garbageCans.add(plastic);
         d.calculateUsageRate(plastic);
 
@@ -85,7 +85,7 @@ class CollectedDataTest {
 
         //TEST 4: add second mixed waste can and let it be empty, now we have one empty and one full garbage can type MIXED
         GarbageCan mixed2 = new GarbageCan(true, GarbageCanType.MIXED);
-        mixed2.addGarbage(0);
+        mixed2.addGarbageForData(0);
         garbageCans.add(mixed2);
         d.calculateUsageRate(mixed2);
 
@@ -93,7 +93,7 @@ class CollectedDataTest {
 
         //TEST 4.2: add third mixed waste can and let it be empty, now we have two empty and one full garbage can type MIXED
         GarbageCan mixed3 = new GarbageCan(true, GarbageCanType.MIXED);
-        mixed3.addGarbage(0);
+        mixed3.addGarbageForData(0);
         garbageCans.add(mixed3);
         d.calculateUsageRate(mixed3);
 
@@ -102,16 +102,16 @@ class CollectedDataTest {
 
     @Test
     void getFullTimeCalculations(){
-        int minutesInADay = 1440;
+        int minutesInADay = 60;
 
-        //Test 1: Declare that mixed waste is full and forward time by 1440 minute(1 day) and "collect the thrash".
+        //Test 1: Declare that mixed waste is full and forward time by 60 minute(1 hour) and "collect the thrash".
         d.startCalculatingGarbageFullTime(GarbageCanType.MIXED);
         Clock.getInstance().setTime(minutesInADay);
         d.stopCalculatingGarbageFullTime(GarbageCanType.MIXED);
 
         assertEquals(1.0, d.getFullTimeCalculations(GarbageCanType.MIXED), 0.0001); //Mixed waste should be full for one day.
 
-        //Test 2: Declare that bio waste is full and forward time by additional 2*1440 minute(2 day) and "collect the thrash".
+        //Test 2: Declare that bio waste is full and forward time by additional 2*60 minute(2 hours) and "collect the thrash".
         d.startCalculatingGarbageFullTime(GarbageCanType.BIO);
         Clock.getInstance().setTime(Clock.getInstance().getTime() + (2 * minutesInADay));
         d.stopCalculatingGarbageFullTime(GarbageCanType.BIO);
