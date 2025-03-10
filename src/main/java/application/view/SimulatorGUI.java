@@ -62,7 +62,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private final Color yellowColor     = Color.rgb(186, 142, 35);
 
     // Middle Control
-    private final Label dayLabel = new Label("Day: 1");
+    private final Label dayLabel    = new Label("Day: 1");
+    private final Label speedLabel  = new Label("Speed: 1x");
 
     // Right box
     private boolean resultWindowOpen = true;
@@ -172,6 +173,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
      */
     public void setDay(int day) {
         dayLabel.setText("Day: " + day);
+    }
+
+    public void setSimulationSpeed(int speed) {
+        speedLabel.setText("Delay: " + speed + " ms");
     }
 
     @Override
@@ -766,9 +771,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         dayLabel.setFont(new Font("Dubai Medium", 20));
         dayLabel.setVisible(false);
 
-        VBox midControl   = new VBox(dayLabel, rootPane);
+        speedLabel.setFont(new Font("Dubai Medium", 20));
+        speedLabel.setVisible(false);
 
-        //ONKO TÄÄ NY VBOX VAI JOKU GRID SYSTEMI????
+        VBox midControl   = new VBox(dayLabel, rootPane);
+        midControl.getChildren().add(speedLabel);
+
+
         return midControl;
     }
 
@@ -1005,11 +1014,16 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
             @Override
             public void handle(ActionEvent event) {
                 dayLabel.setVisible(true);
-                controller.startSimulation();
+                speedLabel.setVisible(true);
+
                 startButton.setDisable(true);
                 pauseButton.setDisable(false);
                 slowButton.setDisable(false);
                 fastButton.setDisable(false);
+
+                controller.startSimulation();
+
+                controller.getSimulationSpeed();
             }
         });
 

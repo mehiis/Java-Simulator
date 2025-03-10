@@ -9,6 +9,7 @@ public interface IControllerForView {
     public void startSimulation();
     public void speedUp();
     public void slowDown();
+    public void getSimulationSpeed();
     public void pause();
     public ObservableList<String> getInputHistory();
 

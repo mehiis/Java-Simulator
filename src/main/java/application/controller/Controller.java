@@ -78,13 +78,26 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		Platform.runLater(() -> ui.setDay(day));
 	}
 
+	@Override
+	public void getSimulationSpeed() {
+		double temp = engine.getDelay();
+		ui.setSimulationSpeed((int)temp);
+	}
+
 	/**
 	 * Slows down the engine.
 	 * Called from the UI when the Slow Down button is pressed.
 	 */
 	@Override
 	public void slowDown() { // hidastetaan moottorisäiettä
-		engine.setDelay((long)(engine.getDelay()*1.10));
+		long newDelay = (long)(engine.getDelay() * 1.10);
+
+		if(newDelay > 1000)// min delay 1s
+			newDelay = 1000;
+
+		engine.setDelay((long)(newDelay));
+
+		getSimulationSpeed();
 	}
 
 	@Override
@@ -99,6 +112,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	@Override
 	public void speedUp() { // nopeutetaan moottorisäiettä
 		engine.setDelay((long)(engine.getDelay()*0.9));
+		getSimulationSpeed();
 	}
 
 	/**

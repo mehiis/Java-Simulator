@@ -19,7 +19,7 @@ public abstract class Engine extends Thread implements IEngine{
 		clock.setTime(0); // Asetetaan kello alkuarvoon
 
 		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
-	}
+	}a
 
 	public void setSimulationTime(double time) {
 		simulationTime = time;

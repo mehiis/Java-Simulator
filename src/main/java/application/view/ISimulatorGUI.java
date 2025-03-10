@@ -62,6 +62,7 @@ public interface ISimulatorGUI {
 	public IVisuals getVisualisointi();
 
 	void setDay(int day);
+	void setSimulationSpeed(int speed);
 
 	void setSimulationTimeValue(int simulationTime);
 
