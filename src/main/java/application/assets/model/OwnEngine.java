@@ -194,24 +194,46 @@ public class OwnEngine extends Engine {
 
 	}
 
+	/**
+	 * Interface method for controller to pause model.
+	 */
 	@Override
 	public void pressPauseButton() { this.paused = !this.paused; }
 
+	/**
+	 * Interface method for controller to pass user input garbage bin amounts to model.
+	 * @param amount
+	 */
 	@Override
 	public void setMixedCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.MIXED, amount);}
-
+	/**
+	 * Interface method for controller to pass user input garbage bin amounts to model.
+	 * @param amount
+	 */
 	@Override
 	public void setPlasticCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.PLASTIC, amount);}
-
+	/**
+	 * Interface method for controller to pass user input garbage bin amounts to model.
+	 * @param amount
+	 */
 	@Override
 	public void setGlassCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.GLASS, amount);}
-
+	/**
+	 * Interface method for controller to pass user input garbage bin amounts to model.
+	 * @param amount
+	 */
 	@Override
 	public void setPaperCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.CARDBOARD, amount);}
-
+	/**
+	 * Interface method for controller to pass user input garbage bin amounts to model.
+	 * @param amount
+	 */
 	@Override
 	public void setBioCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.BIO, amount);}
-
+	/**
+	 * Interface method for controller to pass user input garbage bin amounts to model.
+	 * @param amount
+	 */
 	@Override
 	public void setMetalCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.METAL, amount);}
 }
