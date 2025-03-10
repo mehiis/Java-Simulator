@@ -302,38 +302,68 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     @Override
     public void setMixedUsage(double value) {
+        mixedUsage.setTextFill(blackColor);
+
         DecimalFormat df = new DecimalFormat("#0.00");
         mixedUsage.setText("Mixed usage: " + df.format(value) + "%");
+
+        if(value > 100 || value < 10)
+            mixedUsage.setTextFill(redColor);
     }
 
     @Override
     public void setBioUsage(double value) {
+        bioUsage.setTextFill(blackColor);
+
         DecimalFormat df = new DecimalFormat("#0.00");
         bioUsage.setText("Bio usage: " + df.format(value) + "%");
+
+        if(value > 100 || value < 10)
+            bioUsage.setTextFill(redColor);
     }
 
     @Override
     public void setCardboardUsage(double value) {
+        cardboardUsage.setTextFill(blackColor);
+
         DecimalFormat df = new DecimalFormat("#0.00");
         cardboardUsage.setText("Cardboard usage: " + df.format(value) + "%");
+
+        if(value > 100 || value < 10)
+            cardboardUsage.setTextFill(redColor);
     }
 
     @Override
     public void setPlasticUsage(double value) {
+        plasticUsage.setTextFill(blackColor);
+
         DecimalFormat df = new DecimalFormat("#0.00");
         plasticUsage.setText("Plastic usage: " + df.format(value) + "%");
+
+        if(value > 100 || value < 10)
+            plasticUsage.setTextFill(redColor);
     }
 
     @Override
     public void setGlassUsage(double value) {
+        glassUsage.setTextFill(blackColor);
+
         DecimalFormat df = new DecimalFormat("#0.00");
         glassUsage.setText("Glass usage: " + df.format(value) + "%");
+
+        if(value > 100 || value < 10)
+            glassUsage.setTextFill(redColor);
     }
 
     @Override
     public void setMetalUsage(double value) {
+        metalUsage.setTextFill(blackColor);
+
         DecimalFormat df = new DecimalFormat("#0.00");
         metalUsage.setText("Metal usage: " + df.format(value) + "%");
+
+        if(value > 100 || value < 10)
+            metalUsage.setTextFill(redColor);
     }
 
     @Override
