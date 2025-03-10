@@ -55,8 +55,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private final TextField bioCanAmountValue = new TextField();
     private final TextField metalCanAmountValue = new TextField();
 
-    private final Color blackColor  = Color.BLACK;
-    private final Color redColor    = Color.RED;
+
+    private final Color blackColor      = Color.BLACK;
+    private final Color redColor        = Color.RED;
+    private final Color yellowColor     = Color.rgb(186, 142, 35);
 
     // Middle Control
     private final Label dayLabel = new Label("Day: 1");
@@ -111,6 +113,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private final Label plasticAccessTime   = new Label("");
     private final Label glassAccessTime     = new Label("");
     private final Label metalAccessTime     = new Label("");
+    private final double MAX_ACCESS_TIME = 100.0;
+    private final double MIN_ACCESS_TIME = 10.0;
+
 
     private Button startButton;
     private Button slowButton;
@@ -307,8 +312,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         mixedUsage.setText("Mixed usage: " + df.format(value) + "%");
 
-        if(value > 100 || value < 10)
+        if(value > MAX_ACCESS_TIME)
             mixedUsage.setTextFill(redColor);
+        else if(value < MIN_ACCESS_TIME)
+            mixedUsage.setTextFill(yellowColor);
     }
 
     @Override
@@ -318,8 +325,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         bioUsage.setText("Bio usage: " + df.format(value) + "%");
 
-        if(value > 100 || value < 10)
+        if(value > MAX_ACCESS_TIME)
             bioUsage.setTextFill(redColor);
+        else if(value < MIN_ACCESS_TIME)
+            bioUsage.setTextFill(yellowColor);
     }
 
     @Override
@@ -329,8 +338,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         cardboardUsage.setText("Cardboard usage: " + df.format(value) + "%");
 
-        if(value > 100 || value < 10)
+        if(value > MAX_ACCESS_TIME)
             cardboardUsage.setTextFill(redColor);
+        else if(value < MIN_ACCESS_TIME)
+            cardboardUsage.setTextFill(yellowColor);
     }
 
     @Override
@@ -340,8 +351,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         plasticUsage.setText("Plastic usage: " + df.format(value) + "%");
 
-        if(value > 100 || value < 10)
+        if(value > MAX_ACCESS_TIME)
             plasticUsage.setTextFill(redColor);
+        else if(value < MIN_ACCESS_TIME)
+            plasticUsage.setTextFill(yellowColor);
     }
 
     @Override
@@ -351,8 +364,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         glassUsage.setText("Glass usage: " + df.format(value) + "%");
 
-        if(value > 100 || value < 10)
+        if(value > MAX_ACCESS_TIME)
             glassUsage.setTextFill(redColor);
+        else if(value < MIN_ACCESS_TIME)
+            glassUsage.setTextFill(yellowColor);
     }
 
     @Override
@@ -362,8 +377,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         metalUsage.setText("Metal usage: " + df.format(value) + "%");
 
-        if(value > 100 || value < 10)
+        if(value > MAX_ACCESS_TIME)
             metalUsage.setTextFill(redColor);
+        else if(value < MIN_ACCESS_TIME)
+            metalUsage.setTextFill(yellowColor);
     }
 
     @Override
@@ -494,7 +511,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         shelterUsagePercent.setTextFill(blackColor);
         shelterUsagePercent.setText("Average shelter usage rate: "+amt+" %");
 
-        if(amt < 15)
+        if(amt <= MIN_ACCESS_TIME)
+            shelterUsagePercent.setTextFill(yellowColor);
+        else if(amt > MAX_ACCESS_TIME)
             shelterUsagePercent.setTextFill(redColor);
     }
 

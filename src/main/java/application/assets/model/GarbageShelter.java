@@ -19,7 +19,6 @@ public class GarbageShelter {
 	private final double trashThrowAmtMean;
 	
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
-	
 	private boolean reserved	 	= false;
 	private boolean isFull 			= false;
 
@@ -56,24 +55,23 @@ public class GarbageShelter {
 	// SORRY ABOUT THE MESS
 	// final trash placement into respective cans, separated this out to prevent nested ifs
 	public void putTrash(GarbageCan can, double trashAmt, HashMap<GarbageCanType, Double> generatedTrash) {
-		can.addGarbageForData(trashAmt);
-
-		if (can.checkCapacity(trashAmt)){
+		if (can.checkCapacity(trashAmt)) {
 			can.addGarbage(trashAmt);
+			can.addGarbageForData(trashAmt);
 			generatedTrash.put(can.getType(), 0.0); // zero out trash in hashmap after getting it once, effectively simulating trash has been thrown to one of the cans only
 			System.out.println("Added "+trashAmt+" l of thrash to " + can.getType() + " trash can.");
 			System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " l of trash.");
 
 			//Data collection
 			data.calculateThrashAmountByType(can, trashAmt);
-		}
-		else {
+		}  else {
 			// get type
 			GarbageCanType type = can.getType();
 			// Init entry if absent
 			overflowTrash.putIfAbsent(type, 0.0);
 			// add trash to the entry value
 			overflowTrash.put(type, overflowTrash.get(type) + trashAmt);
+			can.addGarbageForData(trashAmt);
 
 			System.out.println("OVERFLOW IN " + type + " CAN! Added " + trashAmt + " to overflow" );
 
