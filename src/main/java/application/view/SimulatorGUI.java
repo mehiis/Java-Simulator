@@ -13,6 +13,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -155,6 +156,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
             });
 
             stage.setTitle("Garbage Collection Simulator");
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/biowaste.png"))));
 
             stage.setScene(createScene());
             stage.show();
