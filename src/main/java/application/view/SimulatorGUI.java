@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -805,7 +806,14 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
      */
     public void refreshHistoryList() {
         if (historyWindow != null) {
-            historyWindow.setItems(controller.getInputHistory());
+            try {
+                historyWindow.setItems(controller.getInputHistory());
+            } catch (Exception e) {
+                ArrayList<String> error = new ArrayList<>();
+                error.add("Could not fetch history from database.");
+
+                historyWindow.setItems((ObservableList<String>) error);
+            }
         }
     }
 
@@ -817,10 +825,17 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         historyWindow = new ListView<>();
         refreshHistoryList();
         historyWindow.setOnMouseClicked(event -> {
-            String selectedItem = historyWindow.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                int selectedId = Integer.parseInt(selectedItem.split(" \\| ")[0].trim());
-                controller.loadInputParameters(selectedId);
+            try {
+                String selectedItem = historyWindow.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    int selectedId = Integer.parseInt(selectedItem.split(" \\| ")[0].trim());
+                    controller.loadInputParameters(selectedId);
+                }
+            } catch (Exception e) {
+                    ArrayList<String> error = new ArrayList<>();
+                    error.add("Could not fetch history from database.");
+
+                    historyWindow.setItems((ObservableList<String>) error);
             }
         });
 
@@ -1056,12 +1071,15 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         clearHistoryButton.setText("Clear History");
         clearHistoryButton.setVisible(false);
         clearHistoryButton.setOnAction(e -> {
+            try {
                 if (!historyWindow.getItems().isEmpty()) {
                     controller.clearHistory();
-                }
-                else {
+                } else {
                     System.out.println("History is already empty");
                 }
+            } catch (Exception ex) {
+                System.out.println("Could not clear history.");
+            }
         });
 
         HBox bottomControl = new HBox(slowButton, startButton, fastButton, pauseButton, historyButton, clearHistoryButton);

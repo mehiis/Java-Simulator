@@ -16,12 +16,15 @@ public class MariaDbJpaConnection {
      */
     public static EntityManager getInstance() {
         // you need to add synchronization if you run in a multi-threaded environment
-
-        if (em==null) {
-            if (emf==null) {
-                emf = Persistence.createEntityManagerFactory("TrashDataMariaDbUnit");
+        try {
+            if (em == null) {
+                if (emf == null) {
+                    emf = Persistence.createEntityManagerFactory("TrashDataMariaDbUnit");
+                }
+                em = emf.createEntityManager();
             }
-            em = emf.createEntityManager();
+        } catch (Exception e) {
+            System.err.println("MariaDbJpaConnection.java: Error in creating/finding/creating database.");
         }
         return em;
     }

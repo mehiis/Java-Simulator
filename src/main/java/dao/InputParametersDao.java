@@ -3,6 +3,7 @@ package dao;
 import entity.*;
 import jakarta.persistence.EntityManager;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -37,9 +38,14 @@ public class InputParametersDao {
      * @return List of all InputParameters objects.
      */
     public List<InputParameters> findAll() {
+        try {
         EntityManager em = datasource.MariaDbJpaConnection.getInstance();
         List<InputParameters> inputs = em.createQuery("select e from InputParameters e").getResultList();
         return inputs;
+        } catch (Exception e) {
+            System.err.println("InputParameteresDao.java: Error finding all history. (Check connection to database.)");
+            return new LinkedList<>(); //retrun empty
+        }
     }
 
     /**
