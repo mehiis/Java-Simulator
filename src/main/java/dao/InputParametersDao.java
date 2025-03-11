@@ -8,9 +8,10 @@ import java.util.List;
 
 /**
  * DAO class for InputParameters entity
+ * Implements generic full IDao interface
  */
 
-public class InputParametersDao {
+public class InputParametersDao implements IDao<InputParameters>, IReadOnlyDao<InputParameters> {
     /**
      * Method for persisting InputParameters object in the database.
      * @param input InputParameters object to be persisted.

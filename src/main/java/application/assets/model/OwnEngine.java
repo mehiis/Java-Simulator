@@ -8,8 +8,15 @@ import application.controller.Controller;
 import application.eduni.distributions.Negexp;
 import application.eduni.distributions.Normal;
 import application.run.Specs;
+import dao.IDao;
+import dao.InputParametersDao;
+import entity.InputParameters;
+
+import java.time.LocalDate;
+
 /**
  * Child of Engine-class, contains the customized main working logic of the simulator.
+ * Responsible for updating database.
  */
 public class OwnEngine extends Engine {
 	private ArrivalProcess yksioArrivalProcess;
@@ -19,11 +26,20 @@ public class OwnEngine extends Engine {
 	private ArrivalProcess 		clearProcess;
 	private GarbageShelter 		garbageShelter;
 	private Controller 			controller;
+	private IDao<InputParameters> inputDao;
 	private long 				delayTime = 0;
 	private double meanTrashThrowAmt;
 
 	public OwnEngine(Controller controller){
 		this.controller = controller;
+		this.inputDao = new InputParametersDao();
+	}
+
+	/**
+	 * Gets necessary starting info to the engine and saves inputs to the database
+	 */
+	public void startSimulation() {
+		saveInputsToDb();
 
 		meanTrashThrowAmt = controller.getMeanTrashPerThrowAmt();
 
@@ -243,4 +259,29 @@ public class OwnEngine extends Engine {
 	 */
 	@Override
 	public void setMetalCanAmountValue(int amount) {garbageShelter.addGarbageCan(GarbageCanType.METAL, amount);}
+
+	/**
+	 * Method for saving starting inputs to database.
+	 */
+	@Override
+	public void saveInputsToDb() {
+		try {
+			inputDao.persist(controller.getInputsToSave());
+
+		} catch (Exception e) {
+			System.err.println("Error saving inputs to database: " + e.getMessage());
+			e.printStackTrace();
+		}
+		controller.refreshUIHistory();
+
+	}
+
+	/**
+	 * Method for clearing database.
+	 */
+	@Override
+	public void clearHistory() {
+		inputDao.deleteAll();
+		controller.refreshUIHistory();
+	}
 }

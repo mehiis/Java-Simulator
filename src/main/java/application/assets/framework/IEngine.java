@@ -1,5 +1,7 @@
 package application.assets.framework;
 
+import entity.InputParameters;
+
 public interface IEngine { // UUSI
 		
 	// Kontrolleri käyttää tätä rajapintaa
@@ -14,4 +16,8 @@ public interface IEngine { // UUSI
 	public void setDelay(long time);
 	public long getDelay();
 	public void pressPauseButton();
+	public void saveInputsToDb();
+	public void clearHistory();
+
+	public void startSimulation();
 }

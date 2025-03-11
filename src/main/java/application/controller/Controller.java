@@ -1,6 +1,8 @@
 package application.controller;
 
 import application.assets.framework.Clock;
+import dao.IDao;
+import dao.IReadOnlyDao;
 import dao.InputParametersDao;
 import entity.InputParameters;
 import application.assets.model.ApartmentType;
@@ -21,13 +23,17 @@ import java.util.LinkedHashMap;
 
 /**
  * This class is responsible for the communication between the model and the view.
+ * Also has access for database reading.
  */
 public class Controller implements IControllerForModel, IControllerForView {   // UUSI
 	private IEngine engine;
 	private ISimulatorGUI ui;
+	private IReadOnlyDao<InputParameters> inputReadOnlyDao;
 
 	public Controller(ISimulatorGUI ui) {
 		this.ui = ui;
+		inputReadOnlyDao = new InputParametersDao();
+		engine = new OwnEngine(this); // Need to init in constructor for database access before starting sim
 	}
 
 	/**
@@ -40,9 +46,9 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void startSimulation() {
 
 		System.out.println("Start simulation.");
-		saveInputsToDb();
+		engine = new OwnEngine(this); // Create new engine on every start
+		engine.startSimulation();
 		int daysToMinutes = (ui.getSimulationTimeValue() * 1440);
-		engine = new OwnEngine(this); // luodaan uusi moottorisäie jokaista simulointia varten
 		engine.setSimulationTime(daysToMinutes);
 
 		engine.setMixedCanAmountValue(ui.getMixedCanAmountValue());
@@ -77,6 +83,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 		
 		Platform.runLater(() -> ui.setDay(day));
 	}
+
 
 	@Override
 	public void getSimulationSpeed() {
@@ -113,6 +120,10 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	public void speedUp() { // nopeutetaan moottorisäiettä
 		engine.setDelay((long)(engine.getDelay()*0.9));
 		getSimulationSpeed();
+	}
+
+	public int getSimulationTime() {
+		return ui.getSimulationTimeValue();
 	}
 
 	/**
@@ -384,8 +395,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	 */
 	public void loadInputParameters(int id) {
 		try {
-			InputParametersDao IPDao = new InputParametersDao();
-			InputParameters input = IPDao.find(id);
+			InputParameters input = inputReadOnlyDao.find(id);
 			ui.setSimulationTimeValue(input.getSimulationTime());
 			ui.setMeanTrashAmtPerThrow(input.getMeanTrashPerThrow());
 			ui.setSingleAptAmt(input.getSingleAptAmount());
@@ -411,8 +421,7 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	 */
 	public ObservableList<String> getInputHistory() {
 		try {
-			InputParametersDao IPDao = new InputParametersDao();
-			List<InputParameters> inputs = IPDao.findAll();
+			List<InputParameters> inputs = inputReadOnlyDao.findAll();
 			ObservableList<String> dates = FXCollections.observableArrayList();
 			for (InputParameters input : inputs) {
 				dates.add(input.getId() + "  |  " + input.getDate().toString());
@@ -426,46 +435,39 @@ public class Controller implements IControllerForModel, IControllerForView {   /
 	}
 
 	/**
-	 * Gets the inputs from the UI and passes them to the dao to be saved to the database.
+	 * Gets the inputs from the UI and passes them to the model to be saved to the database.
 	 * Called when the Start Simulation button is pressed.
 	 */
-	public void saveInputsToDb() {
-		try {
-			InputParametersDao IPDao = new InputParametersDao();
-			IPDao.persist(new InputParameters(
-					LocalDate.now(),
-					ui.getSimulationTimeValue(),
-					ui.getMeanTrashAmtPerThrow(),
-					ui.getSingleAptAmt(),
-					ui.getDoubleAptAmt(),
-					ui.getTripleAptAmt(),
-					ui.getQuadAptAmt(),
-					ui.getGarbageTruckArrivalInterval(),
-					ui.getMixedCanAmountValue(),
-					ui.getBioCanAmountValue(),
-					ui.getCardboardCanAmountValue(),
-					ui.getGlassCanAmountValue(),
-					ui.getMetalCanAmountValue(),
-					ui.getPlasticCanAmountValue()));
-		} catch (Exception e) {
-			System.err.println("Error saving inputs to database: " + e.getMessage());
-			e.printStackTrace();
-		}
-		ui.refreshHistoryList();
+	public InputParameters getInputsToSave() {
+		InputParameters input = new InputParameters(
+								LocalDate.now(),
+								ui.getSimulationTimeValue(),
+								ui.getMeanTrashAmtPerThrow(),
+								ui.getSingleAptAmt(),
+								ui.getDoubleAptAmt(),
+								ui.getTripleAptAmt(),
+								ui.getQuadAptAmt(),
+								ui.getGarbageTruckArrivalInterval(),
+								ui.getMixedCanAmountValue(),
+								ui.getBioCanAmountValue(),
+								ui.getCardboardCanAmountValue(),
+								ui.getGlassCanAmountValue(),
+								ui.getMetalCanAmountValue(),
+								ui.getPlasticCanAmountValue());
+
+		return input;
 	}
 
 	/**
-	 * Calls the dao to delete all input parameters from the database.
+	 * Method for refreshing UI history list.
+	 * Called from OwnEngine after altering database.
+	 */
+	public void refreshUIHistory() {Platform.runLater(() -> ui.refreshHistoryList());}
+
+	/**
+	 * Delegates database clearing for OwnEngine.
 	 * Called when the Clear History button is pressed.
 	 */
-	public void clearHistory() {
-		try {
-			InputParametersDao IPDao = new InputParametersDao();
-			IPDao.deleteAll();
-			Platform.runLater(() -> ui.refreshHistoryList());
-		} catch (Exception e) {
-			System.err.println("Error clearing history: " + e.getMessage());
-			e.printStackTrace();
-		}
+	public void clearHistory() {engine.clearHistory();
 	}
 }

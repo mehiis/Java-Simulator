@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jdk.jfr.StackTrace;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -1053,6 +1054,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 }
             } catch (Exception ex) {
                 System.out.println("Could not clear history.");
+                ex.printStackTrace();
             }
         });
 
