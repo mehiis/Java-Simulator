@@ -12,20 +12,22 @@ public class GarbageCan {
     //DATA COLLECTION ONLY
     private double dataCapcity;
 
-    public GarbageCan(boolean isBig, GarbageCanType type){
-        if(isBig) totalCapacity = 660; else totalCapacity = 240;
+    public GarbageCan(boolean isBig, GarbageCanType type) {
+        if (isBig) totalCapacity = 660;
+        else totalCapacity = 240;
         this.type = type;
     }
 
     /**
      * Adds garbage to the garbage can.
+     *
      * @param amount
      * @return
      */
-    public boolean addGarbage(double amount){
+    public boolean addGarbage(double amount) {
         double temp = this.currentCapacity + amount;
 
-        if(temp > totalCapacity)
+        if (temp > totalCapacity)
             return false;
 
         this.currentCapacity = temp;
@@ -34,26 +36,28 @@ public class GarbageCan {
 
     /**
      * Garbage data collection.
+     *
      * @param amount
      */
-    public void addGarbageForData(double amount){
+    public void addGarbageForData(double amount) {
         this.dataCapcity += amount;
     }
 
-    public double getCapacity(){
+    public double getCapacity() {
         return totalCapacity;
     }
 
-    public boolean checkCapacity(double thrashAmount){
+    public boolean checkCapacity(double thrashAmount) {
         return (currentCapacity + thrashAmount) <= totalCapacity;
     }
 
     /**
      * Returns the weight of trash of given bin type, multiplied by a trash volume multiplier.
+     *
      * @return
      */
-    public double getWeight(){
-        switch (this.type){
+    public double getWeight() {
+        switch (this.type) {
             case MIXED:
                 this.weightMultiplier = 1.0;
                 break;
@@ -79,14 +83,23 @@ public class GarbageCan {
         return currentCapacity * weightMultiplier;
     }
 
-    public double getCurrentCapacity(){return this.currentCapacity;}
+    public double getCurrentCapacity() {
+        return this.currentCapacity;
+    }
 
-    public double getDataCapacity(){return this.dataCapcity;}
+    public double getDataCapacity() {
+        return this.dataCapcity;
+    }
 
-    public GarbageCanType getType(){return this.type;}
+    public GarbageCanType getType() {
+        return this.type;
+    }
 
     /**
      * Empties the garbage can.
      */
-    public void empty(){this.currentCapacity = 0; this.dataCapcity = 0;}
+    public void empty() {
+        this.currentCapacity = 0;
+        this.dataCapcity = 0;
+    }
 }

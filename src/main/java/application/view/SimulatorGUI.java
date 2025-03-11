@@ -1,4 +1,5 @@
 package application.view;
+
 import application.assets.framework.Clock;
 import application.assets.framework.Trace;
 import application.controller.IControllerForView;
@@ -29,16 +30,15 @@ import java.util.Objects;
  * User interface for the simulator
  */
 public class SimulatorGUI extends Application implements ISimulatorGUI {
-    //Kontrollerin esittely (tarvitaan käyttöliittymässä)
+
     private IControllerForView controller;
 
     // settings
-    //ASPECT RATIO 16:9. Possible sizes are: 800x450, 1280x720, 1600x900, 1920x1080
-    private  int width   = 1280;
-    private  int height  = 720;
+    // ASPECT RATIO 16:9. Possible sizes are: 800x450, 1280x720, 1600x900, 1920x1080
+    private int width = 1280;
+    private int height = 720;
     private final int defaultSimulationTime = 14400 / 1440;// 10 days
 
-    // Käyttöliittymäkomponentit:
     // Left Box values
     private final TextField simulationTimeValue = new TextField();
 
@@ -59,13 +59,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private final TextField metalCanAmountValue = new TextField();
 
 
-    private final Color blackColor      = Color.BLACK;
-    private final Color redColor        = Color.RED;
-    private final Color yellowColor     = Color.rgb(186, 142, 35);
+    private final Color blackColor = Color.BLACK;
+    private final Color redColor = Color.RED;
+    private final Color yellowColor = Color.rgb(186, 142, 35);
 
     // Middle Control
-    private final Label dayLabel    = new Label("Day: 1");
-    private final Label speedLabel  = new Label("Speed: 1x");
+    private final Label dayLabel = new Label("Day: 1");
+    private final Label speedLabel = new Label("Speed: 1x");
 
     // Right box
     private boolean resultWindowOpen = true;
@@ -78,13 +78,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     private TextField delay;
     private Label endTime = new Label("");
-    private Label timeLabel;
-    private Label delayLabel;
-    private Label resultLabel;
 
     // Performance variables
-    private final Label trashThrownTimes    = new Label("");
-    private final Label trashClearedTimes   = new Label("");
+    private final Label trashThrownTimes = new Label("");
+    private final Label trashClearedTimes = new Label("");
     private final Label shelterUsagePercent = new Label("");
 
     private final Label trashThrownTotalKilos = new Label("");
@@ -111,22 +108,20 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     private final Label glassOverflow = new Label("");
     private final Label metalOverflow = new Label("");
 
-    private final Label mixedAccessTime     = new Label("");
-    private final Label bioAccessTime       = new Label("");
+    private final Label mixedAccessTime = new Label("");
+    private final Label bioAccessTime = new Label("");
     private final Label cardboardAccessTime = new Label("");
-    private final Label plasticAccessTime   = new Label("");
-    private final Label glassAccessTime     = new Label("");
-    private final Label metalAccessTime     = new Label("");
+    private final Label plasticAccessTime = new Label("");
+    private final Label glassAccessTime = new Label("");
+    private final Label metalAccessTime = new Label("");
     private final double MAX_ACCESS_TIME = 100.0;
     private final double MIN_ACCESS_TIME = 10.0;
 
-
+    // Bottom controls
     private Button startButton;
     private Button slowButton;
     private Button fastButton;
     private Button pauseButton;
-
-    private IVisuals view;
 
     private Visuals canvas;
 
@@ -143,6 +138,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     /**
      * Start method for the application.
      * Calls createScene method to create the scene for the window.
+     *
      * @param stage Window for the application.
      */
     @Override
@@ -170,6 +166,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     /**
      * Visualizes the simulation time.
+     *
      * @param day Current day passed from the model.
      */
     public void setDay(int day) {
@@ -184,8 +181,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getSimulationTimeValue() {
         if (simulationTimeValue.getText().isEmpty()) {
             return defaultSimulationTime;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(simulationTimeValue.getText());
             } catch (NumberFormatException e) {
@@ -198,8 +194,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public double getMeanTrashAmtPerThrow() {
         if (meanThrashAmountPerThrowValue.getText().isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             try {
                 return Double.parseDouble(meanThrashAmountPerThrowValue.getText());
             } catch (NumberFormatException e) {
@@ -211,8 +206,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getGarbageTruckArrivalInterval() {
         if (garbageTruckArrivalValue.getText().isEmpty()) {
             return 7;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(garbageTruckArrivalValue.getText());
             } catch (NumberFormatException e) {
@@ -225,8 +219,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getSingleAptAmt() {
         if (singleAptAmountValue.getText().isEmpty()) {
             return 10;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(singleAptAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -239,8 +232,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getDoubleAptAmt() {
         if (doubleAptAmountValue.getText().isEmpty()) {
             return 8;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(doubleAptAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -253,8 +245,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getTripleAptAmt() {
         if (tripleAptAmountValue.getText().isEmpty()) {
             return 6;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(tripleAptAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -267,8 +258,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getQuadAptAmt() {
         if (quadAptAmountValue.getText().isEmpty()) {
             return 4;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(quadAptAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -320,9 +310,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         mixedUsage.setText("Mixed usage: " + df.format(value) + "%");
 
-        if(value > MAX_ACCESS_TIME)
+        if (value > MAX_ACCESS_TIME)
             mixedUsage.setTextFill(redColor);
-        else if(value < MIN_ACCESS_TIME)
+        else if (value < MIN_ACCESS_TIME)
             mixedUsage.setTextFill(yellowColor);
     }
 
@@ -333,9 +323,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         bioUsage.setText("Bio usage: " + df.format(value) + "%");
 
-        if(value > MAX_ACCESS_TIME)
+        if (value > MAX_ACCESS_TIME)
             bioUsage.setTextFill(redColor);
-        else if(value < MIN_ACCESS_TIME)
+        else if (value < MIN_ACCESS_TIME)
             bioUsage.setTextFill(yellowColor);
     }
 
@@ -346,9 +336,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         cardboardUsage.setText("Cardboard usage: " + df.format(value) + "%");
 
-        if(value > MAX_ACCESS_TIME)
+        if (value > MAX_ACCESS_TIME)
             cardboardUsage.setTextFill(redColor);
-        else if(value < MIN_ACCESS_TIME)
+        else if (value < MIN_ACCESS_TIME)
             cardboardUsage.setTextFill(yellowColor);
     }
 
@@ -359,9 +349,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         plasticUsage.setText("Plastic usage: " + df.format(value) + "%");
 
-        if(value > MAX_ACCESS_TIME)
+        if (value > MAX_ACCESS_TIME)
             plasticUsage.setTextFill(redColor);
-        else if(value < MIN_ACCESS_TIME)
+        else if (value < MIN_ACCESS_TIME)
             plasticUsage.setTextFill(yellowColor);
     }
 
@@ -372,9 +362,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         glassUsage.setText("Glass usage: " + df.format(value) + "%");
 
-        if(value > MAX_ACCESS_TIME)
+        if (value > MAX_ACCESS_TIME)
             glassUsage.setTextFill(redColor);
-        else if(value < MIN_ACCESS_TIME)
+        else if (value < MIN_ACCESS_TIME)
             glassUsage.setTextFill(yellowColor);
     }
 
@@ -385,9 +375,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.00");
         metalUsage.setText("Metal usage: " + df.format(value) + "%");
 
-        if(value > MAX_ACCESS_TIME)
+        if (value > MAX_ACCESS_TIME)
             metalUsage.setTextFill(redColor);
-        else if(value < MIN_ACCESS_TIME)
+        else if (value < MIN_ACCESS_TIME)
             metalUsage.setTextFill(yellowColor);
     }
 
@@ -434,10 +424,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.0");
         mixedAccessTime.setText("Mixed waste for " + df.format(value) + " hours");
 
-        if(value > 24)
-            mixedAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+        if (value > 24)
+            mixedAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value / 24) + " days");
 
-        if(value > 24)
+        if (value > 24)
             mixedAccessTime.setTextFill(redColor);
     }
 
@@ -448,10 +438,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.0");
         bioAccessTime.setText("Bio waste: " + df.format(value) + " hours");
 
-        if(value > 24)
-            bioAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+        if (value > 24)
+            bioAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value / 24) + " days");
 
-        if(value > 24)
+        if (value > 24)
             bioAccessTime.setTextFill(redColor);
     }
 
@@ -462,10 +452,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.0");
         cardboardAccessTime.setText("Cardboard waste: " + df.format(value) + " hours");
 
-        if(value > 24)
-            cardboardAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+        if (value > 24)
+            cardboardAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value / 24) + " days");
 
-        if(value > 24)
+        if (value > 24)
             cardboardAccessTime.setTextFill(redColor);
     }
 
@@ -476,10 +466,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.0");
         plasticAccessTime.setText("Plastic waste: " + df.format(value) + " hours");
 
-        if(value > 24)
-            plasticAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+        if (value > 24)
+            plasticAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value / 24) + " days");
 
-        if(value > 24)
+        if (value > 24)
             plasticAccessTime.setTextFill(redColor);
     }
 
@@ -490,10 +480,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.0");
         glassAccessTime.setText("Glass waste: " + df.format(value) + " hours");
 
-        if(value > 24)
-            glassAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+        if (value > 24)
+            glassAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value / 24) + " days");
 
-        if(value > 24)
+        if (value > 24)
             glassAccessTime.setTextFill(redColor);
     }
 
@@ -504,30 +494,31 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         DecimalFormat df = new DecimalFormat("#0.0");
         metalAccessTime.setText("Metal waste: " + df.format(value) + " hours");
 
-        if(value > 24)
-            metalAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value/24) + " days");
+        if (value > 24)
+            metalAccessTime.setText("Mixed waste for " + df.format(value) + " hours/" + df.format(value / 24) + " days");
 
-        if(value > 24)
+        if (value > 24)
             metalAccessTime.setTextFill(redColor);
     }
 
     @Override
     public void setTrashThrowTimes(int amt) {
-        trashThrownTimes.setText("Trash was thrown "+amt+" times");
+        trashThrownTimes.setText("Trash was thrown " + amt + " times");
     }
+
     public void setShelterUsagePercent(double amt) {
         shelterUsagePercent.setTextFill(blackColor);
-        shelterUsagePercent.setText("Average shelter usage rate: "+amt+" %");
+        shelterUsagePercent.setText("Average shelter usage rate: " + amt + " %");
 
-        if(amt <= MIN_ACCESS_TIME)
+        if (amt <= MIN_ACCESS_TIME)
             shelterUsagePercent.setTextFill(yellowColor);
-        else if(amt > MAX_ACCESS_TIME)
+        else if (amt > MAX_ACCESS_TIME)
             shelterUsagePercent.setTextFill(redColor);
     }
 
     @Override
     public void setShelterClearedTimes(int amt) {
-        trashClearedTimes.setText("Trash was cleared by truck "+amt+" times");
+        trashClearedTimes.setText("Trash was cleared by truck " + amt + " times");
     }
 
     @Override
@@ -545,8 +536,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getMixedCanAmountValue() {
         if (mixedCanAmountValue.getText().isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(mixedCanAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -558,8 +548,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getPlasticCanAmountValue() {
         if (plasticCanAmountValue.getText().isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(plasticCanAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -571,8 +560,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getGlassCanAmountValue() {
         if (glassCanAmountValue.getText().isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(glassCanAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -584,8 +572,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getCardboardCanAmountValue() {
         if (cardBoardCanAmountValue.getText().isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(cardBoardCanAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -597,8 +584,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getBioCanAmountValue() {
         if (bioCanAmountValue.getText().isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(bioCanAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -610,8 +596,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public int getMetalCanAmountValue() {
         if (metalCanAmountValue.getText().isEmpty()) {
             return 1;
-        }
-        else {
+        } else {
             try {
                 return Integer.parseInt(metalCanAmountValue.getText());
             } catch (NumberFormatException e) {
@@ -620,44 +605,44 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         }
     }
 
-    public void setSimulationTimeValue (int time) {
+    public void setSimulationTimeValue(int time) {
         simulationTimeValue.setText(Integer.toString(time));
 
     }
 
-    public void setMeanTrashAmtPerThrow (double amount) {
+    public void setMeanTrashAmtPerThrow(double amount) {
         meanThrashAmountPerThrowValue.setText(Double.toString(amount));
     }
 
-    public void setGarbageTruckArrivalInterval (int interval) {
+    public void setGarbageTruckArrivalInterval(int interval) {
         garbageTruckArrivalValue.setText(Integer.toString(interval));
     }
 
-    public void setSingleAptAmt (int amount) {
+    public void setSingleAptAmt(int amount) {
         singleAptAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setDoubleAptAmt (int amount) {
+    public void setDoubleAptAmt(int amount) {
         doubleAptAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setTripleAptAmt (int amount) {
+    public void setTripleAptAmt(int amount) {
         tripleAptAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setQuadAptAmt (int amount) {
+    public void setQuadAptAmt(int amount) {
         quadAptAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setMixedCanAmountValue (int amount) {
+    public void setMixedCanAmountValue(int amount) {
         mixedCanAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setPlasticCanAmountValue (int amount) {
+    public void setPlasticCanAmountValue(int amount) {
         plasticCanAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setGlassCanAmountValue (int amount) {
+    public void setGlassCanAmountValue(int amount) {
         glassCanAmountValue.setText(Integer.toString(amount));
     }
 
@@ -665,11 +650,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         cardBoardCanAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setBioCanAmountValue (int amount) {
+    public void setBioCanAmountValue(int amount) {
         bioCanAmountValue.setText(Integer.toString(amount));
     }
 
-    public void setMetalCanAmountValue (int amount) {
+    public void setMetalCanAmountValue(int amount) {
         metalCanAmountValue.setText(Integer.toString(amount));
     }
 
@@ -681,12 +666,13 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     /**
      * Method to set simulation time to the results window.
      * Also enables the start button after the simulation has ended.
+     *
      * @param aika time from the model.
      */
     @Override
     public void setLoppuaika(double aika) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
-        this.endTime.setText("Simulation time: " + formatter.format(aika / 1440)+" days.");
+        this.endTime.setText("Simulation time: " + formatter.format(aika / 1440) + " days.");
         startButton.setDisable(false);
         pauseButton.setDisable(true);
         slowButton.setDisable(true);
@@ -697,18 +683,19 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     /**
      * Method called from the Start() to create the scene for the window.
      * It sets up the layout and configuration of the various UI components in the scene.
+     *
      * @return The created Scene object.
      */
-    private Scene createScene(){
+    private Scene createScene() {
         SplitPane horSplitPane = new SplitPane();
         SplitPane verSplitPane = new SplitPane();
 
         double verticalPosition = 0.90;
 
-        VBox leftVBox   = left();
+        VBox leftVBox = left();
         leftVBox.setId("leftBox");
 
-        ScrollPane resultsWindow  = right();
+        ScrollPane resultsWindow = right();
         resultsWindow.setId("resultsWindow");
 
         ListView historyWindow = historyWindow();
@@ -744,9 +731,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     /**
      * Method called from the createScene() to create middle section of the window.
+     *
      * @return The VBox object containing the middle section of the window.
      */
-    private VBox center(){
+    private VBox center() {
 
         // INITIALIZING VISUALS HERE!!!
         // controller can access canvas with getVisualisointi()
@@ -760,7 +748,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         speedLabel.setVisible(false);
 
-        VBox midControl   = new VBox();
+        VBox midControl = new VBox();
         midControl.setId("centerStats");
         //midControl.getChildren().add(speedLabel);
         midControl.setSpacing(0); // Remove gaps between elements
@@ -779,13 +767,11 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         if (resultWindowOpen) {
             resultsWindow.setVisible(false);
             historyWindow.setVisible(true);
-            //clearHistoryButton.setVisible(true);
             historyButton.setText("Results");
             resultWindowOpen = false;
         } else {
             resultsWindow.setVisible(true);
             historyWindow.setVisible(false);
-            //clearHistoryButton.setVisible(false);
             historyButton.setText("History");
             resultWindowOpen = true;
         }
@@ -799,16 +785,16 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
             try {
                 historyWindow.setItems(controller.getInputHistory());
             } catch (Exception e) {
-                ArrayList<String> error = new ArrayList<>();
-                error.add("Could not fetch history from database.");
+                System.out.println("Could not fetch history from database.");
+                e.printStackTrace();
 
-                historyWindow.setItems((ObservableList<String>) error);
             }
         }
     }
 
     /**
      * Method called from the createScene() to create the history window.
+     *
      * @return The ListView object containing the history window.
      */
     private ListView historyWindow() {
@@ -822,10 +808,8 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                     controller.loadInputParameters(selectedId);
                 }
             } catch (Exception e) {
-                    ArrayList<String> error = new ArrayList<>();
-                    error.add("Could not fetch history from database.");
+                e.printStackTrace();
 
-                    historyWindow.setItems((ObservableList<String>) error);
             }
         });
 
@@ -834,9 +818,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     /**
      * Method called from the createScene() to create the result section of the window.
+     *
      * @return The ScrollPane object containing the result window.
      */
-    private ScrollPane right(){
+    private ScrollPane right() {
         final int TEXT_FIELD_WIDTH = 50;
 
         Label collectedDataTitle = new Label("General data: ");
@@ -849,7 +834,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         Label accessTime = new Label("Time unavailable: ");
 
-        VBox rightControl  = new VBox(
+        VBox rightControl = new VBox(
                 collectedDataTitle,
                 endTime, trashThrownTimes, trashClearedTimes, shelterUsagePercent,
                 trashThrownTotals, trashThrownTotalKilos, trashThrownTotalLiters, mixedTotal, bioTotal, cardboardTotal, plasticTotal, glassTotal, metalTotal,
@@ -861,7 +846,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
         // set padding to all Labels in rightControl
         ObservableList<Node> controls = rightControl.getChildren();
-        for (Node node: controls) {
+        for (Node node : controls) {
             if (node.getClass() == Label.class) {
                 ((Label) node).setPadding(new Insets(8, 8, 8, 8));
             }
@@ -875,9 +860,10 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
 
     /**
      * Method called from the createScene() to create input section of the window.
+     *
      * @return The VBox object containing the input section of the window.
      */
-    private VBox left(){
+    private VBox left() {
         final int TEXT_FIELD_WIDTH = 50;
 
         // Simulation time
@@ -982,16 +968,17 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         metalCanAmount.setLeft(metalCanAmountLabel);
         metalCanAmount.setRight(metalCanAmountValue);
 
-        VBox leftControl  = new VBox(simulationTime, meanThrashAmountPerThrow, garbageTruckTime,  singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, cardBoardCanAmount, metalCanAmount);
+        VBox leftControl = new VBox(simulationTime, meanThrashAmountPerThrow, garbageTruckTime, singleAptAmount, doubleAptAmount, tripleAptAmount, quadAptAmount, mixedCanAmount, plasticCanAmount, bioCanAmount, glassCanAmount, cardBoardCanAmount, metalCanAmount);
         leftControl.setSpacing(10); // Spacing for each component
         return leftControl;
     }
 
     /**
      * Method called from the createScene() to create the bottom section of the window.
+     *
      * @return The Region object containing the bottom section of the window.
      */
-    private Region bottom(){
+    private Region bottom() {
         startButton = new Button();
         startButton.setPrefWidth(150);
         startButton.setText("Start Simulation");
@@ -1018,7 +1005,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         pauseButton.setText("Pause");
         pauseButton.setOnAction(e -> {
             controller.pause();
-            if(Objects.equals(pauseButton.getText(), "Pause"))
+            if (Objects.equals(pauseButton.getText(), "Pause"))
                 pauseButton.setText("Resume");
             else
                 pauseButton.setText("Pause");

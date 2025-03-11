@@ -14,6 +14,7 @@ import java.util.List;
 public class InputParametersDao implements IDao<InputParameters>, IReadOnlyDao<InputParameters> {
     /**
      * Method for persisting InputParameters object in the database.
+     *
      * @param input InputParameters object to be persisted.
      */
     public void persist(InputParameters input) {
@@ -25,6 +26,7 @@ public class InputParametersDao implements IDao<InputParameters>, IReadOnlyDao<I
 
     /**
      * Method for finding individual InputParameters objects from the database.
+     *
      * @param id id of the InputParameters object to be found.
      * @return InputParameters object with the given id.
      */
@@ -36,13 +38,14 @@ public class InputParametersDao implements IDao<InputParameters>, IReadOnlyDao<I
 
     /**
      * Method for finding all InputParameters objects from the database.
+     *
      * @return List of all InputParameters objects.
      */
     public List<InputParameters> findAll() {
         try {
-        EntityManager em = datasource.MariaDbJpaConnection.getInstance();
-        List<InputParameters> inputs = em.createQuery("select e from InputParameters e").getResultList();
-        return inputs;
+            EntityManager em = datasource.MariaDbJpaConnection.getInstance();
+            List<InputParameters> inputs = em.createQuery("select e from InputParameters e").getResultList();
+            return inputs;
         } catch (Exception e) {
             System.err.println("InputParameteresDao.java: Error finding all history. (Check connection to database.)");
             return new LinkedList<>(); //retrun empty

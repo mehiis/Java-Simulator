@@ -13,8 +13,11 @@ public interface IControllerForModel {
     double getMeanTrashPerThrowAmt();
 
     int getSingleAptAmt();
+
     int getDoubleAptAmt();
+
     int getTripleAptAmt();
+
     int getQuadAptAmt();
 
     public void naytaLoppuaika(double aika);

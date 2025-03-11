@@ -16,187 +16,202 @@ import java.util.*;
  * The shelter has a queue for residents and garbage cans for different types of trash.
  */
 public class GarbageShelter {
-	private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
-	private ArrayList<GarbageCan> garbageCans = new ArrayList<>();
-	private TrashDistribution trashGenerator = new TrashDistribution();
-	private final EventList eventList;
-	private final EventType scheduledEventType;
-	private final double trashThrowAmtMean;
-	
-	//JonoStartegia strategia; //optio: asiakkaiden järjestys
-	private boolean reserved	 	= false;
-	private boolean isFull 			= false;
+    private final LinkedList<Apartment> queue = new LinkedList<>(); // Tietorakennetoteutus
+    private ArrayList<GarbageCan> garbageCans = new ArrayList<>();
+    private TrashDistribution trashGenerator = new TrashDistribution();
+    private final EventList eventList;
+    private final EventType scheduledEventType;
+    private final double trashThrowAmtMean;
 
-	//data variables
-	private HashMap<GarbageCanType, Double> overflowTrash = new HashMap<>();
-	private CollectedData data;
+    //JonoStartegia strategia; //optio: asiakkaiden järjestys
+    private boolean reserved = false;
+    private boolean isFull = false;
 
-	/**
-	 * Constructor for the garbage shelter.
-	 * @param eventList simulator event list
-	 * @param type exit event type
-	 * @param meanTrashThrowAmt mean amount of trash thrown at once by residents
-	 */
-	// Constructor with custom amount of garbage cans
-	public GarbageShelter(EventList eventList, EventType type, double meanTrashThrowAmt){
-		data = new CollectedData(garbageCans);
+    //data variables
+    private HashMap<GarbageCanType, Double> overflowTrash = new HashMap<>();
+    private CollectedData data;
 
-		this.eventList 				= eventList;
-		this.scheduledEventType 	= type;
-		// trash throw amt is passed from GUI -> controller -> engine -> here -> throwTrash()/trash distribution
-		this.trashThrowAmtMean = meanTrashThrowAmt;
-	}
+    /**
+     * Constructor for the garbage shelter.
+     *
+     * @param eventList         simulator event list
+     * @param type              exit event type
+     * @param meanTrashThrowAmt mean amount of trash thrown at once by residents
+     */
+    // Constructor with custom amount of garbage cans
+    public GarbageShelter(EventList eventList, EventType type, double meanTrashThrowAmt) {
+        data = new CollectedData(garbageCans);
 
-	public void addToQueue(Apartment a){   // Jonon 1. asiakas aina palvelussa
-		queue.add(a);
-	}
-	/**
-	 * Adds a garbage can to the shelter
-	 * @param type the type of the garbage can
-	 */
-	public void addGarbageCan(GarbageCanType type, int amount){
-		for (int i = 0; i < amount; i++) {
-			garbageCans.add(new GarbageCan(true , type));
-		}
-	}
+        this.eventList = eventList;
+        this.scheduledEventType = type;
+        // trash throw amt is passed from GUI -> controller -> engine -> here -> throwTrash()/trash distribution
+        this.trashThrowAmtMean = meanTrashThrowAmt;
+    }
 
-	public Apartment getFromQueue(){  // Poistetaan palvelussa ollut
-		reserved = false;
-		return queue.poll(); //delete the first element
-	}
+    public void addToQueue(Apartment a) {   // Jonon 1. asiakas aina palvelussa
+        queue.add(a);
+    }
 
-	// SORRY ABOUT THE MESS
-	// final trash placement into respective cans, separated this out to prevent nested ifs
-	/**
-	 * Final placement of trash into respective garbage can. This is separated from the main throwTrash() method to prevent nested ifs.
-	 * @param can the garbage can
-	 * @param trashAmt the amount of trash
-	 * @param generatedTrash the trash
-	 */
-	public void putTrash(GarbageCan can, double trashAmt, HashMap<GarbageCanType, Double> generatedTrash) {
-		if (can.checkCapacity(trashAmt)) {
-			can.addGarbage(trashAmt);
-			can.addGarbageForData(trashAmt);
-			generatedTrash.put(can.getType(), 0.0); // zero out trash in hashmap after getting it once, effectively simulating trash has been thrown to one of the cans only
-			System.out.println("Added "+trashAmt+" l of thrash to " + can.getType() + " trash can.");
-			System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " l of trash.");
+    /**
+     * Adds a garbage can to the shelter
+     *
+     * @param type the type of the garbage can
+     */
+    public void addGarbageCan(GarbageCanType type, int amount) {
+        for (int i = 0; i < amount; i++) {
+            garbageCans.add(new GarbageCan(true, type));
+        }
+    }
 
-			//Data collection
-			data.calculateThrashAmountByType(can, trashAmt);
-		}  else {
-			getData().addFailedAttempt(can.getType());
+    public Apartment getFromQueue() {  // Poistetaan palvelussa ollut
+        reserved = false;
+        return queue.poll(); //delete the first element
+    }
 
-			// get type
-			GarbageCanType type = can.getType();
-			// Init entry if absent
-			overflowTrash.putIfAbsent(type, 0.0);
-			// add trash to the entry value
-			overflowTrash.put(type, overflowTrash.get(type) + trashAmt);
-			can.addGarbageForData(trashAmt);
+    // SORRY ABOUT THE MESS
+    // final trash placement into respective cans, separated this out to prevent nested ifs
 
-			System.out.println("OVERFLOW IN " + type + " CAN! Added " + trashAmt + " to overflow" );
+    /**
+     * Final placement of trash into respective garbage can. This is separated from the main throwTrash() method to prevent nested ifs.
+     *
+     * @param can            the garbage can
+     * @param trashAmt       the amount of trash
+     * @param generatedTrash the trash
+     */
+    public void putTrash(GarbageCan can, double trashAmt, HashMap<GarbageCanType, Double> generatedTrash) {
+        if (can.checkCapacity(trashAmt)) {
+            can.addGarbage(trashAmt);
+            can.addGarbageForData(trashAmt);
+            generatedTrash.put(can.getType(), 0.0); // zero out trash in hashmap after getting it once, effectively simulating trash has been thrown to one of the cans only
+            System.out.println("Added " + trashAmt + " l of thrash to " + can.getType() + " trash can.");
+            System.out.println("Garbage can type: " + can.getType() + " has " + can.getCurrentCapacity() + " l of trash.");
 
-			//calculate how long is the type of cans full.
-			data.startCalculatingGarbageFullTime(can.getType());
-		}
-	}
-	/**
-	 * Throws trash to shelter according to its parameters.
-	 */
-	public void throwTrash(){
-		//Data collection, do this here because it needs to be incremented only once
-		data.addThrownThrash();
+            //Data collection
+            data.calculateThrashAmountByType(can, trashAmt);
+        } else {
+            getData().addFailedAttempt(can.getType());
 
-		reserved = true;
-		eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
-		//double serviceTime = generator.sample();//+serviceTime));
+            // get type
+            GarbageCanType type = can.getType();
+            // Init entry if absent
+            overflowTrash.putIfAbsent(type, 0.0);
+            // add trash to the entry value
+            overflowTrash.put(type, overflowTrash.get(type) + trashAmt);
+            can.addGarbageForData(trashAmt);
 
-		// generate a trash distribution according to trash amt arg
-		HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(trashThrowAmtMean, 1000);
+            System.out.println("OVERFLOW IN " + type + " CAN! Added " + trashAmt + " to overflow");
 
-		for (GarbageCanType currentCanType : generatedTrash.keySet()) {
-			Double trashAmt = generatedTrash.get(currentCanType);
+            //calculate how long is the type of cans full.
+            data.startCalculatingGarbageFullTime(can.getType());
+        }
+    }
 
-			// find all cans of the current type
-			List<GarbageCan> cansOfType = garbageCans.stream().filter(can -> can.getType() == currentCanType).toList();
+    /**
+     * Throws trash to shelter according to its parameters.
+     */
+    public void throwTrash() {
+        //Data collection, do this here because it needs to be incremented only once
+        data.addThrownThrash();
 
-			if (cansOfType.size() > 1) {
-				// if there are multiple cans of the same type, use Negexp to choose one
-				ContinuousGenerator chooseCan = new Negexp(1.0);
-				//math.min() to constrain chosen index to available indices
-				int chosenIndex = (int) Math.min(cansOfType.size() - 1, chooseCan.sample() * cansOfType.size());
-				GarbageCan chosenCan = cansOfType.get(chosenIndex);
-				// place trash
-				putTrash(chosenCan, trashAmt, generatedTrash);
-			} else {
-				if (cansOfType.size() == 1) {
-					// if only one can of this type, throw trash into it
-					GarbageCan chosenCan = cansOfType.get(0);
-					putTrash(chosenCan, trashAmt, generatedTrash);
-				}
-			}
-		}
-	}
+        reserved = true;
+        eventList.add(new Event(scheduledEventType, Clock.getInstance().getTime()));
+        //double serviceTime = generator.sample();//+serviceTime));
 
-	// testing purposes
-	public void printThrashCans(){
-		System.out.println("Garbage cans in the shelter:");
-		for(GarbageCan can : garbageCans){
-			System.out.println(can.getType());
-		}
-	}
+        // generate a trash distribution according to trash amt arg
+        HashMap<GarbageCanType, Double> generatedTrash = trashGenerator.getTrash(trashThrowAmtMean, 1000);
 
-	/**
-	 * Checks if the shelter is reserved.
-	 * @return
-	 */
-	public boolean isReserved(){
-		return reserved;
-	}
+        for (GarbageCanType currentCanType : generatedTrash.keySet()) {
+            Double trashAmt = generatedTrash.get(currentCanType);
 
-	/**
-	 * Checks if the shelter has a queue.
-	 * @return
-	 */
-	public boolean isQueued(){
-		return queue.size() != 0;
-	}
+            // find all cans of the current type
+            List<GarbageCan> cansOfType = garbageCans.stream().filter(can -> can.getType() == currentCanType).toList();
 
-	public boolean isFull(){return  isFull;}
+            if (cansOfType.size() > 1) {
+                // if there are multiple cans of the same type, use Negexp to choose one
+                ContinuousGenerator chooseCan = new Negexp(1.0);
+                //math.min() to constrain chosen index to available indices
+                int chosenIndex = (int) Math.min(cansOfType.size() - 1, chooseCan.sample() * cansOfType.size());
+                GarbageCan chosenCan = cansOfType.get(chosenIndex);
+                // place trash
+                putTrash(chosenCan, trashAmt, generatedTrash);
+            } else {
+                if (cansOfType.size() == 1) {
+                    // if only one can of this type, throw trash into it
+                    GarbageCan chosenCan = cansOfType.get(0);
+                    putTrash(chosenCan, trashAmt, generatedTrash);
+                }
+            }
+        }
+    }
 
-	public void garbageCanStates(){
-		for(GarbageCan can: garbageCans)
-			System.out.println(can.getType() + ": " + can.getCurrentCapacity() + "/"  + can.getCapacity() + ". Is full?: " + !can.checkCapacity(can.getCurrentCapacity()));
-	}
-	/**
-	 * Empties the garbage cans in the shelter. Called by the garbage truck arrival process.
-	 */
-	public void clearGarbageCans(){
-		System.out.println("GARBAGE TRUCK IS HERE TO EMPTY THE GARBAGE CANS!");
-		data.addGarbageCarArrival();
+    // testing purposes
+    public void printThrashCans() {
+        System.out.println("Garbage cans in the shelter:");
+        for (GarbageCan can : garbageCans) {
+            System.out.println(can.getType());
+        }
+    }
 
-		for(GarbageCan can: garbageCans) {
-			data.calculateUsageRate(can);
-			data.stopCalculatingGarbageFullTime(can.getType());
+    /**
+     * Checks if the shelter is reserved.
+     *
+     * @return
+     */
+    public boolean isReserved() {
+        return reserved;
+    }
 
-			can.empty();
-		}
+    /**
+     * Checks if the shelter has a queue.
+     *
+     * @return
+     */
+    public boolean isQueued() {
+        return queue.size() != 0;
+    }
 
-		isFull = false;
-	}
+    public boolean isFull() {
+        return isFull;
+    }
 
-	/**
-	 * Returns the amount of overflow trash in a garbage can type.
-	 * @param type
-	 * @return
-	 */
-	public double getOverflowTrash(GarbageCanType type) {
-		return overflowTrash.getOrDefault(type, 0.0); // return default if no overflow occurred in the can
-	}
+    public void garbageCanStates() {
+        for (GarbageCan can : garbageCans)
+            System.out.println(can.getType() + ": " + can.getCurrentCapacity() + "/" + can.getCapacity() + ". Is full?: " + !can.checkCapacity(can.getCurrentCapacity()));
+    }
 
-	/**
-	 * Returns the data object.
-	 * @return
-	 */
-	public CollectedData getData(){ return this.data; }
+    /**
+     * Empties the garbage cans in the shelter. Called by the garbage truck arrival process.
+     */
+    public void clearGarbageCans() {
+        System.out.println("GARBAGE TRUCK IS HERE TO EMPTY THE GARBAGE CANS!");
+        data.addGarbageCarArrival();
+
+        for (GarbageCan can : garbageCans) {
+            data.calculateUsageRate(can);
+            data.stopCalculatingGarbageFullTime(can.getType());
+
+            can.empty();
+        }
+
+        isFull = false;
+    }
+
+    /**
+     * Returns the amount of overflow trash in a garbage can type.
+     *
+     * @param type
+     * @return
+     */
+    public double getOverflowTrash(GarbageCanType type) {
+        return overflowTrash.getOrDefault(type, 0.0); // return default if no overflow occurred in the can
+    }
+
+    /**
+     * Returns the data object.
+     *
+     * @return
+     */
+    public CollectedData getData() {
+        return this.data;
+    }
 }

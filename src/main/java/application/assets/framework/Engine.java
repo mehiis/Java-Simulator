@@ -1,91 +1,92 @@
 package application.assets.framework;
 
-public abstract class Engine extends Thread implements IEngine{
-	
-	private double simulationTime = 0;
-	private long delayTime = 250; // Adjust later
+public abstract class Engine extends Thread implements IEngine {
 
-	private Clock clock;
-	
-	protected EventList eventList;
-	protected boolean paused = false;
+    private double simulationTime = 0;
+    private long delayTime = 250; // Adjust later
 
-	public Engine(){
+    private Clock clock;
 
-		clock = Clock.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
-		
-		eventList = new EventList();
+    protected EventList eventList;
+    protected boolean paused = false;
 
-		clock.setTime(0); // Asetetaan kello alkuarvoon
+    public Engine() {
 
-		// Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
-	}
+        clock = Clock.getInstance(); // Otetaan kello muuttujaan yksinkertaistamaan koodia
 
-	public void setSimulationTime(double time) {
-		simulationTime = time;
-	}
+        eventList = new EventList();
 
-	public void setDelay(long time) {
-		delayTime = time;
-	}
+        clock.setTime(0); // Asetetaan kello alkuarvoon
 
-	public long getDelay() {
-		return delayTime;
-	}
-	
-	public void run(){
-		init(); // luodaan mm. ensimmäinen tapahtuma
-		while (simulation()) {
+        // Palvelupisteet luodaan simu.model-pakkauksessa Moottorin aliluokassa
+    }
 
-			if (!paused) {
-				delay();
+    public void setSimulationTime(double time) {
+        simulationTime = time;
+    }
 
-				Trace.out(Trace.Level.INFO, "\nA-Stage: simulation time is " + currentTime() + " minutes.");
-				clock.setTime(currentTime());
+    public void setDelay(long time) {
+        delayTime = time;
+    }
 
-				Trace.out(Trace.Level.INFO, "\nB-Stage:");
-				executeBtypeEvents();
+    public long getDelay() {
+        return delayTime;
+    }
 
-				Trace.out(Trace.Level.INFO, "\nC-Stage:");
-				tryCtypeEvents();
+    public void run() {
+        init(); // luodaan mm. ensimmäinen tapahtuma
+        while (simulation()) {
 
-			} else {
-				Trace.out(Trace.Level.INFO, "\nPaused.");
-			}
-		}
-		results();
-	}
-	
-	private void executeBtypeEvents(){
-		while (eventList.getNextTime() == clock.getTime()){
-			executeEvent(eventList.delete());
-		}
-	}
+            if (!paused) {
+                delay();
 
-	private double currentTime(){
-		return eventList.getNextTime();
-	}
-	
-	private boolean simulation(){
-		return clock.getTime() < simulationTime;
-	}
+                Trace.out(Trace.Level.INFO, "\nA-Stage: simulation time is " + currentTime() + " minutes.");
+                clock.setTime(currentTime());
 
-	protected abstract void executeEvent(Event t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
-	protected abstract void tryCtypeEvents();	// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+                Trace.out(Trace.Level.INFO, "\nB-Stage:");
+                executeBtypeEvents();
 
-	protected abstract void init(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+                Trace.out(Trace.Level.INFO, "\nC-Stage:");
+                tryCtypeEvents();
 
-	protected abstract void results();// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+            } else {
+                Trace.out(Trace.Level.INFO, "\nPaused.");
+            }
+        }
+        results();
+    }
 
-	public abstract void pressPauseButton(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+    private void executeBtypeEvents() {
+        while (eventList.getNextTime() == clock.getTime()) {
+            executeEvent(eventList.delete());
+        }
+    }
 
-	private void delay() { // UUSI
-		Trace.out(Trace.Level.INFO, "delay " + delayTime + " ms.");
-		try {
-			sleep(delayTime);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
+    private double currentTime() {
+        return eventList.getNextTime();
+    }
+
+    private boolean simulation() {
+        return clock.getTime() < simulationTime;
+    }
+
+    protected abstract void executeEvent(Event t);  // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+    protected abstract void tryCtypeEvents();    // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+    protected abstract void init(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+    protected abstract void results();// Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+    public abstract void pressPauseButton(); // Määritellään simu.model-pakkauksessa Moottorin aliluokassa
+
+    private void delay() { // UUSI
+        Trace.out(Trace.Level.INFO, "delay " + delayTime + " ms.");
+        try {
+            sleep(delayTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

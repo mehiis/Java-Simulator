@@ -2,6 +2,7 @@ package entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Entity class representing an entry in the "inputs" table.

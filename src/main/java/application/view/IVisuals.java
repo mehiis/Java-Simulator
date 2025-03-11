@@ -11,16 +11,16 @@ import java.util.LinkedHashMap;
 
 public interface IVisuals {
 
-	void setApartmentCounts(ApartmentType type, Integer count);
+    void setApartmentCounts(ApartmentType type, Integer count);
 
-	// this sets up apartment/garbage can icons and amounts
-	void constructSimuElementVisuals();
+    // this sets up apartment/garbage can icons and amounts
+    void constructSimuElementVisuals();
 
-	void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
+    void updateTrashPercentages(LinkedHashMap<GarbageCanType, ArrayList<Double>> percentages);
 
-	void newResident(EventType eventType);
+    void newResident(EventType eventType);
 
-	void newGarbageTruck();
+    void newGarbageTruck();
 
 }
 
