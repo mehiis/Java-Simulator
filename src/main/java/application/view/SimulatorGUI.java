@@ -145,12 +145,9 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
     public void start(Stage stage) {
         // Käyttöliittymän rakentaminen
         try {
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent t) {
-                    Platform.exit();
-                    System.exit(0);
-                }
+            stage.setOnCloseRequest((_) -> {
+                Platform.exit();
+                System.exit(0);
             });
 
             stage.setTitle("Garbage Collection Simulator");
@@ -982,9 +979,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
         startButton = new Button();
         startButton.setPrefWidth(150);
         startButton.setText("Start Simulation");
-        startButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        startButton.setOnAction((_) -> {
                 dayLabel.setVisible(true);
                 speedLabel.setVisible(true);
 
@@ -996,7 +991,7 @@ public class SimulatorGUI extends Application implements ISimulatorGUI {
                 controller.startSimulation();
 
                 controller.getSimulationSpeed();
-            }
+
         });
 
         pauseButton = new Button();
