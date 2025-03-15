@@ -204,21 +204,24 @@ public class OwnEngine extends Engine {
                         "METAL: " + garbageShelter.getData().getAverageRateOfType(GarbageCanType.METAL) + "%.\n\n" +
 
                         "Trash overflows: \n" +
-                        " MIXED: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.MIXED)) + " l\n" +
-                        " BIO: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.BIO)) + " l\n" +
-                        " CARDBOARD: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.CARDBOARD)) + " l\n" +
-                        " PLASTIC: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.PLASTIC)) + " l\n" +
-                        " GLASS: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.GLASS)) + " l\n" +
-                        " METAL: " + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.METAL)) + " l\n"
+                        " MIXED: "      + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.MIXED)) + " l\n"      +
+                        " BIO: "        + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.BIO)) + " l\n"        +
+                        " CARDBOARD: "  + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.CARDBOARD)) + " l\n"  +
+                        " PLASTIC: "    + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.PLASTIC)) + " l\n"    +
+                        " GLASS: "      + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.GLASS)) + " l\n"      +
+                        " METAL: "      + String.format("%.0f", garbageShelter.getOverflowTrash(GarbageCanType.METAL)) + " l\n"      +
+
+                        "Garbage can access times: \n" +
+                        " MIXED: "      + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.MIXED) + " h\n"      +
+                        " BIO: "        + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.BIO) + " h\n"        +
+                        " CARDBOARD: "  + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.CARDBOARD) + " h\n"  +
+                        " PLASTIC: "    + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.PLASTIC) + " h\n"    +
+                        " GLASS: "      + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS) + " h\n"      +
+                        " METAL: "      + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL) + " h\n"
+
+
         );
-
-        System.out.println("Mixed cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.MIXED) + " hours.");
-        System.out.println("Bio cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.BIO) + " hours.");
-        System.out.println("Cardboard cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.CARDBOARD) + " hours.");
-        System.out.println("Plastic cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.PLASTIC) + " hours.");
-        System.out.println("Glass cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.GLASS) + " hours.");
-        System.out.println("Metal cans were full for " + garbageShelter.getData().getFullTimeCalculations(GarbageCanType.METAL) + " hours.");
-
+        //THIS DATA IS NOT USED IN THE GUI, BUT CAN BE USED FOR DEBUGGING.
         System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.MIXED));
         System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.BIO));
         System.out.println("Mixed cans failed attempts: " + garbageShelter.getData().getFailedAttempts(GarbageCanType.CARDBOARD));

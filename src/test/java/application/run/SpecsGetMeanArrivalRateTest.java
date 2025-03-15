@@ -1,3 +1,7 @@
+/**
+ * This class does unit test for the getMeanArrivalRate method in the Specs class.
+ */
+
 package application.run;
 
 import org.junit.jupiter.api.Assertions;

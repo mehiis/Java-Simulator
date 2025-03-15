@@ -1,3 +1,7 @@
+/**
+ * Unit tests for CollectedData class.
+ * */
+
 package application.assets.model;
 
 import application.assets.framework.Clock;

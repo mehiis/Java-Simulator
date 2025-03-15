@@ -307,6 +307,10 @@ public class CollectedData {
     }
 }
 
+/**
+ * This class is used to store data about how long the garbage can was full.
+ */
+
 class FullnessCalculator {
     boolean isFull = false;
 

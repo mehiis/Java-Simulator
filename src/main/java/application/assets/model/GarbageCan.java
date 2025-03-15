@@ -77,7 +77,7 @@ public class GarbageCan {
                 this.weightMultiplier = 1.25;
                 break;
             default:
-                System.out.println("WHAT IS GOING OOON??!?!?!?!?!!?!?!? THIS SHOULD NOT HAPPEN?????????");
+                System.out.println("Invalid garbage can type");
         }
 
         return currentCapacity * weightMultiplier;
