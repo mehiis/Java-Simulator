@@ -1,6 +1,9 @@
 # Thrash Simulator Project
 
-ICT school project made by: Samuel Sarimo (samuelms123), Auri Laitinen (arurauri) and Niko Mehiläinen (mehiis).
+ICT school project made by: 
+* Samuel Sarimo (samuelms123)
+* Auri Laitinen (arurauri)
+* Niko Mehiläinen (mehiis).
 
 # Tech Stack
 * **Frontend** JavaFx
